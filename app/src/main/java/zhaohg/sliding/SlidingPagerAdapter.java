@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class SlidingPagerAdapter extends FragmentPagerAdapter {
 
-    private ArrayList<Fragment> fragments;
+    private ArrayList<SlidingFragment> fragments;
 
-    public SlidingPagerAdapter(FragmentManager manager, ArrayList<Fragment> fragments) {
+    public SlidingPagerAdapter(FragmentManager manager, ArrayList<SlidingFragment> fragments) {
         super(manager);
         this.fragments = fragments;
     }
@@ -26,7 +26,7 @@ public class SlidingPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return "Long Tab Name" + position;
+    public CharSequence getPageTitle(int pos) {
+        return fragments.get(pos).getTitle();
     }
 }

@@ -1,7 +1,6 @@
 package zhaohg.trade;
 
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import zhaohg.sliding.SlidingFragment;
 import zhaohg.sliding.SlidingPagerAdapter;
 import zhaohg.sliding.SlidingTabLayout;
 
@@ -43,10 +43,10 @@ public class MainActivity extends ActionBarActivity  {
 
         SlidingTabLayout slidingTab = (SlidingTabLayout) findViewById(R.id.slidingTab);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new TestFragment());
-        fragments.add(new TestFragment());
-        fragments.add(new TestFragment());
+        ArrayList<SlidingFragment> fragments = new ArrayList<>();
+        fragments.add(new TestFragment().setTitle("Long Name: Sell"));
+        fragments.add(new TestFragment().setTitle("Long Name: Buy"));
+        fragments.add(new TestFragment().setTitle("Long Name: All"));
         SlidingPagerAdapter pagerAdapter = new SlidingPagerAdapter(this.getSupportFragmentManager(), fragments);
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(pagerAdapter);

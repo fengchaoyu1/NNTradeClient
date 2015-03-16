@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity  {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(drawer);
+            drawerLayout.openDrawer(drawer);
             }
         });
 

@@ -95,5 +95,7 @@ public class JsonObject extends JsonValue {
     public Map<JsonString, JsonValue> getObject() {
         return this.data;
     }
+
+    public JsonValue getValue(String key) { return this.data.get(new JsonString(key)); };
     
 }

@@ -54,6 +54,7 @@ public class TestRequestParam extends InstrumentationTestCase {
     public void testToken() {
         RequestParam param = new RequestParam();
         param.setToken("16c2bda807b7b152658458a5e3420181");
+        assertEquals("16c2bda807b7b152658458a5e3420181", param.getToken());
         param.addParam("username", "login_name");
         param.getEncodedUrl();
         assertEquals("?token=c43fd9239c368e4cbd042019bab7b163&username=login_name", param.getEncodedUrl());

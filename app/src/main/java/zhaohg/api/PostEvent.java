@@ -2,7 +2,7 @@ package zhaohg.api;
 
 import zhaohg.json.JsonValue;
 
-public interface RequestPostEvent {
+public interface PostEvent {
 
     public void onPostEvent(JsonValue json);
 

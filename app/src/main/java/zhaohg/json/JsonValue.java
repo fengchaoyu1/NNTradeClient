@@ -139,14 +139,22 @@ public class JsonValue extends JsonAbstract {
     public double getNumber() {
         return ((JsonNumber)this.data).getNumber();
     }
+
+    public int getInteger() {
+        return ((JsonNumber)this.data).getInteger();
+    }
     
     public Map<JsonString, JsonValue> getObject() {
         return ((JsonObject)this.data).getObject();
     }
+
+    public JsonObject getJsonObject() { return (JsonObject)this.data; }
     
     public List<JsonValue> getArray() {
         return ((JsonArray)this.data).getArray();
     }
+
+    public JsonArray getJsonArray() { return (JsonArray)this.data; }
     
     public boolean getBoolean() {
         return ((JsonBoolean)this.data).getBoolean();

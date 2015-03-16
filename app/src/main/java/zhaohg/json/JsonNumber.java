@@ -159,4 +159,6 @@ public class JsonNumber extends JsonValue {
         return this.data;
     }
 
+    public int getInteger() { return (int) this.data; }
+
 }

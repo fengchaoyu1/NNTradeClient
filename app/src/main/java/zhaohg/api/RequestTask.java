@@ -28,14 +28,13 @@ import zhaohg.json.JsonValue;
 public class RequestTask extends AsyncTask<Void, Integer, JsonValue> {
 
     private RequestParam param;
-    private RequestPostEvent postEvent;
+    private PostEvent postEvent;
 
-    public RequestTask(RequestParam param) {
-        super();
+    public void setRequestParam(RequestParam param) {
         this.param = param;
     }
 
-    public void setRequestStatusListener(RequestPostEvent event) {
+    public void setRequestPostEvent(PostEvent event) {
         this.postEvent = event;
     }
 
@@ -80,8 +79,7 @@ public class RequestTask extends AsyncTask<Void, Integer, JsonValue> {
     @Override
     protected JsonValue doInBackground(Void... params) {
         JsonValue json = null;
-        HttpRequestBase httpRequest = null;
-
+        HttpRequestBase httpRequest = this.getHttpRequest();
         if (httpRequest != null) {
             HttpParams httpParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpParams, this.param.getConnectionTimeout());
@@ -105,7 +103,7 @@ public class RequestTask extends AsyncTask<Void, Integer, JsonValue> {
     }
 
     protected void onPostExecute(JsonValue result) {
-        if (this.postEvent != null) {
+        if (this.postEvent != null && !this.isCancelled()) {
             this.postEvent.onPostEvent(result);
         }
     }

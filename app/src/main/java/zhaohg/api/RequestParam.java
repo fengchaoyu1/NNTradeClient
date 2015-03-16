@@ -89,18 +89,7 @@ public class RequestParam {
                 }
                 text += entry.getKey() + "=" + entry.getValue();
             }
-            try {
-                MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-                byte[] encoded = messageDigest.digest(text.getBytes());
-                BigInteger bigInt = new BigInteger(1, encoded);
-                String hashText = bigInt.toString(16);
-                while (hashText.length() < 32) {
-                    hashText = "0" + hashText;
-                }
-                this.params.put("token", hashText);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
+            this.params.put("token", Encryption.md5(text));
         }
     }
 

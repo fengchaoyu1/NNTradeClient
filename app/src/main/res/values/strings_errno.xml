@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ERRNO_NO_ERROR">No error</string>
-    <string name="ERRNO_CONNECTION">Failed to connect to server</string>
-    <string name="ERRNO_INVALID_REQUEST_METHOD">The request method is invalid</string>
-    <string name="ERRNO_MISSING_PARAMETER">Some parameters are missing</string>
+    <string name="errno_no_error">No error</string>
+    <string name="errno_connection">Failed to connect to server</string>
+    <string name="errno_invalid_request_method">The request method is invalid</string>
+    <string name="errno_missing_parameter">Some parameters are missing</string>
 
-    <string name="ERRNO_USERNAME_EXIST">Username already exists</string>
-    <string name="ERRNO_USERNAME_NON_EXIST">Username does not exist</string>
-    <string name="ERRNO_MISMATCH_USERNAME_PASSWORD">Incorrect username or password</string>
-    <string name="ERRNO_NO_TOKEN">User is currently logged out</string>
-    <string name="ERRNO_MISMATCH_TOKEN">User has signed elsewhere</string>
+    <string name="errno_username_exist">Username already exists</string>
+    <string name="errno_username_non_exist">Username does not exist</string>
+    <string name="errno_mismatch_username_password">Incorrect username or password</string>
+    <string name="errno_no_token">User is currently logged out</string>
+    <string name="errno_mismatch_token">User has signed elsewhere</string>
 </resources>

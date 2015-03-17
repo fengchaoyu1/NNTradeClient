@@ -20,24 +20,24 @@ public class ApiErrno {
     public static String getErrorMessage(Context context, int errno) {
         switch (errno) {
             case ERRNO_NO_ERROR:
-                return context.getString(R.string.ERRNO_NO_ERROR);
+                return context.getString(R.string.errno_no_error);
             case ERRNO_CONNECTION:
-                return context.getString(R.string.ERRNO_CONNECTION);
+                return context.getString(R.string.errno_connection);
             case ERRNO_INVALID_REQUEST_METHOD:
-                return context.getString(R.string.ERRNO_INVALID_REQUEST_METHOD);
+                return context.getString(R.string.errno_invalid_request_method);
             case ERRNO_MISSING_PARAMETER:
-                return context.getString(R.string.ERRNO_MISSING_PARAMETER);
+                return context.getString(R.string.errno_missing_parameter);
 
             case ERRNO_USERNAME_EXIST:
-                return context.getString(R.string.ERRNO_USERNAME_EXIST);
+                return context.getString(R.string.errno_username_exist);
             case ERRNO_USERNAME_NON_EXIST:
-                return context.getString(R.string.ERRNO_USERNAME_NON_EXIST);
+                return context.getString(R.string.errno_username_non_exist);
             case ERRNO_MISMATCH_USERNAME_PASSWORD:
-                return context.getString(R.string.ERRNO_MISMATCH_USERNAME_PASSWORD);
+                return context.getString(R.string.errno_mismatch_username_password);
             case ERRNO_NO_TOKEN:
-                return context.getString(R.string.ERRNO_NO_TOKEN);
+                return context.getString(R.string.errno_no_token);
             case ERRNO_MISMATCH_TOKEN:
-                return context.getString(R.string.ERRNO_MISMATCH_TOKEN);
+                return context.getString(R.string.errno_mismatch_token);
         }
         return "";
     }

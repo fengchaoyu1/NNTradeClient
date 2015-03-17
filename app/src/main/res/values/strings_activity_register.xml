@@ -1,0 +1,14 @@
+<resources>
+    <string name="title_activity_register">Register</string>
+
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm">Confirm Password</string>
+    <string name="action_register">Register</string>
+    <string name="action_register_complete">Register Complete</string>
+
+    <string name="error_field_required">The field is required</string>
+    <string name="error_invalid_username">The username is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_invalid_confirm">The new and confirm passwords do not match</string>
+</resources>

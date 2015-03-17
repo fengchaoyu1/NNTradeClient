@@ -7,7 +7,7 @@ import zhaohg.json.JsonValue;
 
 public class AccountRegister extends ApiBase {
 
-    public static String RESOURCE_URL = "account/user";
+    public static String RESOURCE_URL = "account/user/";
 
     private String username = "";
     private String password = "";
@@ -31,6 +31,7 @@ public class AccountRegister extends ApiBase {
     public void request() {
         this.task = new RequestTask();
         RequestParam param = new RequestParam();
+        param.setUrl(BASE_URL + RESOURCE_URL);
         param.setMethod(RequestParam.METHOD_POST);
         param.addParam("username", this.username);
         param.addParam("password", Encryption.md5(this.password));

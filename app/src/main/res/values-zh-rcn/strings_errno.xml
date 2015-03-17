@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ERRNO_NO_ERROR">没有错误</string>
+    <string name="ERRNO_CONNECTION">连接服务器错误</string>
+    <string name="ERRNO_INVALID_REQUEST_METHOD">请求方法错误</string>
+    <string name="ERRNO_MISSING_PARAMETER">缺失参数</string>
+
+    <string name="ERRNO_USERNAME_EXIST">用户名已存在</string>
+    <string name="ERRNO_USERNAME_NON_EXIST">用户名不存在</string>
+    <string name="ERRNO_MISMATCH_USERNAME_PASSWORD">用户名或密码错误</string>
+    <string name="ERRNO_NO_TOKEN">用户未登录</string>
+    <string name="ERRNO_MISMATCH_TOKEN">用户已在别地登陆</string>
+</resources>

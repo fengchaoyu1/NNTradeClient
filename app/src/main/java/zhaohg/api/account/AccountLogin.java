@@ -1,20 +1,26 @@
-package zhaohg.api;
+package zhaohg.api.account;
 
 import android.content.Context;
 
+import zhaohg.api.ApiBase;
+import zhaohg.api.ApiErrno;
+import zhaohg.api.Encryption;
+import zhaohg.api.PostEvent;
+import zhaohg.api.RequestParam;
+import zhaohg.api.RequestTask;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class AccountRegister extends ApiBase {
+public class AccountLogin extends ApiBase {
 
-    public static String RESOURCE_URL = "account/user/";
+    public static String RESOURCE_URL = "account/token/";
 
     private String username = "";
     private String password = "";
 
-    private AccountRegisterPostEvent event;
+    private AccountLoginPostEvent event;
 
-    public AccountRegister(Context context) {
+    public AccountLogin(Context context) {
         super(context);
     }
 
@@ -23,7 +29,7 @@ public class AccountRegister extends ApiBase {
         this.password = password;
     }
 
-    public void setEvent(AccountRegisterPostEvent event) {
+    public void setEvent(AccountLoginPostEvent event) {
         this.event = event;
     }
 
@@ -47,6 +53,8 @@ public class AccountRegister extends ApiBase {
                         if (!values.getValue("success").getBoolean()) {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
+                            String token = values.getValue("token").getString();
+                            saveToken(token);
                             event.onSuccess();
                         }
                     }
@@ -55,5 +63,4 @@ public class AccountRegister extends ApiBase {
         });
         this.task.execute();
     }
-
 }

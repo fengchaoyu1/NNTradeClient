@@ -1,4 +1,4 @@
-package zhaohg.api;
+package zhaohg.api.account;
 
 public interface AccountRegisterPostEvent {
     public void onSuccess();

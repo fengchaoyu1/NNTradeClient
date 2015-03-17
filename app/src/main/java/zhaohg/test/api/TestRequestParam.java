@@ -1,4 +1,4 @@
-package zhaohg.test;
+package zhaohg.test.api;
 
 import android.test.InstrumentationTestCase;
 

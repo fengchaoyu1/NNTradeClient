@@ -1,4 +1,4 @@
-package zhaohg.test;
+package zhaohg.test.api.account;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
@@ -6,8 +6,8 @@ import android.test.InstrumentationTestCase;
 import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.api.AccountRegister;
-import zhaohg.api.AccountRegisterPostEvent;
+import zhaohg.api.account.AccountRegister;
+import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.api.ApiErrno;
 import zhaohg.api.Encryption;
 

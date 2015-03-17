@@ -26,8 +26,8 @@ public class TestAccountRegister extends InstrumentationTestCase {
 
     private String generateRandomName() {
         Calendar calendar = Calendar.getInstance();
-        String text = "test_" + calendar.getTimeInMillis();
-        return "test_" + Encryption.md5(text);
+        String text = "register_" + calendar.getTimeInMillis();
+        return "register_" + Encryption.md5(text);
     }
 
     public void testRegisterNormal() throws InterruptedException {

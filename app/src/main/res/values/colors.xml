@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#3367D6</color>
     <color name="textColorPrimary">#FEFEFE</color>
     <color name="windowBackground">#EEEEEE</color>
+    <color name="textColorError">#D72828</color>
 </resources>

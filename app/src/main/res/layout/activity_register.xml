@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -25,9 +25,11 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <EditText
@@ -36,7 +38,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_username"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:drawablePadding="15dp"
+                android:textColor="#000000"
+                android:drawableLeft="@drawable/username" />
 
             <EditText
                 android:id="@+id/password"
@@ -45,7 +51,12 @@
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:drawablePadding="15dp"
+                android:textColor="#000000"
+                android:drawableLeft="@drawable/password" />
 
             <EditText
                 android:id="@+id/confirm"
@@ -54,7 +65,24 @@
                 android:hint="@string/prompt_confirm"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:drawablePadding="15dp"
+                android:textColor="#000000"
+                android:drawableLeft="@drawable/password" />
+
+            <TextView
+                android:id="@+id/text_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:drawablePadding="15dp"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textColorError"
+                android:drawableLeft="@drawable/error" />
 
             <Button
                 android:id="@+id/register_button"
@@ -63,9 +91,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_register"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/textColorPrimary"/>
 
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

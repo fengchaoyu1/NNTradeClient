@@ -1,27 +1,27 @@
 package zhaohg.account;
 
-import android.app.Activity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import zhaohg.api.ApiErrno;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.trade.R;
+import zhaohg.trade.TestableActivity;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends TestableActivity {
 
     private ProgressBar progressBar;
     private EditText editUsername;
     private EditText editPassword;
     private EditText editConfirm;
     private Button registerButton;
+    private TextView textError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,27 +33,36 @@ public class RegisterActivity extends Activity {
         this.editPassword = (EditText) this.findViewById(R.id.password);
         this.editConfirm = (EditText) this.findViewById(R.id.confirm);
         this.registerButton = (Button) this.findViewById(R.id.register_button);
+        this.textError = (TextView) this.findViewById(R.id.text_error);
 
         this.registerButton.setOnClickListener(new OnRegisterClick());
     }
 
-    private void showToastMessage(String text) {
-        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+    private void hideErrorMessage() {
+        this.textError.setVisibility(View.GONE);
+    }
+
+    private void showErrorMessage(String text) {
+        this.textError.setVisibility(View.VISIBLE);
+        this.textError.setText(text);
     }
 
     private class OnRegisterClick implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             final Context context = getApplicationContext();
+            hideErrorMessage();
             String username = editUsername.getText().toString();
             String password = editPassword.getText().toString();
             if (username.isEmpty() || password.isEmpty()) {
-                showToastMessage(context.getString(R.string.error_field_required));
+                showErrorMessage(context.getString(R.string.error_field_required));
+                finishTest();
                 return;
             }
             String confirm = editConfirm.getText().toString();
             if (password != confirm) {
-                showToastMessage(context.getString(R.string.error_invalid_confirm));
+                showErrorMessage(context.getString(R.string.error_invalid_confirm));
+                finishTest();
                 return;
             }
             AccountRegister register = new AccountRegister(context);
@@ -62,20 +71,25 @@ public class RegisterActivity extends Activity {
                 @Override
                 public void onSuccess() {
                     progressBar.setVisibility(View.GONE);
-                    showToastMessage(context.getString(R.string.action_register_complete));
+                    registerButton.setEnabled(true);
+                    finishTest();
                     onBackPressed();
                 }
 
                 @Override
                 public void onFailure(int errno) {
                     progressBar.setVisibility(View.GONE);
-                    showToastMessage(ApiErrno.getErrorMessage(context, errno));
+                    registerButton.setEnabled(true);
+                    showErrorMessage(ApiErrno.getErrorMessage(context, errno));
+                    finishTest();
                 }
             });
             progressBar.setVisibility(View.VISIBLE);
+            registerButton.setEnabled(false);
             register.request();
         }
     }
+
 }
 
 

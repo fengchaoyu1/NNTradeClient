@@ -5,28 +5,28 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class JsonObject extends JsonValue {
-    
+
     private SortedMap<JsonString, JsonValue> data;
-    
+
     public JsonObject() {
         this.data = new TreeMap<JsonString, JsonValue>();
     }
-    
+
     public JsonObject(SortedMap<JsonString, JsonValue> value) {
         this.data = value;
     }
-    
+
     public JsonObject(Map<JsonString, JsonValue> value) {
         this.data = new TreeMap<JsonString, JsonValue>();
         for (Map.Entry<JsonString, JsonValue> entry : value.entrySet()) {
             this.putValue(entry.getKey(), entry.getValue());
         }
     }
-    
+
     public void putValue(String key, JsonValue value) {
         this.putValue(new JsonString(key), value);
     }
-    
+
     public void putValue(JsonString key, JsonValue value) {
         this.data.put(key, value);
     }
@@ -91,11 +91,13 @@ public class JsonObject extends JsonValue {
         json += "}";
         return json;
     }
-    
+
     public Map<JsonString, JsonValue> getObject() {
         return this.data;
     }
 
-    public JsonValue getValue(String key) { return this.data.get(new JsonString(key)); };
-    
+    public JsonValue getValue(String key) {
+        return this.data.get(new JsonString(key));
+    };
+
 }

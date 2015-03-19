@@ -1,9 +1,9 @@
 package zhaohg.json;
 
 public class JsonNumber extends JsonValue {
-    
+
     private double data;
-    
+
     private static final int STATE_BEGIN = 0;
     private static final int STATE_NEGATIVE = 1;
     private static final int STATE_ZERO = 2;
@@ -14,15 +14,15 @@ public class JsonNumber extends JsonValue {
     private static final int STATE_E_SIGN = 7;
     private static final int STATE_E_EXP = 8;
     private static final int STATE_END = 9;
-    
+
     public JsonNumber() {
         this.data = 0.0;
     }
-    
+
     public JsonNumber(double value) {
         this.data = value;
     }
-    
+
     public void setNumber(double value) {
         this.data = value;
     }
@@ -150,15 +150,17 @@ public class JsonNumber extends JsonValue {
     private boolean isDigit(char c) {
         return '0' <= c && c <= '9';
     }
-    
+
     private boolean isE(char c) {
         return c == 'E' || c == 'e';
     }
-    
+
     public double getNumber() {
         return this.data;
     }
 
-    public int getInteger() { return (int) this.data; }
+    public int getInteger() {
+        return (int) this.data;
+    }
 
 }

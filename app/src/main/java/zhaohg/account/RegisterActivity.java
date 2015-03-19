@@ -2,6 +2,7 @@ package zhaohg.account;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import zhaohg.api.ApiErrno;
+import zhaohg.api.account.AccountLogin;
+import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.trade.R;
@@ -40,6 +43,7 @@ public class RegisterActivity extends TestableActivity {
 
     private void hideErrorMessage() {
         this.textError.setVisibility(View.GONE);
+        this.textError.setText("");
     }
 
     private void showErrorMessage(String text) {
@@ -52,15 +56,15 @@ public class RegisterActivity extends TestableActivity {
         public void onClick(View v) {
             final Context context = getApplicationContext();
             hideErrorMessage();
-            String username = editUsername.getText().toString();
-            String password = editPassword.getText().toString();
+            final String username = editUsername.getText().toString();
+            final String password = editPassword.getText().toString();
             if (username.isEmpty() || password.isEmpty()) {
                 showErrorMessage(context.getString(R.string.error_field_required));
                 finishTest();
                 return;
             }
             String confirm = editConfirm.getText().toString();
-            if (password != confirm) {
+            if (!password.equals(confirm)) {
                 showErrorMessage(context.getString(R.string.error_invalid_confirm));
                 finishTest();
                 return;
@@ -71,9 +75,7 @@ public class RegisterActivity extends TestableActivity {
                 @Override
                 public void onSuccess() {
                     progressBar.setVisibility(View.GONE);
-                    registerButton.setEnabled(true);
                     finishTest();
-                    onBackPressed();
                 }
 
                 @Override

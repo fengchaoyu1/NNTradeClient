@@ -1,11 +1,14 @@
 <resources>
     <string name="title_activity_register">新用户注册</string>
+    <string name="title_activity_login">用户登录</string>
 
     <string name="prompt_username">用户名</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_confirm">确认密码</string>
     <string name="action_register">注册</string>
     <string name="action_register_complete">注册成功</string>
+    <string name="action_login">登录</string>
+    <string name="action_login_complete">登录成功</string>
 
     <string name="error_field_required">有区域为空</string>
     <string name="error_invalid_username">用户名组成不合法</string>

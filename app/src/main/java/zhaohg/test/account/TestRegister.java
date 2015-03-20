@@ -16,7 +16,7 @@ import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.testable.OnTestFinishedListener;
 import zhaohg.main.R;
 
-public class TestRegisterActivity extends ActivityInstrumentationTestCase2<RegisterActivity> {
+public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActivity> {
 
     private RegisterActivity activity;
 
@@ -26,7 +26,7 @@ public class TestRegisterActivity extends ActivityInstrumentationTestCase2<Regis
     private Button registerButton;
     private TextView textError;
 
-    public TestRegisterActivity() {
+    public TestRegister() {
         super(RegisterActivity.class);
     }
 

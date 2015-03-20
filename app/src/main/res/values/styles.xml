@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
+        <item name="android:itemTextAppearance">@style/AppTheme.MenuTextAppearance</item>
+    </style>
+    <style name="AppTheme.OverFlow">
+        <item name="android:src">@drawable/overflow</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+    <style name="AppTheme.MenuTextAppearance">
+        <item name="android:textColor">@color/text_color_primary_dark</item>
     </style>
 </resources>

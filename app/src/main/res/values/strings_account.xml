@@ -9,6 +9,7 @@
     <string name="action_register_complete">Register Complete</string>
     <string name="action_login">Login</string>
     <string name="action_login_complete">Login Complete</string>
+    <string name="action_logout">Logout</string>
 
     <string name="error_field_required">The field is required</string>
     <string name="error_invalid_username">The username is invalid</string>

@@ -9,6 +9,7 @@
     <string name="action_register_complete">注册成功</string>
     <string name="action_login">登录</string>
     <string name="action_login_complete">登录成功</string>
+    <string name="action_logout">登出账户</string>
 
     <string name="error_field_required">有区域为空</string>
     <string name="error_invalid_username">用户名组成不合法</string>

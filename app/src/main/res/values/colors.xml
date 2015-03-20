@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4285F4</color>
-    <color name="colorPrimaryDark">#3367D6</color>
-    <color name="textColorPrimary">#FEFEFE</color>
-    <color name="windowBackground">#EEEEEE</color>
-    <color name="textColorError">#D72828</color>
+    <color name="color_primary">#4285F4</color>
+    <color name="color_primary_dark">#3367D6</color>
+    <color name="text_color_primary">#FEFEFE</color>
+    <color name="text_color_primary_dark">#000022</color>
+    <color name="window_background">#EEEEEE</color>
+    <color name="text_color_error">#D72828</color>
 </resources>

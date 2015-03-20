@@ -1,8 +1,8 @@
 package zhaohg.testable;
 
-import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 
-public class TestableActivity extends Activity implements Testable {
+public class TestableActionBarActivity extends ActionBarActivity implements Testable {
 
     private OnTestFinishedListener testFinishedListener;
 

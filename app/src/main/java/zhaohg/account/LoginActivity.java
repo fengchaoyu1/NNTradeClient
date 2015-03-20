@@ -2,6 +2,7 @@ package zhaohg.account;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +13,9 @@ import zhaohg.api.ApiErrno;
 import zhaohg.api.account.AccountLogin;
 import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.main.R;
-import zhaohg.testable.TestableActivity;
+import zhaohg.testable.TestableActionBarActivity;
 
-public class LoginActivity extends TestableActivity {
+public class LoginActivity extends TestableActionBarActivity {
 
     private ProgressBar progressBar;
     private EditText editUsername;
@@ -26,6 +27,16 @@ public class LoginActivity extends TestableActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         this.progressBar = (ProgressBar) this.findViewById(R.id.login_progress);
         this.editUsername = (EditText) this.findViewById(R.id.username);
@@ -65,6 +76,7 @@ public class LoginActivity extends TestableActivity {
                 public void onSuccess() {
                     progressBar.setVisibility(View.GONE);
                     finishTest();
+                    finish();
                 }
 
                 @Override

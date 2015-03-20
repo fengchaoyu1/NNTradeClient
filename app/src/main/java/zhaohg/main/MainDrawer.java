@@ -2,6 +2,7 @@ package zhaohg.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import zhaohg.testable.TestableLinearLayout;
 public class MainDrawer extends TestableLinearLayout {
 
     private Context context;
+    private View view;
 
     public MainDrawer(Context context) {
         super(context);
@@ -35,29 +37,38 @@ public class MainDrawer extends TestableLinearLayout {
 
     public void initView(Context context) {
         this.context = context;
-        View view = LayoutInflater.from(context).inflate(R.layout.main_drawer, null);
+        this.view = LayoutInflater.from(context).inflate(R.layout.main_drawer, null);
         this.addView(view);
 
         Button registerButton = (Button) view.findViewById(R.id.register_button);
         registerButton.setOnClickListener(new OnRegisterButtonClickListener());
-
         Button loginButton = (Button) view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnLoginButtonClickListener());
 
+        this.updateUserLayout();
+    }
+
+    public void updateUserLayout() {
+        Button registerButton = (Button) view.findViewById(R.id.register_button);
+        Button loginButton = (Button) view.findViewById(R.id.login_button);
         ImageView portraitView = (ImageView) view.findViewById(R.id.image_portrait);
         TextView usernameText = (TextView) view.findViewById(R.id.text_username);
-
         AccountLogin login = new AccountLogin(context);
         if (login.hasLogin()) {
-            registerButton.setVisibility(GONE);
-            loginButton.setVisibility(GONE);
-            portraitView.setVisibility(VISIBLE);
-            usernameText.setVisibility(VISIBLE);
+            if (registerButton.getVisibility() != GONE) {
+                registerButton.setVisibility(GONE);
+                loginButton.setVisibility(GONE);
+                portraitView.setVisibility(VISIBLE);
+                usernameText.setVisibility(VISIBLE);
+                usernameText.setText(login.loadUsername());
+            }
         } else {
-            registerButton.setVisibility(VISIBLE);
-            loginButton.setVisibility(VISIBLE);
-            portraitView.setVisibility(GONE);
-            usernameText.setVisibility(GONE);
+            if (registerButton.getVisibility() != VISIBLE) {
+                registerButton.setVisibility(VISIBLE);
+                loginButton.setVisibility(VISIBLE);
+                portraitView.setVisibility(GONE);
+                usernameText.setVisibility(GONE);
+            }
         }
     }
 

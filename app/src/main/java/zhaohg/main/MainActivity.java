@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
+
+    private MainDrawer mainDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +34,13 @@ public class MainActivity extends ActionBarActivity  {
             drawerLayout.openDrawer(drawer);
             }
         });
+
+        this.mainDrawer = (MainDrawer) findViewById(R.id.drawer);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.mainDrawer.updateUserLayout();
     }
 }

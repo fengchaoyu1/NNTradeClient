@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import zhaohg.api.ApiErrno;
@@ -17,7 +16,6 @@ import zhaohg.testable.TestableActionBarActivity;
 
 public class LoginActivity extends TestableActionBarActivity {
 
-    private ProgressBar progressBar;
     private EditText editUsername;
     private EditText editPassword;
     private Button loginButton;
@@ -38,7 +36,6 @@ public class LoginActivity extends TestableActionBarActivity {
             }
         });
 
-        this.progressBar = (ProgressBar) this.findViewById(R.id.login_progress);
         this.editUsername = (EditText) this.findViewById(R.id.username);
         this.editPassword = (EditText) this.findViewById(R.id.password);
         this.loginButton = (Button) this.findViewById(R.id.login_button);
@@ -74,20 +71,17 @@ public class LoginActivity extends TestableActionBarActivity {
             login.setEvent(new AccountLoginPostEvent() {
                 @Override
                 public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
                     finishTest();
                     finish();
                 }
 
                 @Override
                 public void onFailure(int errno) {
-                    progressBar.setVisibility(View.GONE);
                     loginButton.setEnabled(true);
                     showErrorMessage(ApiErrno.getErrorMessage(context, errno));
                     finishTest();
                 }
             });
-            progressBar.setVisibility(View.VISIBLE);
             loginButton.setEnabled(false);
             login.request();
         }

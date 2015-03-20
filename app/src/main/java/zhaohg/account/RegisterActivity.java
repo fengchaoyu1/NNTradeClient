@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import zhaohg.api.ApiErrno;
@@ -18,7 +17,6 @@ import zhaohg.testable.TestableActionBarActivity;
 
 public class RegisterActivity extends TestableActionBarActivity {
 
-    private ProgressBar progressBar;
     private EditText editUsername;
     private EditText editPassword;
     private EditText editConfirm;
@@ -40,7 +38,6 @@ public class RegisterActivity extends TestableActionBarActivity {
             }
         });
 
-        this.progressBar = (ProgressBar) this.findViewById(R.id.register_progress);
         this.editUsername = (EditText) this.findViewById(R.id.username);
         this.editPassword = (EditText) this.findViewById(R.id.password);
         this.editConfirm = (EditText) this.findViewById(R.id.confirm);
@@ -83,7 +80,6 @@ public class RegisterActivity extends TestableActionBarActivity {
             register.setEvent(new AccountRegisterPostEvent() {
                 @Override
                 public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
                     finishTest();
                     Intent intent = new Intent(context, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -93,13 +89,11 @@ public class RegisterActivity extends TestableActionBarActivity {
 
                 @Override
                 public void onFailure(int errno) {
-                    progressBar.setVisibility(View.GONE);
                     registerButton.setEnabled(true);
                     showErrorMessage(ApiErrno.getErrorMessage(context, errno));
                     finishTest();
                 }
             });
-            progressBar.setVisibility(View.VISIBLE);
             registerButton.setEnabled(false);
             register.request();
         }

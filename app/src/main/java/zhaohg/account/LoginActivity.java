@@ -11,8 +11,8 @@ import android.widget.TextView;
 import zhaohg.api.ApiErrno;
 import zhaohg.api.account.AccountLogin;
 import zhaohg.api.account.AccountLoginPostEvent;
-import zhaohg.trade.R;
-import zhaohg.trade.TestableActivity;
+import zhaohg.main.R;
+import zhaohg.testable.TestableActivity;
 
 public class LoginActivity extends TestableActivity {
 

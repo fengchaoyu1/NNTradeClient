@@ -13,8 +13,8 @@ import zhaohg.account.LoginActivity;
 import zhaohg.api.Encryption;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.trade.OnTestFinishedListener;
-import zhaohg.trade.R;
+import zhaohg.testable.OnTestFinishedListener;
+import zhaohg.main.R;
 
 public class TestLoginActivity extends ActivityInstrumentationTestCase2<LoginActivity> {
 

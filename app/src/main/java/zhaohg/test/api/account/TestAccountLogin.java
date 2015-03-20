@@ -75,6 +75,9 @@ public class TestAccountLogin extends InstrumentationTestCase {
         login.request();
         signal.await();
         assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
+        assertTrue(login.hasLogin());
+        assertFalse(login.loadToken().equals(""));
+        assertEquals(username, login.loadUsername());
     }
 
     public void testLoginNonExist() throws InterruptedException {
@@ -98,6 +101,7 @@ public class TestAccountLogin extends InstrumentationTestCase {
         login.request();
         signal.await();
         assertEquals(ApiErrno.ERRNO_USERNAME_NON_EXIST, localErrno);
+        assertFalse(login.hasLogin());
     }
 
     public void testLoginWrongPassword() throws InterruptedException {
@@ -121,6 +125,7 @@ public class TestAccountLogin extends InstrumentationTestCase {
         login.request();
         signal.await();
         assertEquals(ApiErrno.ERRNO_MISMATCH_USERNAME_PASSWORD, localErrno);
+        assertFalse(login.hasLogin());
     }
 
 }

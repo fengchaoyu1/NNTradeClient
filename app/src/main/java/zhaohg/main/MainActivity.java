@@ -1,20 +1,13 @@
-package zhaohg.trade;
+package zhaohg.main;
 
 import android.os.Build;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-
-import zhaohg.sliding.SlidingFragment;
-import zhaohg.sliding.SlidingPagerAdapter;
-import zhaohg.sliding.SlidingTabLayout;
+import android.widget.LinearLayout;
 
 public class MainActivity extends ActionBarActivity  {
 
@@ -29,7 +22,7 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final ListView drawer = (ListView) findViewById(R.id.drawer);
+        final MainDrawer drawer = (MainDrawer) findViewById(R.id.drawer);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,16 +33,5 @@ public class MainActivity extends ActionBarActivity  {
             drawerLayout.openDrawer(drawer);
             }
         });
-
-        SlidingTabLayout slidingTab = (SlidingTabLayout) findViewById(R.id.slidingTab);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ArrayList<SlidingFragment> fragments = new ArrayList<>();
-        fragments.add(new TestFragment().setTitle("Long Name: Sell"));
-        fragments.add(new TestFragment().setTitle("Long Name: Buy"));
-        fragments.add(new TestFragment().setTitle("Long Name: All"));
-        SlidingPagerAdapter pagerAdapter = new SlidingPagerAdapter(this.getSupportFragmentManager(), fragments);
-        viewPager.setOffscreenPageLimit(fragments.size());
-        viewPager.setAdapter(pagerAdapter);
-        slidingTab.setViewPager(viewPager);
     }
 }

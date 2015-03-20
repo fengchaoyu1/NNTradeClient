@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
-import zhaohg.trade.R;
+import zhaohg.main.R;
 
 public class SlidingTabLayout extends HorizontalScrollView {
 

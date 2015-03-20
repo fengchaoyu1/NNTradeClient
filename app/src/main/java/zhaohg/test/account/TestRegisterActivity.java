@@ -1,8 +1,6 @@
 package zhaohg.test.account;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,14 +8,13 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import zhaohg.account.RegisterActivity;
 import zhaohg.api.Encryption;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.trade.OnTestFinishedListener;
-import zhaohg.trade.R;
+import zhaohg.testable.OnTestFinishedListener;
+import zhaohg.main.R;
 
 public class TestRegisterActivity extends ActivityInstrumentationTestCase2<RegisterActivity> {
 

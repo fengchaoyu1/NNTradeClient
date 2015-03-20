@@ -2,7 +2,6 @@ package zhaohg.account;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,8 +11,8 @@ import android.widget.TextView;
 import zhaohg.api.ApiErrno;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.trade.R;
-import zhaohg.trade.TestableActivity;
+import zhaohg.main.R;
+import zhaohg.testable.TestableActivity;
 
 public class RegisterActivity extends TestableActivity {
 

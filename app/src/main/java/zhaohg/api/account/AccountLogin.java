@@ -41,6 +41,7 @@ public class AccountLogin extends ApiBase {
         param.setMethod(RequestParam.METHOD_POST);
         param.addParam("username", this.username);
         param.addParam("password", Encryption.md5(this.password));
+        this.saveToken("");
         this.task.setRequestParam(param);
         this.task.setRequestPostEvent(new PostEvent() {
             @Override
@@ -55,6 +56,7 @@ public class AccountLogin extends ApiBase {
                         } else {
                             String token = values.getValue("token").getString();
                             saveToken(token);
+                            saveUsername(username);
                             event.onSuccess();
                         }
                     }

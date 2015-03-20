@@ -2,7 +2,7 @@ package zhaohg.api;
 
 import android.content.Context;
 
-import zhaohg.trade.R;
+import zhaohg.main.R;
 
 public class ApiErrno {
 

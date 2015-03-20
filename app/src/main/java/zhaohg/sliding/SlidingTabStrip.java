@@ -9,7 +9,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import zhaohg.trade.R;
+import zhaohg.main.R;
 
 class SlidingTabStrip extends LinearLayout {
 

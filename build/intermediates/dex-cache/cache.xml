@@ -2,46 +2,32 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\ZHG\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="F:\flea-client\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-54a65accc67612f1d1c80ff38c133ccdb283c800.jar" />
-    </item>
-    <item
-        jar="F:\flea-client\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
-        <dex dex="F:\flea-client\app\build\intermediates\pre-dexed\debug\classes-b7299094cd859f19ed143e7d879cf3eda84b272b.jar" />
-    </item>
-    <item
-        jar="F:\flea-client\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="F:\flea-client\app\build\intermediates\pre-dexed\debug\classes-192da6198713802d8b2a04e2bfbea8cce28be7ae.jar" />
-    </item>
-    <item
-        jar="F:\flea-client\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="F:\flea-client\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-2b56025e2db025a25b2a1e322aa3434c087447f9.jar" />
-    </item>
-    <item
-        jar="F:\flea-client\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="F:\flea-client\app\build\intermediates\pre-dexed\debug\classes-1ab5ebd5258d67a0dd3ef996976f1c13ca3c73c8.jar" />
-    </item>
-    <item
-        jar="F:\flea-client\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jar="D:\test\MyApplication\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="F:\flea-client\app\build\intermediates\pre-dexed\debug\classes-cc3d795039e7c9c9a8a89a63d193ecf296bd816a.jar" />
+        <dex dex="D:\test\MyApplication\app\build\intermediates\pre-dexed\debug\classes-077e25361e8a4f8b9071085f716507b0d872201d.jar" />
+    </item>
+    <item
+        jar="D:\test\MyApplication\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="D:\test\MyApplication\app\build\intermediates\pre-dexed\debug\classes-ccada10fe062b1311fbd2c7f47e67672ddd97af6.jar" />
+    </item>
+    <item
+        jar="D:\test\MyApplication\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="D:\test\MyApplication\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-36fe9bc8bf8adaea1545e1adaa748f1490fa9097.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dip\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="D:\test\MyApplication\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-1db8538aba3561fdfded0eeba36e85a308627f79.jar" />
     </item>
 
 </items>

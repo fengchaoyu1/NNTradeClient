@@ -20,20 +20,16 @@
         android:text="@string/hello_world"/>
     <ImageView
         android:id="@+id/myView"
-        android:src="@drawable/abc"
-        android:layout_width="249dp"
-        android:layout_height="306dp"
-        android:layout_alignLeft="@+id/btn1"
-        android:layout_alignStart="@+id/btn1"
-        android:layout_below="@+id/btn2"
-        android:layout_alignRight="@+id/btn1"
-        android:layout_alignEnd="@+id/btn1" />
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/myView"
-        android:layout_alignStart="@+id/myView" />
+        android:layout_gravity="bottom"
+        />
 
 
 

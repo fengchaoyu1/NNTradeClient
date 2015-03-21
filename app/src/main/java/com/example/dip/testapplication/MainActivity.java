@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.os.Environment;
 import android.app.AlertDialog;
 import android.app.Dialog;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import java.io.FileInputStream;
@@ -82,7 +84,36 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
         }*/
 
+        Bitmap mBitmap;
+        int[] mColors;
+        int WIDTH=500;
+        int HEIGHT=500;
+        int STRIDE=640;//must be >=WIDTH
 
+        mColors=initColors(STRIDE,HEIGHT,WIDTH);
+        mBitmap=Bitmap.createBitmap(mColors, 0, STRIDE, WIDTH, HEIGHT, Bitmap.Config.RGB_565);
+        //mJpegs=codec(mBitmap,Bitmap.CompressFormat.JPEG,80);
+        ImageView myImage2=null;
+        myImage2=(ImageView)findViewById(R.id.myView);
+        myImage2.setImageBitmap(mBitmap);
+
+
+
+        File file1 = new File(Environment.getExternalStorageDirectory() + "/","abc" + ".jpg");
+        try{
+            FileOutputStream out =new FileOutputStream(file1);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 30, out);
+            out.flush();
+            out.close();
+
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        AlertDialog.Builder build = new AlertDialog.Builder(this);
+
+        build.setMessage("按HELLO World 缩略").show();
 
 
 
@@ -117,10 +148,34 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
+    public   Bitmap codec(Bitmap bitmap, Bitmap.CompressFormat format, int quality) {
+             ByteArrayOutputStream baos=new ByteArrayOutputStream();
+             bitmap.compress(format, quality, baos);
+             byte[] data=baos.toByteArray();
+             return BitmapFactory.decodeByteArray(data, 0, data.length);
+    }
+
+    public int[] initColors(int STRIDE,int HEIGHT,int WIDTH) {
+           int[] colors=new int[STRIDE*HEIGHT];
+           for (int y = 0; y < HEIGHT; y++) {//use of x,y is legible then the use of i,j
+                for (int x = 0; x < WIDTH; x++) {
+                     int r = x * 255 / (WIDTH - 1);
+                     int g = y * 255 / (HEIGHT - 1);
+                     int b = 255 - Math.min(r, g);
+                     int a = Math.max(r, g);
+                     colors[y*STRIDE+x]=(a<<24)|(r<<16)|(g<<8)|(b);//the shift operation generates the color ARGB
+                }
+           }
+           return colors;
+    }
+
+
+
+
 
     public  void testThumbnails(){
 
-        String path = Environment.getExternalStorageDirectory() + "/DCIM/Camera/";
+        String path = Environment.getExternalStorageDirectory() + "/";
         String path2="content://downloads/all_downloads/";
         String imagePath = path + "abc.jpg";
 
@@ -128,6 +183,8 @@ public class MainActivity extends ActionBarActivity {
         BitmapFactory.Options opt=new BitmapFactory.Options();
         opt.inJustDecodeBounds=true;
         bmap=BitmapFactory.decodeFile(imagePath,opt);
+
+
         opt.inJustDecodeBounds=false;
 
         int width=150;
@@ -137,16 +194,16 @@ public class MainActivity extends ActionBarActivity {
         int beHeight=h/height;
         int beWidth=w/width;
 
-        int be=1;
+        int compressSize=1;
         if (beWidth < beHeight) {
-            be = beWidth;
+            compressSize = beWidth;
         } else {
-            be = beHeight;
+            compressSize = beHeight;
         }
-        if (be <= 0) {
-            be = 1;
+        if (compressSize <= 0) {
+            compressSize = 1;
         }
-        opt.inSampleSize=be;
+        opt.inSampleSize=compressSize;
         bmap=BitmapFactory.decodeFile(imagePath,opt);
         bmap= ThumbnailUtils.extractThumbnail(bmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
         File file = new File(Environment.getExternalStorageDirectory() + "ooo" + ".jpg");
@@ -164,7 +221,7 @@ public class MainActivity extends ActionBarActivity {
         }
         AlertDialog.Builder build = new AlertDialog.Builder(this);
 
-        build.setMessage("nihao").show();
+        build.setMessage("缩略完成").show();
         ImageView myImage=null;
         myImage=(ImageView)findViewById(R.id.image);
         myImage.setImageBitmap(bmap);
@@ -202,111 +259,8 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public void saveMyBitmap(String bitName) throws IOException {
-
-        String path = Environment.getExternalStorageDirectory() + "/";
-        String name1 = path + "DCIM/Camera/adc.jpg";
-        File originalFile = new File(name1);
 
 
-
-
-        Bitmap bmp = decodeFile(originalFile);
-        File f = new File(path + bitName + ".jpg");
-        f.createNewFile();
-
-        FileOutputStream fOut = null;
-
-        try {
-
-            fOut = new FileOutputStream(f);
-
-
-
-        if(bmp.compress(Bitmap.CompressFormat.PNG, 30, fOut)){
-            fOut.flush();
-            fOut.close();
-        }
-
-
-
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-
-
-
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
-    }
-
-    private Bitmap decodeFile(File f){
-
-        try {
-
-            //Decode image size
-
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f),null,o);
-
-            //The new size we want to scale to
-
-            final int REQUIRED_HEIGHT=250;
-            final int REQUIRED_WIDTH=150;
-
-
-            //Find the correct scale value. It should be the power of 2.
-
-            int width_tmp=o.outWidth, height_tmp=o.outHeight;
-
-
-            AlertDialog.Builder build = new AlertDialog.Builder(this);
-
-            build.setMessage("nihao").show();
-            System.out.println(width_tmp+"  "+height_tmp);
-
-            Log.w("===", (width_tmp+"  "+height_tmp));
-
-            int scale=1;
-
-            while(true){
-
-                if(width_tmp/2<REQUIRED_WIDTH && height_tmp/2<REQUIRED_HEIGHT)
-
-                    break;
-
-                width_tmp/=2;
-
-                height_tmp/=2;
-
-                scale++;
-
-
-
-                Log.w("===", scale+"''"+width_tmp+"  "+height_tmp);
-
-            }
-
-
-            //Decode with inSampleSize
-
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-
-            o2.inSampleSize=scale;
-
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-
-        } catch (FileNotFoundException e) {}
-
-        return null;
-
-    }
 
 
 

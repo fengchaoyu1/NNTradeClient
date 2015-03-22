@@ -5,7 +5,9 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -43,17 +45,27 @@ import android.os.Bundle;
 
 import android.util.Log;
 
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class MainActivity extends ActionBarActivity {
     Button btn =null;
     ImageView myView=null;
+    ImageView myView3=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        //StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
        /* try {
 
             saveMyBitmap("ooo");
@@ -120,9 +132,13 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+
+
         /*AlertDialog.Builder build = new AlertDialog.Builder(this);
 
         build.setMessage("nihao").show();*/
+        myView3=(ImageView)findViewById(R.id.imageInternet);
+
 
         btn =(Button)findViewById(R.id.btn2);
         btn.setOnClickListener(new OnClickListener()
@@ -135,7 +151,14 @@ public class MainActivity extends ActionBarActivity {
                 /*Intent intent = new Intent();
                 intent.setClass(MainActivity.this,RegisterActivity.class);
                 startActivity(intent);*/
+                String imagePath="http://ts2.mm.bing.net/th?id=HN.608007102913186522&pid=1.7";
                 testThumbnails();
+                RequestTask requestTask=new RequestTask();
+                requestTask.execute(imagePath);
+                /*
+                ImageView myImage3=null;
+                myImage3=(ImageView)findViewById(R.id.imageInternet);
+                myImage3.setImageBitmap(bitmap);*/
 
 
 
@@ -148,6 +171,8 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
+
+
     public   Bitmap codec(Bitmap bitmap, Bitmap.CompressFormat format, int quality) {
              ByteArrayOutputStream baos=new ByteArrayOutputStream();
              bitmap.compress(format, quality, baos);
@@ -258,6 +283,42 @@ public class MainActivity extends ActionBarActivity {
         return bmap;
 
     }
+    private class RequestTask extends AsyncTask<String, Integer, Bitmap> {
+
+
+        protected Bitmap doInBackground(String ...imagePath) {
+
+            HttpGet httpRequest =new HttpGet(imagePath[0]);
+            HttpClient httpClient=new DefaultHttpClient();
+            Bitmap bitmap=null;
+            try{
+                HttpResponse httpResponse=httpClient.execute(httpRequest);
+                if(httpResponse.getStatusLine().getStatusCode()== HttpStatus.SC_OK){
+                    HttpEntity httpEntity=httpResponse.getEntity();
+                    InputStream is = httpEntity.getContent();
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+
+
+
+                }
+
+            }
+            catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+            return bitmap;
+
+        }
+        protected void onPostExecute(Bitmap bitmap) {
+
+            myView3.setImageBitmap(bitmap);
+        }
+
+    }
 
 
 
@@ -293,3 +354,4 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

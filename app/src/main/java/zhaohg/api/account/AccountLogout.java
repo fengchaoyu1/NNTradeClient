@@ -12,6 +12,11 @@ public class AccountLogout extends ApiBase {
         super(context);
     }
 
+    @Override
+    public String getUrl() {
+        return null;
+    }
+
     public void setEvent(AccountLogoutPostEvent event) {
         this.event = event;
     }

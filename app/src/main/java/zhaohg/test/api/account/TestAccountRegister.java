@@ -55,9 +55,6 @@ public class TestAccountRegister extends InstrumentationTestCase {
         register.request();
         signal.await();
         assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
-        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(RegisterActivity.class.getName(), null, false);
-        RegisterActivity registerActivity = (RegisterActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 10000);
-        assertNotNull(registerActivity);
     }
 
     public void testRegisterExist() throws InterruptedException {

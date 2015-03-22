@@ -13,7 +13,7 @@ import zhaohg.json.JsonValue;
 
 public class AccountLogin extends ApiBase {
 
-    public static String RESOURCE_URL = "account/token/";
+    public static String RESOURCE_URL = "account/login/";
 
     private String username = "";
     private String password = "";
@@ -22,6 +22,11 @@ public class AccountLogin extends ApiBase {
 
     public AccountLogin(Context context) {
         super(context);
+    }
+
+    @Override
+    public String getUrl() {
+        return BASE_URL + RESOURCE_URL;
     }
 
     public void setParameter(String username, String password) {
@@ -37,7 +42,7 @@ public class AccountLogin extends ApiBase {
     public void request() {
         this.task = new RequestTask();
         RequestParam param = new RequestParam();
-        param.setUrl(BASE_URL + RESOURCE_URL);
+        param.setUrl(this.getUrl());
         param.setMethod(RequestParam.METHOD_POST);
         param.addParam("username", this.username);
         param.addParam("password", Encryption.md5(this.password));
@@ -54,9 +59,10 @@ public class AccountLogin extends ApiBase {
                         if (!values.getValue("success").getBoolean()) {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
-                            String token = values.getValue("token").getString();
-                            saveToken(token);
+                            int user_id = values.getValue("user_id").getInteger();
+                            saveToken(Encryption.md5(password));
                             saveUsername(username);
+                            saveUserId(user_id);
                             event.onSuccess();
                         }
                     }

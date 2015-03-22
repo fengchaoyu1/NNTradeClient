@@ -17,6 +17,9 @@ public class ApiErrno {
     public static final int ERRNO_NO_TOKEN = -1003;
     public static final int ERRNO_MISMATCH_TOKEN = -1004;
 
+    public static final int ERRNO_NOT_EXIST = -2000;
+    public static final int ERRNO_NOT_OWNER = -2001;
+
     public static String getErrorMessage(Context context, int errno) {
         switch (errno) {
             case ERRNO_NO_ERROR:
@@ -38,6 +41,11 @@ public class ApiErrno {
                 return context.getString(R.string.errno_no_token);
             case ERRNO_MISMATCH_TOKEN:
                 return context.getString(R.string.errno_mismatch_token);
+
+            case ERRNO_NOT_EXIST:
+                return context.getString(R.string.errno_not_exist);
+            case ERRNO_NOT_OWNER:
+                return context.getString(R.string.errno_not_owner);
         }
         return "";
     }

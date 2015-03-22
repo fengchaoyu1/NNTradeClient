@@ -10,4 +10,7 @@
     <string name="errno_mismatch_username_password">Incorrect username or password</string>
     <string name="errno_no_token">User is currently logged out</string>
     <string name="errno_mismatch_token">User has signed elsewhere</string>
+
+    <string name="errno_not_exist">The target does not existed</string>
+    <string name="errno_not_owner">User is not owner</string>
 </resources>

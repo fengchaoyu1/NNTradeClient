@@ -9,12 +9,14 @@ public abstract class ApiBase {
     public static final String SP_NAME = "api";
     public static final String SP_KEY_TOKEN = "token";
     public static final String SP_KEY_USERNAME = "username";
+    public static final String SP_KEY_USER_ID = "user_id";
 
     protected Context context;
     protected RequestTask task;
 
     private static String token = "";
     private static String username = "";
+    private static String userId = "";
 
     public ApiBase(Context context) {
         this.context = context;
@@ -43,7 +45,7 @@ public abstract class ApiBase {
     }
 
     public String loadToken() {
-        if (token == "") {
+        if (token.equals("")) {
             token = loadStringValue(SP_KEY_TOKEN);
         }
         return token;
@@ -55,10 +57,22 @@ public abstract class ApiBase {
     }
 
     public String loadUsername() {
-        if (username == "") {
+        if (username.equals("")) {
             username = loadStringValue(SP_KEY_USERNAME);
         }
         return username;
+    }
+
+    public void saveUserId(int id) {
+        userId = "" + id;
+        this.saveValue(SP_KEY_USER_ID, userId);
+    }
+
+    public String loadUserId() {
+        if (userId.equals("")) {
+            userId = loadStringValue(SP_KEY_USER_ID);
+        }
+        return userId;
     }
 
     public boolean hasLogin() {
@@ -71,6 +85,7 @@ public abstract class ApiBase {
         }
     }
 
+    public abstract String getUrl();
     public abstract void request();
 
 }

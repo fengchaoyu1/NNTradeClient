@@ -29,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final MainDrawer drawer = (MainDrawer) findViewById(R.id.drawer);
+        this.mainDrawer = (MainDrawer) findViewById(R.id.drawer);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,11 +37,9 @@ public class MainActivity extends ActionBarActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(drawer);
+                drawerLayout.openDrawer(mainDrawer);
             }
         });
-
-        this.mainDrawer = (MainDrawer) findViewById(R.id.drawer);
     }
 
     @Override

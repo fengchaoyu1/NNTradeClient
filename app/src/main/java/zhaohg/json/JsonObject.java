@@ -9,7 +9,7 @@ public class JsonObject extends JsonValue {
     private SortedMap<JsonString, JsonValue> data;
 
     public JsonObject() {
-        this.data = new TreeMap<JsonString, JsonValue>();
+        this.data = new TreeMap<>();
     }
 
     public JsonObject(SortedMap<JsonString, JsonValue> value) {
@@ -17,7 +17,7 @@ public class JsonObject extends JsonValue {
     }
 
     public JsonObject(Map<JsonString, JsonValue> value) {
-        this.data = new TreeMap<JsonString, JsonValue>();
+        this.data = new TreeMap<>();
         for (Map.Entry<JsonString, JsonValue> entry : value.entrySet()) {
             this.putValue(entry.getKey(), entry.getValue());
         }
@@ -38,7 +38,7 @@ public class JsonObject extends JsonValue {
             return false;
         }
         ++index;
-        this.data = new TreeMap<JsonString, JsonValue>();
+        this.data = new TreeMap<>();
         while (true) {
             JsonString jsonString = new JsonString();
             if (!jsonString.tryParse(json, index)) {
@@ -98,6 +98,6 @@ public class JsonObject extends JsonValue {
 
     public JsonValue getValue(String key) {
         return this.data.get(new JsonString(key));
-    };
+    }
 
 }

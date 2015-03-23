@@ -1,13 +1,11 @@
 package zhaohg.test.api.account;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
 import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.account.RegisterActivity;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.api.ApiErrno;

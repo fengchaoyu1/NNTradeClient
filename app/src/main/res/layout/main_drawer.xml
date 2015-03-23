@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:dividerHeight="0dp"
-    android:choiceMode="singleChoice"
-    android:background="@color/window_background">
+    android:choiceMode="singleChoice">
 
     <LinearLayout
         android:id="@+id/layout_account"
@@ -49,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             style="?android:textAppearanceLarge"
             android:text="@string/click_to_login"
             android:textColor="@color/text_color_primary"

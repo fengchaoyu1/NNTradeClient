@@ -27,7 +27,7 @@ public abstract class ApiBase {
             SharedPreferences sharedPreferences = this.context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 

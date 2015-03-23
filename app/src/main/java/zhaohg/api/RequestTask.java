@@ -8,7 +8,6 @@ import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -65,8 +64,14 @@ public class RequestTask extends AsyncTask<Void, Integer, JsonValue> {
         return httpPut;
     }
 
-    private HttpDelete getHttpDelete() {
-        return new HttpDelete(this.param.getEncodedUrl());
+    private HttpDeleteWithBody getHttpDelete() {
+        HttpDeleteWithBody httpDelete = new HttpDeleteWithBody(this.param.getUrl());
+        try {
+            httpDelete.setEntity(new StringEntity(this.param.getEncodedAst()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return httpDelete;
     }
 
     private HttpRequestBase getHttpRequest() {

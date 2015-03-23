@@ -134,7 +134,10 @@ public class JsonValue extends JsonAbstract {
     }
 
     public String getString() {
-        return ((JsonString)this.data).getString();
+        if (this.data.getClass() == JsonString.class) {
+            return ((JsonString)this.data).getString();
+        }
+        return this.data.toString();
     }
 
     public double getNumber() {

@@ -71,8 +71,7 @@ public class SellNewPost extends ApiBase {
                         if (!values.getValue("success").getBoolean()) {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
-                            int postId = values.getValue("post_id").getInteger();
-                            event.onSuccess(postId);
+                            event.onSuccess(values.getValue("post_id").getString());
                         }
                     }
                 }

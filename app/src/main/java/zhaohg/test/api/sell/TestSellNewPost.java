@@ -14,8 +14,11 @@ import zhaohg.api.account.AccountLogin;
 import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
+import zhaohg.api.sell.SellGetPost;
+import zhaohg.api.sell.SellGetPostPostEvent;
 import zhaohg.api.sell.SellNewPost;
 import zhaohg.api.sell.SellNewPostPostEvent;
+import zhaohg.api.sell.SellPost;
 
 public class TestSellNewPost extends InstrumentationTestCase {
 
@@ -72,18 +75,41 @@ public class TestSellNewPost extends InstrumentationTestCase {
     public void testNewPostNormal() throws InterruptedException {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
-        Context context = this.getInstrumentation().getContext();
+        final Context context = this.getInstrumentation().getContext();
         SellNewPost newPost = new SellNewPost(context);
         List<String> imageIdList = new ArrayList<>();
         imageIdList.add("1");
         imageIdList.add("2");
         imageIdList.add("3");
-        newPost.setParameter("New Post+", "New Post Description", imageIdList);
+        final String title = "New Post+";
+        final String description = "New Post Description";
+        newPost.setParameter(title, description, imageIdList);
         newPost.setEvent(new SellNewPostPostEvent() {
             @Override
-            public void onSuccess(int post_id) {
-                assertTrue(post_id >= 0);
-                signal.countDown();
+            public void onSuccess(final String post_id) {
+                assertFalse(post_id.equals(""));
+                final SellGetPost getPost = new SellGetPost(context);
+                getPost.setParameter(post_id);
+                getPost.setEvent(new SellGetPostPostEvent() {
+                    @Override
+                    public void onSuccess(SellPost post) {
+                        assertEquals(getPost.loadUserId(), post.getUserId());
+                        assertEquals(post_id, post.getPostId());
+                        assertEquals(title, post.getTitle());
+                        assertEquals(description, post.getDescription());
+                        assertFalse(post.getPostId().equals(""));
+                        assertFalse(post.getImageSetId().equals(""));
+                        assertTrue(post.isOpen());
+                        signal.countDown();
+                    }
+
+                    @Override
+                    public void onFailure(int errno) {
+                        localErrno = errno;
+                        signal.countDown();
+                    }
+                });
+                getPost.request();
             }
 
             @Override
@@ -100,18 +126,41 @@ public class TestSellNewPost extends InstrumentationTestCase {
     public void testNewPostUtf8() throws InterruptedException {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
-        Context context = this.getInstrumentation().getContext();
+        final Context context = this.getInstrumentation().getContext();
         SellNewPost newPost = new SellNewPost(context);
         List<String> imageIdList = new ArrayList<>();
         imageIdList.add("1");
         imageIdList.add("2");
         imageIdList.add("3");
-        newPost.setParameter("出售信息", "出售内容描述", imageIdList);
+        final String title = "出售信息";
+        final String description = "出售内容描述";
+        newPost.setParameter(title, description, imageIdList);
         newPost.setEvent(new SellNewPostPostEvent() {
             @Override
-            public void onSuccess(int post_id) {
-                assertTrue(post_id >= 0);
-                signal.countDown();
+            public void onSuccess(final String post_id) {
+                assertFalse(post_id.equals(""));
+                final SellGetPost getPost = new SellGetPost(context);
+                getPost.setParameter(post_id);
+                getPost.setEvent(new SellGetPostPostEvent() {
+                    @Override
+                    public void onSuccess(SellPost post) {
+                        assertEquals(getPost.loadUserId(), post.getUserId());
+                        assertEquals(post_id, post.getPostId());
+                        assertEquals(title, post.getTitle());
+                        assertEquals(description, post.getDescription());
+                        assertFalse(post.getPostId().equals(""));
+                        assertFalse(post.getImageSetId().equals(""));
+                        assertTrue(post.isOpen());
+                        signal.countDown();
+                    }
+
+                    @Override
+                    public void onFailure(int errno) {
+                        localErrno = errno;
+                        signal.countDown();
+                    }
+                });
+                getPost.request();
             }
 
             @Override

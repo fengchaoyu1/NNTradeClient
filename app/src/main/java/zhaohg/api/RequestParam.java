@@ -1,9 +1,10 @@
 package zhaohg.api;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,11 @@ public class RequestParam {
                 } else {
                     text += "&";
                 }
-                text += entry.getKey() + "=" + entry.getValue();
+                try {
+                    text += entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8").replace("+", "%20");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
             this.params.put("token", Encryption.md5(text));
         }
@@ -96,8 +101,19 @@ public class RequestParam {
         if (!url.endsWith("?")) {
             url += "?";
         }
-        List<NameValuePair> values = this.getNameValuePairs();
-        url += URLEncodedUtils.format(values, "utf-8");
+        boolean first = true;
+        for (Map.Entry<String, String> entry : this.params.entrySet()) {
+            if (first) {
+                first = false;
+            } else {
+                url += "&";
+            }
+            try {
+                url += entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8").replace("+", "%20");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
         return url;
     }
 
@@ -105,7 +121,11 @@ public class RequestParam {
         this.initSecretToken();
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         for (Map.Entry<String, String> entry : this.params.entrySet()) {
-            nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            try {
+                nameValuePairs.add(new BasicNameValuePair(entry.getKey(), URLEncoder.encode(entry.getValue(), "UTF-8").replace("+", "%20")));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         return nameValuePairs;
     }

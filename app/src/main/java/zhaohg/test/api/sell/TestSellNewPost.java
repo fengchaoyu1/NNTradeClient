@@ -78,7 +78,35 @@ public class TestSellNewPost extends InstrumentationTestCase {
         imageIdList.add("1");
         imageIdList.add("2");
         imageIdList.add("3");
-        newPost.setParameter("New Post", "New Post Description", imageIdList);
+        newPost.setParameter("New Post+", "New Post Description", imageIdList);
+        newPost.setEvent(new SellNewPostPostEvent() {
+            @Override
+            public void onSuccess(int post_id) {
+                assertTrue(post_id >= 0);
+                signal.countDown();
+            }
+
+            @Override
+            public void onFailure(int errno) {
+                localErrno = errno;
+                signal.countDown();
+            }
+        });
+        newPost.request();
+        signal.await();
+        assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
+    }
+
+    public void testNewPostUtf8() throws InterruptedException {
+        this.localErrno = ApiErrno.ERRNO_NO_ERROR;
+        final CountDownLatch signal = new CountDownLatch(1);
+        Context context = this.getInstrumentation().getContext();
+        SellNewPost newPost = new SellNewPost(context);
+        List<String> imageIdList = new ArrayList<>();
+        imageIdList.add("1");
+        imageIdList.add("2");
+        imageIdList.add("3");
+        newPost.setParameter("出售信息", "出售内容描述", imageIdList);
         newPost.setEvent(new SellNewPostPostEvent() {
             @Override
             public void onSuccess(int post_id) {

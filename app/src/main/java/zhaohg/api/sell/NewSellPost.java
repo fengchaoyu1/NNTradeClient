@@ -12,7 +12,7 @@ import zhaohg.api.RequestTask;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class SellNewPost extends ApiBase {
+public class NewSellPost extends ApiBase {
 
     public static String RESOURCE_URL = "sell/post/";
 
@@ -20,9 +20,9 @@ public class SellNewPost extends ApiBase {
     private String description;
     private List<String> imageIdList;
 
-    private SellNewPostPostEvent event;
+    private NewSellPostPostEvent event;
 
-    public SellNewPost(Context context) {
+    public NewSellPost(Context context) {
         super(context);
     }
 
@@ -37,7 +37,7 @@ public class SellNewPost extends ApiBase {
         this.imageIdList = imageIdList;
     }
 
-    public void setEvent(SellNewPostPostEvent event) {
+    public void setEvent(NewSellPostPostEvent event) {
         this.event = event;
     }
 

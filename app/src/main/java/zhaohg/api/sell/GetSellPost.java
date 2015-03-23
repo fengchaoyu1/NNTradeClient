@@ -14,15 +14,15 @@ import zhaohg.api.RequestTask;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class SellGetPost extends ApiBase {
+public class GetSellPost extends ApiBase {
 
     public static String RESOURCE_URL = "sell/post/";
 
-    private SellGetPostPostEvent event;
+    private GetSellPostPostEvent event;
 
     private String postId;
 
-    public SellGetPost(Context context) {
+    public GetSellPost(Context context) {
         super(context);
     }
 
@@ -30,7 +30,7 @@ public class SellGetPost extends ApiBase {
         this.postId = postId;
     }
 
-    public void setEvent(SellGetPostPostEvent event) {
+    public void setEvent(GetSellPostPostEvent event) {
         this.event = event;
     }
 

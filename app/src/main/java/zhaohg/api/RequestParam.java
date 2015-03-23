@@ -95,6 +95,26 @@ public class RequestParam {
         }
     }
 
+    public String getEncodedAst() {
+        this.initSecretToken();
+        String ast = "{";
+        boolean first = true;
+        for (Map.Entry<String, String> entry : this.params.entrySet()) {
+            if (first) {
+                first = false;
+            } else {
+                ast += ",";
+            }
+            try {
+                ast += "'" + entry.getKey() + "':'" + URLEncoder.encode(entry.getValue(), "UTF-8").replace("+", "%20") + "'";
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        ast += "}";
+        return ast;
+    }
+
     public String getEncodedUrl() {
         this.initSecretToken();
         String url = this.url;

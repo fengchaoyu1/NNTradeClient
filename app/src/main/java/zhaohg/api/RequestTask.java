@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -55,7 +56,13 @@ public class RequestTask extends AsyncTask<Void, Integer, JsonValue> {
     }
 
     private HttpPut getHttpPut() {
-        return new HttpPut(this.param.getEncodedUrl());
+        HttpPut httpPut = new HttpPut(this.param.getUrl());
+        try {
+            httpPut.setEntity(new StringEntity(this.param.getEncodedAst()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return httpPut;
     }
 
     private HttpDelete getHttpDelete() {

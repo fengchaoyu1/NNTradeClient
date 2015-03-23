@@ -1,6 +1,6 @@
 package zhaohg.api.sell;
 
-public interface SellNewPostPostEvent {
+public interface NewSellPostPostEvent {
     public void onSuccess(String postId);
     public void onFailure(int errno);
 }

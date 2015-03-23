@@ -12,11 +12,11 @@ import zhaohg.api.account.AccountLogin;
 import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.api.sell.SellGetPost;
-import zhaohg.api.sell.SellGetPostPostEvent;
+import zhaohg.api.sell.GetSellPost;
+import zhaohg.api.sell.GetSellPostPostEvent;
 import zhaohg.api.sell.SellPost;
 
-public class TestSellGetPost extends InstrumentationTestCase {
+public class TestGetSellPost extends InstrumentationTestCase {
 
     private int localErrno;
 
@@ -72,9 +72,9 @@ public class TestSellGetPost extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         Context context = this.getInstrumentation().getContext();
-        SellGetPost newPost = new SellGetPost(context);
+        GetSellPost newPost = new GetSellPost(context);
         newPost.setParameter("1234567890");
-        newPost.setEvent(new SellGetPostPostEvent() {
+        newPost.setEvent(new GetSellPostPostEvent() {
             @Override
             public void onSuccess(SellPost post) {
                 signal.countDown();

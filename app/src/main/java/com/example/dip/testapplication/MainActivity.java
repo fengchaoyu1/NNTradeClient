@@ -1,6 +1,7 @@
 package com.example.dip.testapplication;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -64,16 +65,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        //StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
-       /* try {
 
-            saveMyBitmap("ooo");
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
+       /*
 
 
 
@@ -128,15 +121,6 @@ public class MainActivity extends ActionBarActivity {
         build.setMessage("按HELLO World 缩略").show();
 
 
-
-
-
-
-
-
-        /*AlertDialog.Builder build = new AlertDialog.Builder(this);
-
-        build.setMessage("nihao").show();*/
         myView3=(ImageView)findViewById(R.id.imageInternet);
 
 
@@ -212,8 +196,8 @@ public class MainActivity extends ActionBarActivity {
 
         opt.inJustDecodeBounds=false;
 
-        int width=150;
-        int height=200;
+        int width=600;
+        int height=700;
         int h=opt.outHeight;
         int w=opt.outWidth;
         int beHeight=h/height;
@@ -255,8 +239,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public Bitmap getImageThumbnail(String imagePath,int width,int height)
-    {
+
+
+    public Bitmap getImageThumbnail(String imagePath,int width,int height){
         Bitmap bmap=null;
         BitmapFactory.Options opt=new BitmapFactory.Options();
         opt.inJustDecodeBounds=true;

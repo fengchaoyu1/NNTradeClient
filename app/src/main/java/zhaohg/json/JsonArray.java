@@ -19,6 +19,14 @@ public class JsonArray extends JsonValue {
         this.data.add(value);
     }
 
+    public int size() {
+        return this.data.size();
+    }
+
+    public JsonValue get(int index) {
+        return this.data.get(index);
+    }
+
     @Override
     public boolean tryParse(String json, int offset) {
         int index = this.skipWhitespaces(json, offset);

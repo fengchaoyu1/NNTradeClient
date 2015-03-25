@@ -1,0 +1,5 @@
+<resources>
+    <string name="title_activity_edit_sell_post">编辑出售信息</string>
+    <string name="action_post">发布</string>
+    <string name="upload_image">上传图象</string>
+</resources>

@@ -51,23 +51,21 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
 
     public void testNormal() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        activity.runOnUiThread(
-                new Runnable() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editUsername.setText(generateRandomName());
+                editPassword.setText("register_activity");
+                editConfirm.setText("register_activity");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                     @Override
-                    public void run() {
-                        editUsername.setText(generateRandomName());
-                        editPassword.setText("register_activity");
-                        editConfirm.setText("register_activity");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        registerButton.performClick();
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
-                }
-        );
+                });
+                registerButton.performClick();
+            }
+        });
         signal.await();
         assertFalse(this.registerButton.isEnabled());
         assertEquals(View.GONE, this.textError.getVisibility());
@@ -75,22 +73,20 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
 
     public void testEmptyNameField() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        activity.runOnUiThread(
-                new Runnable() {
+        activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editPassword.setText("register_activity");
-                        editConfirm.setText("register_activity");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        registerButton.performClick();
+                editPassword.setText("register_activity");
+                editConfirm.setText("register_activity");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
+                    @Override
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
-                }
-        );
+                });
+                registerButton.performClick();
+            }
+        });
         signal.await();
         assertTrue(this.registerButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());
@@ -99,22 +95,20 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
 
     public void testEmptyPasswordField() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        activity.runOnUiThread(
-                new Runnable() {
+        activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editUsername.setText(generateRandomName());
-                        editConfirm.setText("register_activity");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        registerButton.performClick();
+                editUsername.setText(generateRandomName());
+                editConfirm.setText("register_activity");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
+                    @Override
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
-                }
-        );
+                });
+                registerButton.performClick();
+            }
+        });
         signal.await();
         assertTrue(this.registerButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());
@@ -123,23 +117,21 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
 
     public void testMismatchPassword() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        activity.runOnUiThread(
-                new Runnable() {
+        activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editUsername.setText(generateRandomName());
-                        editPassword.setText("register_activity_1");
-                        editConfirm.setText("register_activity_2");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        registerButton.performClick();
+                editUsername.setText(generateRandomName());
+                editPassword.setText("register_activity_1");
+                editConfirm.setText("register_activity_2");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
+                    @Override
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
-                }
-        );
+                });
+                registerButton.performClick();
+            }
+        });
         signal.await();
         assertTrue(this.registerButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());
@@ -155,23 +147,21 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
         register.setEvent(new AccountRegisterPostEvent() {
             @Override
             public void onSuccess() {
-                activity.runOnUiThread(
-                        new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                editUsername.setText(existedUsername);
-                                editPassword.setText(existedPassword);
-                                editConfirm.setText(existedPassword);
-                                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                                    @Override
-                                    public void onTaskFinished() {
-                                        signal.countDown();
-                                    }
-                                });
-                                registerButton.performClick();
+                        editUsername.setText(existedUsername);
+                        editPassword.setText(existedPassword);
+                        editConfirm.setText(existedPassword);
+                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
+                            @Override
+                            public void onTaskFinished() {
+                                signal.countDown();
                             }
-                        }
-                );
+                        });
+                        registerButton.performClick();
+                    }
+                });
             }
             @Override
             public void onFailure(int errno) {

@@ -1,5 +1,6 @@
-package zhaohg.test.account;
+package zhaohg.test.sell;
 
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
@@ -9,24 +10,29 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.account.LoginActivity;
+import zhaohg.api.ApiErrno;
 import zhaohg.api.Encryption;
+import zhaohg.api.account.AccountLogin;
+import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.testable.OnTestFinishedListener;
 import zhaohg.main.R;
+import zhaohg.sell.EditSellPostActivity;
+import zhaohg.testable.OnTestFinishedListener;
 
-public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostActivity> {
 
-    private LoginActivity activity;
+    private EditSellPostActivity activity;
 
-    private EditText editUsername;
-    private EditText editPassword;
-    private Button loginButton;
+    private EditText editTitle;
+    private EditText editDescription;
+    private Button postButton;
     private TextView textError;
 
-    public TestLogin() {
-        super(LoginActivity.class);
+    private int localErrno;
+
+    public TestNewPost() {
+        super(EditSellPostActivity.class);
     }
 
     @Override
@@ -34,20 +40,58 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
         super.setUp();
 
         this.activity = this.getActivity();
-
-        this.editUsername = (EditText) this.activity.findViewById(R.id.username);
-        this.editPassword = (EditText) this.activity.findViewById(R.id.password);
-        this.loginButton = (Button) this.activity.findViewById(R.id.login_button);
+        this.editTitle = (EditText) this.activity.findViewById(R.id.edit_title);
+        this.editDescription = (EditText) this.activity.findViewById(R.id.edit_description);
         this.textError = (TextView) this.activity.findViewById(R.id.text_error);
+        this.postButton = (Button) this.activity.findViewById(R.id.button_post);
+
+        this.registerAndLogin();
     }
 
     private String generateRandomName() {
         Calendar calendar = Calendar.getInstance();
-        String text = "login_activity_" + calendar.getTimeInMillis();
-        return "login_activity_" + Encryption.md5(text);
+        String text = "new_post_" + calendar.getTimeInMillis();
+        return "new_post_" + Encryption.md5(text);
     }
 
-    public void testLoginNormal() throws InterruptedException {
+    private void registerAndLogin() throws Exception {
+        final String username = generateRandomName();
+        final String password = "password";
+        final Context context = this.activity.getApplicationContext();
+        final CountDownLatch signal = new CountDownLatch(1);
+        AccountRegister register = new AccountRegister(context);
+        register.setParameter(username, password);
+        register.setEvent(new AccountRegisterPostEvent() {
+            @Override
+            public void onSuccess() {
+                AccountLogin login = new AccountLogin(context);
+                login.setParameter(username, password);
+                login.setEvent(new AccountLoginPostEvent() {
+                    @Override
+                    public void onSuccess() {
+                        signal.countDown();
+                    }
+                    @Override
+                    public void onFailure(int errno) {
+                        localErrno = errno;
+                        signal.countDown();
+                    }
+                });
+                login.request();
+            }
+
+            @Override
+            public void onFailure(int errno) {
+                localErrno = errno;
+                signal.countDown();
+            }
+        });
+        register.request();
+        signal.await();
+        assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
+    }
+
+    public void testNewPostNormal() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
         final String existedUsername = this.generateRandomName();
@@ -59,15 +103,15 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editUsername.setText(existedUsername);
-                        editPassword.setText(existedPassword);
+                        editTitle.setText("New Post in Activity");
+                        editDescription.setText("New Description");
                         activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                             @Override
                             public void onTaskFinished() {
                                 signal.countDown();
                             }
                         });
-                        loginButton.performClick();
+                        postButton.performClick();
                     }
                 });
             }
@@ -78,11 +122,11 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
         });
         register.request();
         signal.await();
-        assertFalse(this.loginButton.isEnabled());
+        assertFalse(this.postButton.isEnabled());
         assertEquals(View.GONE, this.textError.getVisibility());
     }
 
-    public void testLoginEmptyName() throws InterruptedException {
+    public void testNewPostMissTitle() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
         final String existedUsername = this.generateRandomName();
@@ -94,15 +138,15 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editUsername.setText("");
-                        editPassword.setText(existedPassword);
+                        editTitle.setText("");
+                        editDescription.setText("New Description");
                         activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                             @Override
                             public void onTaskFinished() {
                                 signal.countDown();
                             }
                         });
-                        loginButton.performClick();
+                        postButton.performClick();
                     }
                 });
             }
@@ -113,12 +157,12 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
         });
         register.request();
         signal.await();
-        assertTrue(this.loginButton.isEnabled());
+        assertTrue(this.postButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());
         assertEquals(this.activity.getString(R.string.error_field_required), this.textError.getText());
     }
 
-    public void testLoginEmptyPassword() throws InterruptedException {
+    public void testNewPostMissDescription() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
         final String existedUsername = this.generateRandomName();
@@ -130,15 +174,15 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editUsername.setText(existedUsername);
-                        editPassword.setText("");
+                        editTitle.setText("New Post in Activity");
+                        editDescription.setText("");
                         activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                             @Override
                             public void onTaskFinished() {
                                 signal.countDown();
                             }
                         });
-                        loginButton.performClick();
+                        postButton.performClick();
                     }
                 });
             }
@@ -149,81 +193,9 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
         });
         register.request();
         signal.await();
-        assertTrue(this.loginButton.isEnabled());
+        assertTrue(this.postButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());
         assertEquals(this.activity.getString(R.string.error_field_required), this.textError.getText());
-    }
-
-    public void testLoginNonExistName() throws InterruptedException {
-        final CountDownLatch signal = new CountDownLatch(1);
-        AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
-        final String existedPassword = "existed";
-        register.setParameter(existedUsername, existedPassword);
-        register.setEvent(new AccountRegisterPostEvent() {
-            @Override
-            public void onSuccess() {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        editUsername.setText(existedUsername + "_non");
-                        editPassword.setText(existedPassword);
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        loginButton.performClick();
-                    }
-                });
-            }
-            @Override
-            public void onFailure(int errno) {
-                signal.countDown();
-            }
-        });
-        register.request();
-        signal.await();
-        assertTrue(this.loginButton.isEnabled());
-        assertEquals(View.VISIBLE, this.textError.getVisibility());
-        assertEquals(this.activity.getString(R.string.errno_username_non_exist), this.textError.getText());
-    }
-
-    public void testLoginWrongPassword() throws InterruptedException {
-        final CountDownLatch signal = new CountDownLatch(1);
-        AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
-        final String existedPassword = "existed";
-        register.setParameter(existedUsername, existedPassword);
-        register.setEvent(new AccountRegisterPostEvent() {
-            @Override
-            public void onSuccess() {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        editUsername.setText(existedUsername);
-                        editPassword.setText(existedPassword + "_non");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        loginButton.performClick();
-                    }
-                });
-            }
-            @Override
-            public void onFailure(int errno) {
-                signal.countDown();
-            }
-        });
-        register.request();
-        signal.await();
-        assertTrue(this.loginButton.isEnabled());
-        assertEquals(View.VISIBLE, this.textError.getVisibility());
-        assertEquals(this.activity.getString(R.string.errno_mismatch_username_password), this.textError.getText());
     }
 
 }

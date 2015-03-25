@@ -40,7 +40,7 @@ public class EditSellPostActivity extends TestableActionBarActivity {
 
         this.editTitle = (EditText) findViewById(R.id.edit_title);
         this.editDescription = (EditText) findViewById(R.id.edit_description);
-        this.textError = (TextView) this.findViewById(R.id.text_error);
+        this.textError = (TextView) findViewById(R.id.text_error);
 
         this.postButton = (Button) findViewById(R.id.button_post);
         this.postButton.setOnClickListener(new OnPostButtonClickListener());

@@ -1,6 +1,7 @@
 package zhaohg.account;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,9 +17,13 @@ import zhaohg.testable.TestableActionBarActivity;
 
 public class LoginActivity extends TestableActionBarActivity {
 
+    public static final String EXTRA_USERNAME = "EXTRA_USERNAME";
+    public static final String EXTRA_PASSWORD = "EXTRA_PASSWORD";
+
     private EditText editUsername;
     private EditText editPassword;
     private Button loginButton;
+    private Button registerButton;
     private TextView textError;
 
     @Override
@@ -39,9 +44,22 @@ public class LoginActivity extends TestableActionBarActivity {
         this.editUsername = (EditText) this.findViewById(R.id.username);
         this.editPassword = (EditText) this.findViewById(R.id.password);
         this.loginButton = (Button) this.findViewById(R.id.login_button);
+        this.registerButton = (Button) this.findViewById(R.id.register_button);
         this.textError = (TextView) this.findViewById(R.id.text_error);
 
         this.loginButton.setOnClickListener(new OnLoginClick());
+        this.registerButton.setOnClickListener(new OnRegisterClick());
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String username = extras.getString(EXTRA_USERNAME, "");
+            String password = extras.getString(EXTRA_PASSWORD, "");
+            this.editUsername.setText(username);
+            this.editPassword.setText(password);
+            if (!username.isEmpty() && !password.isEmpty()) {
+                this.loginButton.performClick();
+            }
+        }
     }
 
     private void hideErrorMessage() {
@@ -84,6 +102,17 @@ public class LoginActivity extends TestableActionBarActivity {
             });
             loginButton.setEnabled(false);
             login.request();
+        }
+    }
+
+    private class OnRegisterClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, RegisterActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+            finish();
         }
     }
 

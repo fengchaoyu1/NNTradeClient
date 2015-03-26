@@ -82,6 +82,8 @@ public class RegisterActivity extends TestableActionBarActivity {
                 public void onSuccess() {
                     finishTest();
                     Intent intent = new Intent(context, LoginActivity.class);
+                    intent.putExtra(LoginActivity.EXTRA_USERNAME, username);
+                    intent.putExtra(LoginActivity.EXTRA_PASSWORD, password);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                     finish();

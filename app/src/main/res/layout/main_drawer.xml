@@ -20,20 +20,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/register_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/color_primary_dark"
-            android:textColor="@color/text_color_primary"
-            android:layout_marginRight="30dp"
-            android:text="@string/action_register"/>
-
-        <Button
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/color_primary_dark"
             android:textColor="@color/text_color_primary"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/action_login"/>
 
         <ImageView

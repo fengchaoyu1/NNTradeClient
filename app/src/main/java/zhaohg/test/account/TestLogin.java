@@ -22,6 +22,7 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
     private EditText editUsername;
     private EditText editPassword;
     private Button loginButton;
+    private Button registerButton;
     private TextView textError;
 
     public TestLogin() {
@@ -37,6 +38,7 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
         this.editUsername = (EditText) this.activity.findViewById(R.id.username);
         this.editPassword = (EditText) this.activity.findViewById(R.id.password);
         this.loginButton = (Button) this.activity.findViewById(R.id.login_button);
+        this.registerButton = (Button) this.activity.findViewById(R.id.register_button);
         this.textError = (TextView) this.activity.findViewById(R.id.text_error);
     }
 

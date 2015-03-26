@@ -5,4 +5,5 @@
     <string name="description">Description</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_sell_post">SellPostActivity</string>
 </resources>

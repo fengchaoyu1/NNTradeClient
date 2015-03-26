@@ -2,4 +2,6 @@
     <string name="title_activity_edit_sell_post">编辑出售信息</string>
     <string name="action_post">发布</string>
     <string name="upload_image">上传图象</string>
+
+    <string name="error_post_not_exist">信息不存在</string>
 </resources>

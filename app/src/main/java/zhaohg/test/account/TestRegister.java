@@ -6,13 +6,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.account.RegisterActivity;
-import zhaohg.api.Encryption;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
+import zhaohg.test.helper.RandomName;
 import zhaohg.testable.OnTestFinishedListener;
 import zhaohg.main.R;
 
@@ -43,18 +42,12 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
         this.textError = (TextView) this.activity.findViewById(R.id.text_error);
     }
 
-    private String generateRandomName() {
-        Calendar calendar = Calendar.getInstance();
-        String text = "register_activity_" + calendar.getTimeInMillis();
-        return "register_activity_" + Encryption.md5(text);
-    }
-
     public void testNormal() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                editUsername.setText(generateRandomName());
+                editUsername.setText(RandomName.generateRandomName("test_register_"));
                 editPassword.setText("register_activity");
                 editConfirm.setText("register_activity");
                 activity.setOnTestFinishedListener(new OnTestFinishedListener() {
@@ -98,7 +91,7 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
         activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                editUsername.setText(generateRandomName());
+                editUsername.setText(RandomName.generateRandomName("test_register_"));
                 editConfirm.setText("register_activity");
                 activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                     @Override
@@ -120,7 +113,7 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
         activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                editUsername.setText(generateRandomName());
+                editUsername.setText(RandomName.generateRandomName("test_register_"));
                 editPassword.setText("register_activity_1");
                 editConfirm.setText("register_activity_2");
                 activity.setOnTestFinishedListener(new OnTestFinishedListener() {
@@ -141,7 +134,7 @@ public class TestRegister extends ActivityInstrumentationTestCase2<RegisterActiv
     public void testExistedUsername() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
+        final String existedUsername = RandomName.generateRandomName("test_register_");
         final String existedPassword = "existed";
         register.setParameter(existedUsername, existedPassword);
         register.setEvent(new AccountRegisterPostEvent() {

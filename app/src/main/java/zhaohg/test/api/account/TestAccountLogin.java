@@ -3,7 +3,6 @@ package zhaohg.test.api.account;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
-import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.account.AccountLogin;
@@ -11,7 +10,7 @@ import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.api.ApiErrno;
-import zhaohg.api.Encryption;
+import zhaohg.test.helper.RandomName;
 
 public class TestAccountLogin extends InstrumentationTestCase {
 
@@ -26,7 +25,7 @@ public class TestAccountLogin extends InstrumentationTestCase {
             super.setUp();
             final CountDownLatch signal = new CountDownLatch(1);
             Context context = this.getInstrumentation().getContext();
-            username = this.generateRandomName();
+            username = RandomName.generateRandomName("test_account_login_");
             password = "password";
             AccountRegister register = new AccountRegister(context);
             register.setParameter(username, password);
@@ -46,12 +45,6 @@ public class TestAccountLogin extends InstrumentationTestCase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private String generateRandomName() {
-        Calendar calendar = Calendar.getInstance();
-        String text = "login_" + calendar.getTimeInMillis();
-        return "login_" + Encryption.md5(text);
     }
 
     public void testLoginNormal() throws InterruptedException {
@@ -85,7 +78,7 @@ public class TestAccountLogin extends InstrumentationTestCase {
         final CountDownLatch signal = new CountDownLatch(1);
         Context context = this.getInstrumentation().getContext();
         AccountLogin login = new AccountLogin(context);
-        login.setParameter(this.generateRandomName(), password);
+        login.setParameter(RandomName.generateRandomName("test_account_login_"), password);
         login.setEvent(new AccountLoginPostEvent() {
             @Override
             public void onSuccess() {

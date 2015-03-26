@@ -35,6 +35,10 @@
             android:name="zhaohg.sell.EditSellPostActivity"
             android:label="@string/title_activity_edit_sell_post" >
         </activity>
+        <activity
+            android:name="zhaohg.sell.SellPostActivity"
+            android:label="@string/title_activity_sell_post" >
+        </activity>
     </application>
 
 </manifest>

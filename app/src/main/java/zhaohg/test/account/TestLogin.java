@@ -6,13 +6,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.account.LoginActivity;
-import zhaohg.api.Encryption;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
+import zhaohg.test.helper.RandomName;
 import zhaohg.testable.OnTestFinishedListener;
 import zhaohg.main.R;
 
@@ -41,16 +40,10 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
         this.textError = (TextView) this.activity.findViewById(R.id.text_error);
     }
 
-    private String generateRandomName() {
-        Calendar calendar = Calendar.getInstance();
-        String text = "login_activity_" + calendar.getTimeInMillis();
-        return "login_activity_" + Encryption.md5(text);
-    }
-
     public void testLoginNormal() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
+        final String existedUsername = RandomName.generateRandomName("test_login_normal");
         final String existedPassword = "existed";
         register.setParameter(existedUsername, existedPassword);
         register.setEvent(new AccountRegisterPostEvent() {
@@ -85,7 +78,7 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
     public void testLoginEmptyName() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
+        final String existedUsername = RandomName.generateRandomName("test_login_empty_name");
         final String existedPassword = "existed";
         register.setParameter(existedUsername, existedPassword);
         register.setEvent(new AccountRegisterPostEvent() {
@@ -121,7 +114,7 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
     public void testLoginEmptyPassword() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
+        final String existedUsername = RandomName.generateRandomName("test_login_empty_password");
         final String existedPassword = "existed";
         register.setParameter(existedUsername, existedPassword);
         register.setEvent(new AccountRegisterPostEvent() {
@@ -157,7 +150,7 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
     public void testLoginNonExistName() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
+        final String existedUsername = RandomName.generateRandomName("test_login_non_existed");
         final String existedPassword = "existed";
         register.setParameter(existedUsername, existedPassword);
         register.setEvent(new AccountRegisterPostEvent() {
@@ -193,7 +186,7 @@ public class TestLogin extends ActivityInstrumentationTestCase2<LoginActivity> {
     public void testLoginWrongPassword() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
         AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
+        final String existedUsername = RandomName.generateRandomName("test_login_wrong_password");
         final String existedPassword = "existed";
         register.setParameter(existedUsername, existedPassword);
         register.setEvent(new AccountRegisterPostEvent() {

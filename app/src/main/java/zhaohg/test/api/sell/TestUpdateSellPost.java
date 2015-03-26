@@ -21,6 +21,7 @@ import zhaohg.api.sell.NewSellPostPostEvent;
 import zhaohg.api.sell.SellPost;
 import zhaohg.api.sell.UpdateSellPost;
 import zhaohg.api.sell.UpdateSellPostPostEvent;
+import zhaohg.test.helper.RegisterAndLogin;
 
 public class TestUpdateSellPost extends InstrumentationTestCase {
 
@@ -34,40 +35,11 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        username = this.generateRandomName();
-        password = "password";
-        AccountRegister register = new AccountRegister(context);
-        register.setParameter(username, password);
-        register.setEvent(new AccountRegisterPostEvent() {
-            @Override
-            public void onSuccess() {
-                AccountLogin login = new AccountLogin(context);
-                login.setParameter(username, password);
-                login.setEvent(new AccountLoginPostEvent() {
-                    @Override
-                    public void onSuccess() {
-                        signal.countDown();
-                    }
-                    @Override
-                    public void onFailure(int errno) {
-                        localErrno = errno;
-                        signal.countDown();
-                    }
-                });
-                login.request();
-            }
-
-            @Override
-            public void onFailure(int errno) {
-                localErrno = errno;
-                signal.countDown();
-            }
-        });
-        register.request();
-        signal.await();
-        assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
+        RegisterAndLogin registerAndLogin = new RegisterAndLogin(context, "test_update_sell_post_");
+        assertTrue(registerAndLogin.registerAndLogin());
+        username = registerAndLogin.getUsername();
+        password = registerAndLogin.getPassword();
     }
 
     private String generateRandomName() {

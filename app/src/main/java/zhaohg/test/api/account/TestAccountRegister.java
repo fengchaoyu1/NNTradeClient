@@ -3,13 +3,12 @@ package zhaohg.test.api.account;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
-import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.api.ApiErrno;
-import zhaohg.api.Encryption;
+import zhaohg.test.helper.RandomName;
 
 public class TestAccountRegister extends InstrumentationTestCase {
 
@@ -24,17 +23,11 @@ public class TestAccountRegister extends InstrumentationTestCase {
         }
     }
 
-    private String generateRandomName() {
-        Calendar calendar = Calendar.getInstance();
-        String text = "register_" + calendar.getTimeInMillis();
-        return "register_" + Encryption.md5(text);
-    }
-
     public void testRegisterNormal() throws InterruptedException {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         Context context = this.getInstrumentation().getContext();
-        String username = this.generateRandomName();
+        String username = RandomName.generateRandomName("test_account_register_");
         String password = "password";
         AccountRegister register = new AccountRegister(context);
         register.setParameter(username, password);
@@ -59,7 +52,7 @@ public class TestAccountRegister extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        final String username = this.generateRandomName();
+        final String username = RandomName.generateRandomName("test_account_register_");;
         final String password = "password";
         AccountRegister register = new AccountRegister(context);
         register.setParameter(username, password);

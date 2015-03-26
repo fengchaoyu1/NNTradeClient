@@ -18,6 +18,8 @@ import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.main.R;
 import zhaohg.sell.EditSellPostActivity;
+import zhaohg.test.helper.RandomName;
+import zhaohg.test.helper.RegisterAndLogin;
 import zhaohg.testable.OnTestFinishedListener;
 
 public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostActivity> {
@@ -28,8 +30,6 @@ public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostAc
     private EditText editDescription;
     private Button postButton;
     private TextView textError;
-
-    private int localErrno;
 
     public TestNewPost() {
         super(EditSellPostActivity.class);
@@ -45,82 +45,27 @@ public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostAc
         this.textError = (TextView) this.activity.findViewById(R.id.text_error);
         this.postButton = (Button) this.activity.findViewById(R.id.button_post);
 
-        this.registerAndLogin();
-    }
-
-    private String generateRandomName() {
-        Calendar calendar = Calendar.getInstance();
-        String text = "new_post_" + calendar.getTimeInMillis();
-        return "new_post_" + Encryption.md5(text);
-    }
-
-    private void registerAndLogin() throws Exception {
-        final String username = generateRandomName();
-        final String password = "password";
-        final Context context = this.activity.getApplicationContext();
-        final CountDownLatch signal = new CountDownLatch(1);
-        AccountRegister register = new AccountRegister(context);
-        register.setParameter(username, password);
-        register.setEvent(new AccountRegisterPostEvent() {
-            @Override
-            public void onSuccess() {
-                AccountLogin login = new AccountLogin(context);
-                login.setParameter(username, password);
-                login.setEvent(new AccountLoginPostEvent() {
-                    @Override
-                    public void onSuccess() {
-                        signal.countDown();
-                    }
-                    @Override
-                    public void onFailure(int errno) {
-                        localErrno = errno;
-                        signal.countDown();
-                    }
-                });
-                login.request();
-            }
-
-            @Override
-            public void onFailure(int errno) {
-                localErrno = errno;
-                signal.countDown();
-            }
-        });
-        register.request();
-        signal.await();
-        assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
+        Context context = this.activity.getApplicationContext();
+        RegisterAndLogin registerAndLogin = new RegisterAndLogin(context, "test_new_post_");
+        assertTrue(registerAndLogin.registerAndLogin());
     }
 
     public void testNewPostNormal() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
-        final String existedPassword = "existed";
-        register.setParameter(existedUsername, existedPassword);
-        register.setEvent(new AccountRegisterPostEvent() {
+        activity.runOnUiThread(new Runnable() {
             @Override
-            public void onSuccess() {
-                activity.runOnUiThread(new Runnable() {
+            public void run() {
+                editTitle.setText("New Post in Activity");
+                editDescription.setText("New Description");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                     @Override
-                    public void run() {
-                        editTitle.setText("New Post in Activity");
-                        editDescription.setText("New Description");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        postButton.performClick();
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
                 });
-            }
-            @Override
-            public void onFailure(int errno) {
-                signal.countDown();
+                postButton.performClick();
             }
         });
-        register.request();
         signal.await();
         assertFalse(this.postButton.isEnabled());
         assertEquals(View.GONE, this.textError.getVisibility());
@@ -128,34 +73,20 @@ public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostAc
 
     public void testNewPostMissTitle() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
-        final String existedPassword = "existed";
-        register.setParameter(existedUsername, existedPassword);
-        register.setEvent(new AccountRegisterPostEvent() {
+        activity.runOnUiThread(new Runnable() {
             @Override
-            public void onSuccess() {
-                activity.runOnUiThread(new Runnable() {
+            public void run() {
+                editTitle.setText("");
+                editDescription.setText("New Description");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                     @Override
-                    public void run() {
-                        editTitle.setText("");
-                        editDescription.setText("New Description");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        postButton.performClick();
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
                 });
-            }
-            @Override
-            public void onFailure(int errno) {
-                signal.countDown();
+                postButton.performClick();
             }
         });
-        register.request();
         signal.await();
         assertTrue(this.postButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());
@@ -164,34 +95,20 @@ public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostAc
 
     public void testNewPostMissDescription() throws InterruptedException {
         final CountDownLatch signal = new CountDownLatch(1);
-        AccountRegister register = new AccountRegister(this.activity.getApplicationContext());
-        final String existedUsername = this.generateRandomName();
-        final String existedPassword = "existed";
-        register.setParameter(existedUsername, existedPassword);
-        register.setEvent(new AccountRegisterPostEvent() {
+        activity.runOnUiThread(new Runnable() {
             @Override
-            public void onSuccess() {
-                activity.runOnUiThread(new Runnable() {
+            public void run() {
+                editTitle.setText("New Post in Activity");
+                editDescription.setText("");
+                activity.setOnTestFinishedListener(new OnTestFinishedListener() {
                     @Override
-                    public void run() {
-                        editTitle.setText("New Post in Activity");
-                        editDescription.setText("");
-                        activity.setOnTestFinishedListener(new OnTestFinishedListener() {
-                            @Override
-                            public void onTaskFinished() {
-                                signal.countDown();
-                            }
-                        });
-                        postButton.performClick();
+                    public void onTaskFinished() {
+                        signal.countDown();
                     }
                 });
-            }
-            @Override
-            public void onFailure(int errno) {
-                signal.countDown();
+                postButton.performClick();
             }
         });
-        register.request();
         signal.await();
         assertTrue(this.postButton.isEnabled());
         assertEquals(View.VISIBLE, this.textError.getVisibility());

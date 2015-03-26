@@ -3,7 +3,6 @@ package zhaohg.test.api.account;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
-import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.account.AccountLogin;
@@ -12,7 +11,7 @@ import zhaohg.api.account.AccountLogout;
 import zhaohg.api.account.AccountLogoutPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.api.Encryption;
+import zhaohg.test.helper.RandomName;
 
 public class TestAccountLogout extends InstrumentationTestCase {
 
@@ -22,7 +21,7 @@ public class TestAccountLogout extends InstrumentationTestCase {
             super.setUp();
             final CountDownLatch signal = new CountDownLatch(1);
             final Context context = this.getInstrumentation().getContext();
-            final String username = this.generateRandomName();
+            final String username = RandomName.generateRandomName("test_account_logout_");
             final String password = "password";
             AccountRegister register = new AccountRegister(context);
             register.setParameter(username, password);
@@ -55,12 +54,6 @@ public class TestAccountLogout extends InstrumentationTestCase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private String generateRandomName() {
-        Calendar calendar = Calendar.getInstance();
-        String text = "logout_" + calendar.getTimeInMillis();
-        return "logout_" + Encryption.md5(text);
     }
 
     public void testLogoutNormal() throws InterruptedException {

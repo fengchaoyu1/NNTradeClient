@@ -31,7 +31,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:hint="@string/title"
-                android:visibility="gone"
                 android:textColor="@color/text_color_primary_dark"/>
 
             <TextView
@@ -40,8 +39,28 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:hint="@string/description"
-                android:visibility="gone"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/text_color_primary_dark" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:hint="@string/publish_date_"
+                android:gravity="right"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_color_primary_dark" />
+
+            <Switch
+                android:id="@+id/switch_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/sell_open"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/text_color_primary_dark"
+                android:layout_gravity="right"/>
 
             <TextView
                 android:id="@+id/text_error"

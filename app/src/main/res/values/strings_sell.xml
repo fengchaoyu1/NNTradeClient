@@ -1,9 +1,7 @@
 <resources>
     <string name="title_activity_edit_sell_post">Edit Sell Post</string>
-    <string name="action_post">Post</string>
+    <string name="title_activity_sell_post">Sell Post</string>
     <string name="upload_image">Upload Image</string>
     <string name="sell_open">Open</string>
     <string name="sell_close">Close</string>
-
-    <string name="error_post_not_exist">The post is not exist.</string>
 </resources>

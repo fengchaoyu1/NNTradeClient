@@ -1,8 +1,12 @@
 package zhaohg.sell;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -33,6 +37,7 @@ public class SellPostActivity extends TestableActionBarActivity {
     private TextView textError;
 
     private SellPost sellPost;
+    private boolean isOwner = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,47 @@ public class SellPostActivity extends TestableActionBarActivity {
         this.loadInfo();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sell_post, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem actionEdit = menu.findItem(R.id.action_edit);
+        MenuItem actionDelete = menu.findItem(R.id.action_delete);
+        if (this.isOwner) {
+            actionEdit.setVisible(true);
+            actionDelete.setVisible(true);
+        } else {
+            actionEdit.setVisible(false);
+            actionDelete.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_edit:
+                Context context = getApplicationContext();
+                Intent intent = new Intent(context, EditSellPostActivity.class);
+                intent.putExtra(EditSellPostActivity.EXTRA_POST_ID, postId);
+                intent.putExtra(EditSellPostActivity.EXTRA_TITLE, this.textTitle.getText().toString());
+                intent.putExtra(EditSellPostActivity.EXTRA_DESCRIPTION, this.textDescription.getText().toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                finish();
+                break;
+            case R.id.action_delete:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void hideErrorMessage() {
         this.textError.setVisibility(View.GONE);
         this.textError.setText("");
@@ -88,9 +134,9 @@ public class SellPostActivity extends TestableActionBarActivity {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 textDate.setText(context.getString(R.string.publish_date_) + dateFormat.format(post.getPostDate()));
                 switchOpen.setChecked(post.isOpen());
-                if (post.getUserId() != getSellPost.loadUserId()) {
-                    switchOpen.setEnabled(false);
-                }
+                isOwner = post.getUserId().equals(getSellPost.loadUserId());
+                switchOpen.setEnabled(isOwner);
+                invalidateOptionsMenu();
                 hideErrorMessage();
                 finishTest();
             }

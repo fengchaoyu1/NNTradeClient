@@ -1,0 +1,7 @@
+<resources>
+    <string name="error_field_required">The field is required</string>
+    <string name="error_invalid_username">The username is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_invalid_confirm">The new and confirm passwords do not match</string>
+    <string name="error_post_not_exist">The post is not exist.</string>
+</resources>

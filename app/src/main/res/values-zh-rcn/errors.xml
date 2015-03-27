@@ -1,0 +1,7 @@
+<resources>
+    <string name="error_field_required">有区域为空</string>
+    <string name="error_invalid_username">用户名组成不合法</string>
+    <string name="error_invalid_password">密码过短</string>
+    <string name="error_invalid_confirm">两次输入密码不匹配</string>
+    <string name="error_post_not_exist">信息不存在</string>
+</resources>

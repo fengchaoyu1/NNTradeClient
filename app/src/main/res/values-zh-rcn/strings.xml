@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">近邻交易</string>
-    <string name="action_settings">设置</string>
     <string name="title">标题</string>
     <string name="description">描述</string>
     <string name="publish_date_">发布日期：</string>

@@ -66,7 +66,7 @@ public class MainDrawer extends TestableLinearLayout {
         }
     }
 
-    private class OnLoginButtonClickListener implements  OnClickListener {
+    private class OnLoginButtonClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, LoginActivity.class);

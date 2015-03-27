@@ -1,6 +1,9 @@
 package zhaohg.main;
 
 import android.os.Build;
+import android.provider.SyncStateContract;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.view.WindowManager;
 
 import zhaohg.api.account.AccountLogout;
 import zhaohg.api.account.AccountLogoutPostEvent;
+import zhaohg.sell.SellPostsFragment;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -40,6 +44,11 @@ public class MainActivity extends ActionBarActivity {
                 drawerLayout.openDrawer(mainDrawer);
             }
         });
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_container, new SellPostsFragment());
+        fragmentTransaction.commit();
     }
 
     @Override

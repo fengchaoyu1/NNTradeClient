@@ -7,4 +7,5 @@
     <string name="sell_delete">Delete Sell Post</string>
     <string name="sell_delete_success">Successfully deleted sell post</string>
     <string name="sell_delete_fail">Failed to delete sell post</string>
+    <string name="sell_get_posts_fail">Failed to get post list</string>
 </resources>

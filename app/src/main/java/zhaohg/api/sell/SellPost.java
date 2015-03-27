@@ -1,6 +1,10 @@
 package zhaohg.api.sell;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import zhaohg.main.R;
 
 public class SellPost {
 
@@ -84,6 +88,16 @@ public class SellPost {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    public String getPostDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(this.postDate);
+    }
+
+    public String getModifyDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(this.modifyDate);
     }
 
 }

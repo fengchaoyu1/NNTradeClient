@@ -15,9 +15,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import zhaohg.api.sell.DeleteSellPost;
 import zhaohg.api.sell.DeleteSellPostPostEvent;
 import zhaohg.api.sell.GetSellPost;
@@ -165,8 +162,7 @@ public class SellPostActivity extends TestableActionBarActivity {
                 sellPost = post;
                 textTitle.setText(post.getTitle());
                 textDescription.setText(post.getDescription());
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                textDate.setText(context.getString(R.string.publish_date_) + dateFormat.format(post.getPostDate()));
+                textDate.setText(context.getString(R.string.publish_date_) + post.getPostDateString());
                 switchOpen.setChecked(post.isOpen());
                 isOwner = post.getUserId().equals(getSellPost.loadUserId());
                 switchOpen.setEnabled(isOwner);

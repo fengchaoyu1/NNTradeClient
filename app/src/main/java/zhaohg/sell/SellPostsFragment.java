@@ -3,6 +3,7 @@ package zhaohg.sell;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,10 +26,12 @@ public class SellPostsFragment extends TestableFragment {
 
     private Context context;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclePosts;
     private ImageView imageNewPost;
 
+    private boolean refresh = false;
     private boolean loading = false;
     private int pageNum = 1;
 
@@ -63,6 +66,18 @@ public class SellPostsFragment extends TestableFragment {
             }
         });
 
+        this.swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (!refresh) {
+                    refresh = true;
+                    pageNum = 1;
+                    loadNextPage();
+                }
+            }
+        });
+
         loadNextPage();
         return view;
     }
@@ -75,6 +90,11 @@ public class SellPostsFragment extends TestableFragment {
             @Override
             public void onSuccess(List<SellPost> posts) {
                 SellPostsAdapter adapter = (SellPostsAdapter) recyclePosts.getAdapter();
+                if (refresh) {
+                    refresh = false;
+                    swipeRefreshLayout.setRefreshing(false);
+                    adapter.clear();
+                }
                 adapter.append(posts);
                 ++pageNum;
                 loading = false;

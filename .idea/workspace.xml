@@ -45,28 +45,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45266274" vertical-offset="0" max-vertical-offset="3655">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2958">
+              <caret line="140" column="47" selection-start-line="139" selection-start-column="16" selection-end-line="140" selection-end-column="47" />
               <folding>
-                <element signature="e#4039#4758#0" expanded="true" />
-                <element signature="e#4746#4747#0" expanded="true" />
-                <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+                <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SampleTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/SampleTest.java">
+      <file leaf-file-name="ThumbnailsTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/ThumbnailsTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1020">
-              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2032" max-vertical-offset="2448">
+              <caret line="94" column="54" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DownloadTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/DownloadTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.62739724" vertical-offset="230" max-vertical-offset="663">
+              <caret line="62" column="50" selection-start-line="62" selection-start-column="50" selection-end-line="62" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="class#RequestTask#0;class#DownloadTest#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Creatpicture.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/Creatpicture.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="969">
+              <caret line="42" column="5" selection-start-line="14" selection-start-column="4" selection-end-line="42" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -78,7 +100,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="353" max-vertical-offset="816">
+            <state vertical-scroll-proportion="0.0" vertical-offset="302" max-vertical-offset="816">
               <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
               <folding />
             </state>
@@ -103,26 +125,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="227" max-vertical-offset="595">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="272">
-              <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -883,8 +885,11 @@
         <option value="$PROJECT_DIR$/app/src/androidTest/java/com/example/dip/SampleTest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/SampleTest.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/Creatpicture.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/ThumbnailsTest.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/DownloadTest.java" />
       </list>
     </option>
   </component>
@@ -923,6 +928,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1015,9 +1023,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1048,7 +1053,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Android Application.app">
+  <component name="RunManager" selected="Android Tests.Tests">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -1243,7 +1248,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="744" extended-state="1" />
+    <frame x="-8" y="-8" width="1376" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1257,7 +1262,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35153583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35153583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1265,13 +1270,13 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32764506" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1293,40 +1298,11 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="578">
-          <caret line="25" column="96" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="272">
-          <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="3893">
-          <caret line="64" column="66" selection-start-line="64" selection-start-column="66" selection-end-line="64" selection-end-column="66" />
-          <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -1378,12 +1354,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1496" max-vertical-offset="3859">
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1439,12 +1412,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="2414" max-vertical-offset="3876">
           <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1500,12 +1470,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1668" max-vertical-offset="3876">
           <caret line="105" column="20" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="20" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1561,12 +1528,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="4148">
           <caret line="64" column="32" selection-start-line="64" selection-start-column="32" selection-end-line="64" selection-end-column="32" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1614,12 +1578,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="1088">
           <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1667,12 +1628,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1088">
           <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1720,12 +1678,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1757,32 +1712,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/RegisterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="353" max-vertical-offset="816">
-          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1795,25 +1728,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/SampleTest.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="1020">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="302" max-vertical-offset="816">
+          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-21/java/io/FileOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7506849" vertical-offset="814" max-vertical-offset="2873">
+          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/Creatpicture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="969">
+          <caret line="42" column="5" selection-start-line="14" selection-start-column="4" selection-end-line="42" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45266274" vertical-offset="0" max-vertical-offset="3655">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2958">
+          <caret line="140" column="47" selection-start-line="139" selection-start-column="16" selection-end-line="140" selection-end-column="47" />
           <folding>
-            <element signature="e#4039#4758#0" expanded="true" />
-            <element signature="e#4746#4747#0" expanded="true" />
-            <element signature="method#codec#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#initColors#0;class#MainActivity#0" expanded="false" />
             <element signature="method#testThumbnails#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getImageThumbnail#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#RequestTask#0;class#MainActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/ThumbnailsTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1428" max-vertical-offset="2448">
+          <caret line="94" column="54" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dip/testapplication/test/DownloadTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.62739724" vertical-offset="230" max-vertical-offset="663">
+          <caret line="62" column="50" selection-start-line="62" selection-start-column="50" selection-end-line="62" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#RequestTask#0;class#DownloadTest#0" expanded="false" />
           </folding>
         </state>
       </provider>

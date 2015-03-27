@@ -4,4 +4,7 @@
     <string name="upload_image">上传图象</string>
     <string name="sell_open">进行中</string>
     <string name="sell_close">交易完成</string>
+    <string name="sell_delete">删除出售信息</string>
+    <string name="sell_delete_success">成功删除出售信息</string>
+    <string name="sell_delete_fail">删除出售信息失败</string>
 </resources>

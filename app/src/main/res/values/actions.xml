@@ -9,4 +9,7 @@
     <string name="action_post">Post</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+    <string name="sure_to_delete">Are you sure you want to delete?</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

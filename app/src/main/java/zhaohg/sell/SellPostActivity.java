@@ -1,6 +1,8 @@
 package zhaohg.sell;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +13,13 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import zhaohg.api.sell.DeleteSellPost;
+import zhaohg.api.sell.DeleteSellPostPostEvent;
 import zhaohg.api.sell.GetSellPost;
 import zhaohg.api.sell.GetSellPostPostEvent;
 import zhaohg.api.sell.SellPost;
@@ -93,9 +98,9 @@ public class SellPostActivity extends TestableActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final Context context = this.getApplicationContext();
         switch(item.getItemId()) {
             case R.id.action_edit:
-                Context context = getApplicationContext();
                 Intent intent = new Intent(context, EditSellPostActivity.class);
                 intent.putExtra(EditSellPostActivity.EXTRA_POST_ID, postId);
                 intent.putExtra(EditSellPostActivity.EXTRA_TITLE, this.textTitle.getText().toString());
@@ -105,7 +110,36 @@ public class SellPostActivity extends TestableActionBarActivity {
                 finish();
                 break;
             case R.id.action_delete:
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(context.getString(R.string.sell_delete));
+                builder.setMessage(context.getString(R.string.sure_to_delete));
+                builder.setPositiveButton(context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeleteSellPost deleteSellPost = new DeleteSellPost(context);
+                        deleteSellPost.setParameter(postId);
+                        deleteSellPost.setEvent(new DeleteSellPostPostEvent() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getApplicationContext(), context.getString(R.string.sell_delete_success), Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            @Override
+                            public void onFailure(int errno) {
+                                Toast.makeText(getApplicationContext(), context.getString(R.string.sell_delete_fail), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        deleteSellPost.request();
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(context.getString(R.string.action_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
                 break;
         }
         return super.onOptionsItemSelected(item);

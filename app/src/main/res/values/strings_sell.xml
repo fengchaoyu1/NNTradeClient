@@ -4,4 +4,7 @@
     <string name="upload_image">Upload Image</string>
     <string name="sell_open">Open</string>
     <string name="sell_close">Close</string>
+    <string name="sell_delete">Delete Sell Post</string>
+    <string name="sell_delete_success">Successfully deleted sell post</string>
+    <string name="sell_delete_fail">Failed to delete sell post</string>
 </resources>

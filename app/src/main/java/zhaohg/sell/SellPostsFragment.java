@@ -1,12 +1,14 @@
 package zhaohg.sell;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class SellPostsFragment extends TestableFragment {
     private Context context;
 
     private RecyclerView recyclePosts;
+    private ImageView imageNewPost;
 
     private int pageNum = 1;
 
@@ -41,6 +44,16 @@ public class SellPostsFragment extends TestableFragment {
         this.recyclePosts.setLayoutManager(new LinearLayoutManager(context));
         SellPostsAdapter adapter = new SellPostsAdapter(context);
         this.recyclePosts.setAdapter(adapter);
+        this.imageNewPost = (ImageView) view.findViewById(R.id.image_new);
+        this.imageNewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, EditSellPostActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
         loadNextPage();
         return view;
     }

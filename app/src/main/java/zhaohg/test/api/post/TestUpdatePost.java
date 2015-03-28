@@ -1,4 +1,4 @@
-package zhaohg.test.api.sell;
+package zhaohg.test.api.post;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
@@ -14,16 +14,16 @@ import zhaohg.api.account.AccountLogin;
 import zhaohg.api.account.AccountLoginPostEvent;
 import zhaohg.api.account.AccountRegister;
 import zhaohg.api.account.AccountRegisterPostEvent;
-import zhaohg.api.sell.GetSellPost;
-import zhaohg.api.sell.GetSellPostPostEvent;
-import zhaohg.api.sell.NewSellPost;
-import zhaohg.api.sell.NewSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
-import zhaohg.api.sell.UpdateSellPost;
-import zhaohg.api.sell.UpdateSellPostPostEvent;
+import zhaohg.api.post.GetPost;
+import zhaohg.api.post.GetPostPostEvent;
+import zhaohg.api.post.NewPost;
+import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.Post;
+import zhaohg.api.post.UpdatePost;
+import zhaohg.api.post.UpdatePostPostEvent;
 import zhaohg.test.helper.RegisterAndLogin;
 
-public class TestUpdateSellPost extends InstrumentationTestCase {
+public class TestUpdatePost extends InstrumentationTestCase {
 
     private int localErrno;
 
@@ -52,9 +52,9 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        NewSellPost newPost = new NewSellPost(context);
+        NewPost newPost = new NewPost(context);
         newPost.setParameter(title, description, imageIdList);
-        newPost.setEvent(new NewSellPostPostEvent() {
+        newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String postId) {
                 lastPostId = postId;
@@ -83,18 +83,18 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
         final String title = "New Post+";
         final String description = "New Post Description";
         this.newSellPost(title, description, imageIdList);
-        UpdateSellPost updatePost = new UpdateSellPost(context);
+        UpdatePost updatePost = new UpdatePost(context);
         updatePost.setParameter(lastPostId);
         final String newTitle = "Update New Title";
         updatePost.setUpdateTitle(newTitle);
-        updatePost.setEvent(new UpdateSellPostPostEvent() {
+        updatePost.setEvent(new UpdatePostPostEvent() {
             @Override
             public void onSuccess() {
-                final GetSellPost getPost = new GetSellPost(context);
+                final GetPost getPost = new GetPost(context);
                 getPost.setParameter(lastPostId);
-                getPost.setEvent(new GetSellPostPostEvent() {
+                getPost.setEvent(new GetPostPostEvent() {
                     @Override
-                    public void onSuccess(SellPost post) {
+                    public void onSuccess(Post post) {
                         assertEquals(newTitle, post.getTitle());
                         assertEquals(description, post.getDescription());
                         assertTrue(post.isOpen());
@@ -131,18 +131,18 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
         final String title = "New Post+";
         final String description = "New Post Description";
         this.newSellPost(title, description, imageIdList);
-        UpdateSellPost updatePost = new UpdateSellPost(context);
+        UpdatePost updatePost = new UpdatePost(context);
         updatePost.setParameter(lastPostId);
         final String newDescription = "Update New Description";
         updatePost.setUpdateDescription(newDescription);
-        updatePost.setEvent(new UpdateSellPostPostEvent() {
+        updatePost.setEvent(new UpdatePostPostEvent() {
             @Override
             public void onSuccess() {
-                final GetSellPost getPost = new GetSellPost(context);
+                final GetPost getPost = new GetPost(context);
                 getPost.setParameter(lastPostId);
-                getPost.setEvent(new GetSellPostPostEvent() {
+                getPost.setEvent(new GetPostPostEvent() {
                     @Override
-                    public void onSuccess(SellPost post) {
+                    public void onSuccess(Post post) {
                         assertEquals(title, post.getTitle());
                         assertEquals(newDescription, post.getDescription());
                         assertTrue(post.isOpen());
@@ -179,17 +179,17 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
         final String title = "New Post+";
         final String description = "New Post Description";
         this.newSellPost(title, description, imageIdList);
-        UpdateSellPost updatePost = new UpdateSellPost(context);
+        UpdatePost updatePost = new UpdatePost(context);
         updatePost.setParameter(lastPostId);
         updatePost.setUpdateOpen(false);
-        updatePost.setEvent(new UpdateSellPostPostEvent() {
+        updatePost.setEvent(new UpdatePostPostEvent() {
             @Override
             public void onSuccess() {
-                final GetSellPost getPost = new GetSellPost(context);
+                final GetPost getPost = new GetPost(context);
                 getPost.setParameter(lastPostId);
-                getPost.setEvent(new GetSellPostPostEvent() {
+                getPost.setEvent(new GetPostPostEvent() {
                     @Override
-                    public void onSuccess(SellPost post) {
+                    public void onSuccess(Post post) {
                         assertEquals(title, post.getTitle());
                         assertEquals(description, post.getDescription());
                         assertFalse(post.isOpen());
@@ -238,10 +238,10 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
                 login.setEvent(new AccountLoginPostEvent() {
                     @Override
                     public void onSuccess() {
-                        UpdateSellPost updatePost = new UpdateSellPost(context);
+                        UpdatePost updatePost = new UpdatePost(context);
                         updatePost.setParameter(lastPostId);
                         updatePost.setUpdateOpen(false);
-                        updatePost.setEvent(new UpdateSellPostPostEvent() {
+                        updatePost.setEvent(new UpdatePostPostEvent() {
                             @Override
                             public void onSuccess() {
                                 signal.countDown();
@@ -285,10 +285,10 @@ public class TestUpdateSellPost extends InstrumentationTestCase {
         final String title = "New Post+";
         final String description = "New Post Description";
         this.newSellPost(title, description, imageIdList);
-        UpdateSellPost updatePost = new UpdateSellPost(context);
+        UpdatePost updatePost = new UpdatePost(context);
         updatePost.setParameter(lastPostId + "123");
         updatePost.setUpdateOpen(false);
-        updatePost.setEvent(new UpdateSellPostPostEvent() {
+        updatePost.setEvent(new UpdatePostPostEvent() {
             @Override
             public void onSuccess() {
                 signal.countDown();

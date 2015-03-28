@@ -1,4 +1,4 @@
-package zhaohg.sell;
+package zhaohg.post;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,17 +15,17 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import zhaohg.api.sell.DeleteSellPost;
-import zhaohg.api.sell.DeleteSellPostPostEvent;
-import zhaohg.api.sell.GetSellPost;
-import zhaohg.api.sell.GetSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
-import zhaohg.api.sell.UpdateSellPost;
-import zhaohg.api.sell.UpdateSellPostPostEvent;
+import zhaohg.api.post.DeletePost;
+import zhaohg.api.post.DeletePostPostEvent;
+import zhaohg.api.post.GetPost;
+import zhaohg.api.post.GetPostPostEvent;
+import zhaohg.api.post.Post;
+import zhaohg.api.post.UpdatePost;
+import zhaohg.api.post.UpdatePostPostEvent;
 import zhaohg.main.R;
 import zhaohg.testable.TestableActionBarActivity;
 
-public class SellPostActivity extends TestableActionBarActivity {
+public class PostActivity extends TestableActionBarActivity {
 
     public static final String EXTRA_POST_ID = "EXTRA_POST_ID";
 
@@ -38,13 +38,13 @@ public class SellPostActivity extends TestableActionBarActivity {
 
     private TextView textError;
 
-    private SellPost sellPost;
+    private Post post;
     private boolean isOwner = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sell_post);
+        setContentView(R.layout.activity_post);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,10 +98,10 @@ public class SellPostActivity extends TestableActionBarActivity {
         final Context context = this.getApplicationContext();
         switch(item.getItemId()) {
             case R.id.action_edit:
-                Intent intent = new Intent(context, EditSellPostActivity.class);
-                intent.putExtra(EditSellPostActivity.EXTRA_POST_ID, postId);
-                intent.putExtra(EditSellPostActivity.EXTRA_TITLE, this.textTitle.getText().toString());
-                intent.putExtra(EditSellPostActivity.EXTRA_DESCRIPTION, this.textDescription.getText().toString());
+                Intent intent = new Intent(context, EditPostActivity.class);
+                intent.putExtra(EditPostActivity.EXTRA_POST_ID, postId);
+                intent.putExtra(EditPostActivity.EXTRA_TITLE, this.textTitle.getText().toString());
+                intent.putExtra(EditPostActivity.EXTRA_DESCRIPTION, this.textDescription.getText().toString());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 finish();
@@ -113,9 +113,9 @@ public class SellPostActivity extends TestableActionBarActivity {
                 builder.setPositiveButton(context.getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DeleteSellPost deleteSellPost = new DeleteSellPost(context);
-                        deleteSellPost.setParameter(postId);
-                        deleteSellPost.setEvent(new DeleteSellPostPostEvent() {
+                        DeletePost deletePost = new DeletePost(context);
+                        deletePost.setParameter(postId);
+                        deletePost.setEvent(new DeletePostPostEvent() {
                             @Override
                             public void onSuccess() {
                                 Toast.makeText(getApplicationContext(), context.getString(R.string.sell_delete_success), Toast.LENGTH_SHORT).show();
@@ -126,7 +126,7 @@ public class SellPostActivity extends TestableActionBarActivity {
                                 Toast.makeText(getApplicationContext(), context.getString(R.string.sell_delete_fail), Toast.LENGTH_SHORT).show();
                             }
                         });
-                        deleteSellPost.request();
+                        deletePost.request();
                         dialog.dismiss();
                     }
                 });
@@ -154,17 +154,17 @@ public class SellPostActivity extends TestableActionBarActivity {
 
     public void loadInfo() {
         final Context context = this.getApplicationContext();
-        final GetSellPost getSellPost = new GetSellPost(context);
-        getSellPost.setParameter(this.postId);
-        getSellPost.setEvent(new GetSellPostPostEvent() {
+        final GetPost getPost = new GetPost(context);
+        getPost.setParameter(this.postId);
+        getPost.setEvent(new GetPostPostEvent() {
             @Override
-            public void onSuccess(SellPost post) {
-                sellPost = post;
+            public void onSuccess(Post post) {
+                PostActivity.this.post = post;
                 textTitle.setText(post.getTitle());
                 textDescription.setText(post.getDescription());
                 textDate.setText(context.getString(R.string.publish_date_) + post.getPostDateString());
                 switchOpen.setChecked(post.isOpen());
-                isOwner = post.getUserId().equals(getSellPost.loadUserId());
+                isOwner = post.getUserId().equals(getPost.loadUserId());
                 switchOpen.setEnabled(isOwner);
                 invalidateOptionsMenu();
                 hideErrorMessage();
@@ -177,7 +177,7 @@ public class SellPostActivity extends TestableActionBarActivity {
                 finishTest();
             }
         });
-        getSellPost.request();
+        getPost.request();
     }
 
     public String getPostId() {
@@ -192,11 +192,11 @@ public class SellPostActivity extends TestableActionBarActivity {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             Context context = buttonView.getContext();
-            if (sellPost.isOpen() != isChecked) {
-                UpdateSellPost updateSellPost = new UpdateSellPost(context);
-                updateSellPost.setParameter(postId);
-                updateSellPost.setUpdateOpen(isChecked);
-                updateSellPost.setEvent(new UpdateSellPostPostEvent() {
+            if (post.isOpen() != isChecked) {
+                UpdatePost updatePost = new UpdatePost(context);
+                updatePost.setParameter(postId);
+                updatePost.setUpdateOpen(isChecked);
+                updatePost.setEvent(new UpdatePostPostEvent() {
                     @Override
                     public void onSuccess() {
                         finishTest();
@@ -206,8 +206,8 @@ public class SellPostActivity extends TestableActionBarActivity {
                         finishTest();
                     }
                 });
-                updateSellPost.request();
-                sellPost.setOpen(isChecked);
+                updatePost.request();
+                post.setOpen(isChecked);
             }
             if (isChecked) {
                 switchOpen.setText(context.getString(R.string.sell_open));

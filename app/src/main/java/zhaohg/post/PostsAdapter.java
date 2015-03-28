@@ -1,4 +1,4 @@
-package zhaohg.sell;
+package zhaohg.post;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,29 +11,29 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.Post;
 import zhaohg.main.R;
 
-public class SellPostsAdapter extends RecyclerView.Adapter<SellPostsAdapter.ViewHolder> {
+public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    private List<SellPost> posts;
+    private List<Post> posts;
 
     private Context context;
 
-    public SellPostsAdapter(Context context) {
+    public PostsAdapter(Context context) {
         this.context = context;
         this.posts = new ArrayList<>();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_sell_post, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        SellPost post = posts.get(i);
+        Post post = posts.get(i);
         viewHolder.setPostId(post.getPostId());
         viewHolder.textTitle.setText(post.getTitle());
         viewHolder.textDescription.setText(post.getDescription());
@@ -45,8 +45,8 @@ public class SellPostsAdapter extends RecyclerView.Adapter<SellPostsAdapter.View
         return posts.size();
     }
 
-    private boolean isExisted(SellPost newPost) {
-        for (SellPost post : posts) {
+    private boolean isExisted(Post newPost) {
+        for (Post post : posts) {
             if (post.getPostId().equals(newPost.getPostId())) {
                 return true;
             }
@@ -59,7 +59,7 @@ public class SellPostsAdapter extends RecyclerView.Adapter<SellPostsAdapter.View
         notifyDataSetChanged();
     }
 
-    public void append(SellPost post) {
+    public void append(Post post) {
         if (!isExisted(post)) {
             int pos = posts.size();
             posts.add(post);
@@ -68,8 +68,8 @@ public class SellPostsAdapter extends RecyclerView.Adapter<SellPostsAdapter.View
         }
     }
 
-    public void append(List<SellPost> posts) {
-        for (SellPost post : posts) {
+    public void append(List<Post> posts) {
+        for (Post post : posts) {
             append(post);
         }
     }
@@ -98,8 +98,8 @@ public class SellPostsAdapter extends RecyclerView.Adapter<SellPostsAdapter.View
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, SellPostActivity.class);
-                intent.putExtra(SellPostActivity.EXTRA_POST_ID, postId);
+                Intent intent = new Intent(context, PostActivity.class);
+                intent.putExtra(PostActivity.EXTRA_POST_ID, postId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

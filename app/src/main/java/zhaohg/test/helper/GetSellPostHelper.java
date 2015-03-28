@@ -4,26 +4,27 @@ import android.content.Context;
 
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.api.sell.GetSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.GetPost;
+import zhaohg.api.post.GetPostPostEvent;
+import zhaohg.api.post.Post;
 
 public class GetSellPostHelper {
 
     private Context context;
-    private SellPost sellPost;
+    private Post post;
 
     public GetSellPostHelper(Context context) {
         this.context = context;
     }
 
-    public SellPost getSellPost(String postId) throws Exception {
+    public Post getSellPost(String postId) throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
-        zhaohg.api.sell.GetSellPost newPost = new zhaohg.api.sell.GetSellPost(context);
+        GetPost newPost = new GetPost(context);
         newPost.setParameter(postId);
-        newPost.setEvent(new GetSellPostPostEvent() {
+        newPost.setEvent(new GetPostPostEvent() {
             @Override
-            public void onSuccess(SellPost post) {
-                sellPost = post;
+            public void onSuccess(Post post) {
+                GetSellPostHelper.this.post = post;
                 signal.countDown();
             }
 
@@ -34,7 +35,7 @@ public class GetSellPostHelper {
         });
         newPost.request();
         signal.await();
-        return sellPost;
+        return post;
     }
 
 }

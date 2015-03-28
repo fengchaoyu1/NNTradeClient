@@ -1,29 +1,65 @@
-package zhaohg.api.sell;
+package zhaohg.api.post;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import zhaohg.main.R;
+import zhaohg.json.JsonObject;
 
-public class SellPost {
+public class Post {
 
+    public static final int TYPE_SELL = 0;
+
+    private int type;
     private String title;
     private String description;
     private String userId;
+    private String userName;
     private String postId;
     private boolean isOpen;
     private String imageSetId;
+    private String commentsId;
     private Date postDate;
     private Date modifyDate;
 
-    public SellPost() {
+    public Post() {
+        this.type = TYPE_SELL;
         this.title = "";
         this.description = "";
         this.userId = "";
+        this.userName = "";
         this.imageSetId = "";
+        this.commentsId = "";
         this.postDate = new Date();
         this.modifyDate = new Date();
+    }
+
+    public Post(JsonObject postObject) {
+        this.postId = postObject.getValue("post_id").getString();
+        this.type = postObject.getValue("type").getInteger();
+        this.title = postObject.getValue("title").getString();
+        this.description = postObject.getValue("description").getString();
+        this.userId = postObject.getValue("user_id").getString();
+        this.userName = postObject.getValue("user_name").getString();
+        this.imageSetId = postObject.getValue("image_set_id").getString();
+        this.commentsId = postObject.getValue("comments_id").getString();
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+            this.postDate = dateFormat.parse(postObject.getValue("post_date").getString());
+            this.modifyDate = dateFormat.parse(postObject.getValue("modify_date").getString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.isOpen = postObject.getValue("is_open").getBoolean();
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -50,6 +86,14 @@ public class SellPost {
         this.userId = userId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getPostId() {
         return postId;
     }
@@ -72,6 +116,14 @@ public class SellPost {
 
     public void setImageSetId(String imageSetId) {
         this.imageSetId = imageSetId;
+    }
+
+    public String getCommentsId() {
+        return commentsId;
+    }
+
+    public void setCommentsId(String commentsId) {
+        this.commentsId = commentsId;
     }
 
     public Date getPostDate() {

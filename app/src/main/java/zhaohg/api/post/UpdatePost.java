@@ -1,4 +1,4 @@
-package zhaohg.api.sell;
+package zhaohg.api.post;
 
 import android.content.Context;
 
@@ -12,9 +12,9 @@ import zhaohg.api.RequestTask;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class UpdateSellPost extends ApiBase {
+public class UpdatePost extends ApiBase {
 
-    public static String RESOURCE_URL = "sell/post/";
+    public static String RESOURCE_URL = "post/";
 
     private String postId;
     private String title;
@@ -27,9 +27,9 @@ public class UpdateSellPost extends ApiBase {
     private boolean updateImageIdList;
     private boolean updateIsOpen;
 
-    private UpdateSellPostPostEvent event;
+    private UpdatePostPostEvent event;
 
-    public UpdateSellPost(Context context) {
+    public UpdatePost(Context context) {
         super(context);
         this.updateTitle = false;
         this.updateDescription = false;
@@ -72,7 +72,7 @@ public class UpdateSellPost extends ApiBase {
         this.imageIdList = imageIdList;
     }
 
-    public void setEvent(UpdateSellPostPostEvent event) {
+    public void setEvent(UpdatePostPostEvent event) {
         this.event = event;
     }
 

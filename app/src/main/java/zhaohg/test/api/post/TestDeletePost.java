@@ -1,4 +1,4 @@
-package zhaohg.test.api.sell;
+package zhaohg.test.api.post;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.ApiErrno;
-import zhaohg.api.sell.DeleteSellPost;
-import zhaohg.api.sell.DeleteSellPostPostEvent;
-import zhaohg.api.sell.GetSellPost;
-import zhaohg.api.sell.GetSellPostPostEvent;
-import zhaohg.api.sell.NewSellPost;
-import zhaohg.api.sell.NewSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.DeletePost;
+import zhaohg.api.post.DeletePostPostEvent;
+import zhaohg.api.post.GetPost;
+import zhaohg.api.post.GetPostPostEvent;
+import zhaohg.api.post.NewPost;
+import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.test.helper.RegisterAndLogin;
 
-public class TestDeleteSellPost extends InstrumentationTestCase {
+public class TestDeletePost extends InstrumentationTestCase {
 
     private int localErrno;
 
@@ -35,7 +35,7 @@ public class TestDeleteSellPost extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        NewSellPost newPost = new NewSellPost(context);
+        NewPost newPost = new NewPost(context);
         List<String> imageIdList = new ArrayList<>();
         imageIdList.add("1");
         imageIdList.add("2");
@@ -43,7 +43,7 @@ public class TestDeleteSellPost extends InstrumentationTestCase {
         final String title = "New Post+";
         final String description = "New Post Description";
         newPost.setParameter(title, description, imageIdList);
-        newPost.setEvent(new NewSellPostPostEvent() {
+        newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String postId) {
                 lastPostId = postId;
@@ -66,21 +66,21 @@ public class TestDeleteSellPost extends InstrumentationTestCase {
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
         this.newSellPost();
-        DeleteSellPost deletePost = new DeleteSellPost(context);
+        DeletePost deletePost = new DeletePost(context);
         deletePost.setParameter(lastPostId);
-        deletePost.setEvent(new DeleteSellPostPostEvent() {
+        deletePost.setEvent(new DeletePostPostEvent() {
             @Override
             public void onSuccess() {
-                final GetSellPost getPost = new GetSellPost(context);
+                final GetPost getPost = new GetPost(context);
                 getPost.setParameter(lastPostId);
-                getPost.setEvent(new GetSellPostPostEvent() {
+                getPost.setEvent(new GetPostPostEvent() {
                     @Override
-                    public void onSuccess(SellPost post) {
-                        GetSellPost getPost = new GetSellPost(context);
+                    public void onSuccess(Post post) {
+                        GetPost getPost = new GetPost(context);
                         getPost.setParameter(lastPostId);
-                        getPost.setEvent(new GetSellPostPostEvent() {
+                        getPost.setEvent(new GetPostPostEvent() {
                             @Override
-                            public void onSuccess(SellPost post) {
+                            public void onSuccess(Post post) {
                                 signal.countDown();
                             }
 
@@ -119,9 +119,9 @@ public class TestDeleteSellPost extends InstrumentationTestCase {
         this.newSellPost();
         RegisterAndLogin registerAndLogin = new RegisterAndLogin(context, "test_delete_post_");
         assertTrue(registerAndLogin.registerAndLogin());
-        DeleteSellPost deletePost = new DeleteSellPost(context);
+        DeletePost deletePost = new DeletePost(context);
         deletePost.setParameter(lastPostId);
-        deletePost.setEvent(new DeleteSellPostPostEvent() {
+        deletePost.setEvent(new DeletePostPostEvent() {
             @Override
             public void onSuccess() {
                 signal.countDown();
@@ -142,9 +142,9 @@ public class TestDeleteSellPost extends InstrumentationTestCase {
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
         this.newSellPost();
-        DeleteSellPost deleteSellPost = new DeleteSellPost(context);
-        deleteSellPost.setParameter(lastPostId + "123");
-        deleteSellPost.setEvent(new DeleteSellPostPostEvent() {
+        DeletePost deletePost = new DeletePost(context);
+        deletePost.setParameter(lastPostId + "123");
+        deletePost.setEvent(new DeletePostPostEvent() {
             @Override
             public void onSuccess() {
                 signal.countDown();
@@ -155,7 +155,7 @@ public class TestDeleteSellPost extends InstrumentationTestCase {
                 signal.countDown();
             }
         });
-        deleteSellPost.request();
+        deletePost.request();
         signal.await();
         assertEquals(ApiErrno.ERRNO_NOT_EXIST, localErrno);
     }

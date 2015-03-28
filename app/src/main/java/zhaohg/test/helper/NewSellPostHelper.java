@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.api.sell.NewSellPost;
-import zhaohg.api.sell.NewSellPostPostEvent;
+import zhaohg.api.post.NewPost;
+import zhaohg.api.post.NewPostPostEvent;
 
 public class NewSellPostHelper {
 
@@ -29,9 +29,9 @@ public class NewSellPostHelper {
 
     public String newPost() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
-        NewSellPost newPost = new NewSellPost(context);
+        NewPost newPost = new NewPost(context);
         newPost.setParameter(title, description, imageIdList);
-        newPost.setEvent(new NewSellPostPostEvent() {
+        newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String id) {
                 postId = id;

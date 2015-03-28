@@ -1,4 +1,4 @@
-package zhaohg.test.api.sell;
+package zhaohg.test.api.post;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
@@ -6,12 +6,12 @@ import android.test.InstrumentationTestCase;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.ApiErrno;
-import zhaohg.api.sell.GetSellPost;
-import zhaohg.api.sell.GetSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.GetPost;
+import zhaohg.api.post.GetPostPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.test.helper.RegisterAndLogin;
 
-public class TestGetSellPost extends InstrumentationTestCase {
+public class TestGetPost extends InstrumentationTestCase {
 
     private int localErrno;
 
@@ -27,11 +27,11 @@ public class TestGetSellPost extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         Context context = this.getInstrumentation().getContext();
-        GetSellPost newPost = new GetSellPost(context);
+        GetPost newPost = new GetPost(context);
         newPost.setParameter("1234567890");
-        newPost.setEvent(new GetSellPostPostEvent() {
+        newPost.setEvent(new GetPostPostEvent() {
             @Override
-            public void onSuccess(SellPost post) {
+            public void onSuccess(Post post) {
                 signal.countDown();
             }
 

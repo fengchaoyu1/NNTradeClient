@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="zhaohg.sell.SellPostActivity">
+    tools:context="zhaohg.post.EditPostActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -25,43 +25,30 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <TextView
-                android:id="@+id/text_title"
+            <EditText
+                android:id="@+id/edit_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:hint="@string/title"
                 android:textColor="@color/text_color_primary_dark"/>
 
-            <TextView
-                android:id="@+id/text_description"
+            <EditText
+                android:id="@+id/edit_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:hint="@string/description"
-                android:layout_marginTop="10dp"
                 android:textColor="@color/text_color_primary_dark" />
 
-            <TextView
-                android:id="@+id/text_date"
+            <Button
+                android:id="@+id/button_add_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="@string/publish_date_"
-                android:gravity="right"
+                android:text="@string/upload_image"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/text_color_primary_dark" />
-
-            <Switch
-                android:id="@+id/switch_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/sell_open"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/text_color_primary_dark"
-                android:enabled="false"
-                android:layout_gravity="right"/>
+                android:background="@color/color_primary"
+                android:textColor="@color/text_color_primary"/>
 
             <TextView
                 android:id="@+id/text_error"
@@ -75,6 +62,15 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/text_color_error"
                 android:drawableLeft="@drawable/error" />
+
+            <Button
+                android:id="@+id/button_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_post"
+                android:layout_marginTop="15dp"
+                android:background="@color/color_primary"
+                android:textColor="@color/text_color_primary"/>
 
         </LinearLayout>
 

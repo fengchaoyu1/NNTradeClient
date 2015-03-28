@@ -1,4 +1,4 @@
-package zhaohg.sell;
+package zhaohg.post;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +12,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import zhaohg.api.ApiErrno;
-import zhaohg.api.sell.NewSellPost;
-import zhaohg.api.sell.NewSellPostPostEvent;
-import zhaohg.api.sell.UpdateSellPost;
-import zhaohg.api.sell.UpdateSellPostPostEvent;
+import zhaohg.api.post.NewPost;
+import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.UpdatePost;
+import zhaohg.api.post.UpdatePostPostEvent;
 import zhaohg.main.R;
 import zhaohg.testable.TestableActionBarActivity;
 
-public class EditSellPostActivity extends TestableActionBarActivity {
+public class EditPostActivity extends TestableActionBarActivity {
 
     public static final String EXTRA_POST_ID = "EXTRA_POST_ID";
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
@@ -35,7 +35,7 @@ public class EditSellPostActivity extends TestableActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_sell_post);
+        setContentView(R.layout.activity_edit_post);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,13 +87,13 @@ public class EditSellPostActivity extends TestableActionBarActivity {
             postButton.setEnabled(false);
             if (postId.isEmpty()) {
                 // Create new post.
-                NewSellPost newSellPost = new NewSellPost(context);
-                newSellPost.setParameter(title, description, new ArrayList<String>());
-                newSellPost.setEvent(new NewSellPostPostEvent() {
+                NewPost newPost = new NewPost(context);
+                newPost.setParameter(title, description, new ArrayList<String>());
+                newPost.setEvent(new NewPostPostEvent() {
                     @Override
                     public void onSuccess(String postId) {
-                        Intent intent = new Intent(context, SellPostActivity.class);
-                        intent.putExtra(SellPostActivity.EXTRA_POST_ID, postId);
+                        Intent intent = new Intent(context, PostActivity.class);
+                        intent.putExtra(PostActivity.EXTRA_POST_ID, postId);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         finishTest();
@@ -106,18 +106,18 @@ public class EditSellPostActivity extends TestableActionBarActivity {
                         finishTest();
                     }
                 });
-                newSellPost.request();
+                newPost.request();
             } else {
                 // This is an update.
-                UpdateSellPost updateSellPost = new UpdateSellPost(context);
-                updateSellPost.setParameter(postId);
-                updateSellPost.setUpdateTitle(editTitle.getText().toString());
-                updateSellPost.setUpdateDescription(editDescription.getText().toString());
-                updateSellPost.setEvent(new UpdateSellPostPostEvent() {
+                UpdatePost updatePost = new UpdatePost(context);
+                updatePost.setParameter(postId);
+                updatePost.setUpdateTitle(editTitle.getText().toString());
+                updatePost.setUpdateDescription(editDescription.getText().toString());
+                updatePost.setEvent(new UpdatePostPostEvent() {
                     @Override
                     public void onSuccess() {
-                        Intent intent = new Intent(context, SellPostActivity.class);
-                        intent.putExtra(SellPostActivity.EXTRA_POST_ID, postId);
+                        Intent intent = new Intent(context, PostActivity.class);
+                        intent.putExtra(PostActivity.EXTRA_POST_ID, postId);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         finishTest();
@@ -130,7 +130,7 @@ public class EditSellPostActivity extends TestableActionBarActivity {
                         finishTest();
                     }
                 });
-                updateSellPost.request();
+                updatePost.request();
             }
         }
     }

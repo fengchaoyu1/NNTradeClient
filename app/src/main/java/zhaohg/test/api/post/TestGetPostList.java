@@ -1,4 +1,4 @@
-package zhaohg.test.api.sell;
+package zhaohg.test.api.post;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
@@ -8,18 +8,18 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.ApiErrno;
-import zhaohg.api.sell.GetSellPostList;
-import zhaohg.api.sell.GetSellPostListPostEvent;
-import zhaohg.api.sell.NewSellPost;
-import zhaohg.api.sell.NewSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.GetPostList;
+import zhaohg.api.post.GetPostListPostEvent;
+import zhaohg.api.post.NewPost;
+import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.test.helper.RegisterAndLogin;
 
-public class TestGetSellPostList extends InstrumentationTestCase {
+public class TestGetPostList extends InstrumentationTestCase {
 
     private int localErrno;
 
-    List<SellPost> localPosts;
+    List<Post> localPosts;
 
     @Override
     protected void setUp() throws Exception {
@@ -33,9 +33,9 @@ public class TestGetSellPostList extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        NewSellPost newPost = new NewSellPost(context);
+        NewPost newPost = new NewPost(context);
         newPost.setParameter(title, description, imageIdList);
-        newPost.setEvent(new NewSellPostPostEvent() {
+        newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String postId) {
                 signal.countDown();
@@ -59,11 +59,11 @@ public class TestGetSellPostList extends InstrumentationTestCase {
         for (int i = 0; i < 20; ++i) {
             newSellPost("title_" + i, "", new ArrayList<String>());
         }
-        GetSellPostList getSellPostList = new GetSellPostList(context);
-        getSellPostList.setParameter(1);
-        getSellPostList.setEvent(new GetSellPostListPostEvent() {
+        GetPostList getPostList = new GetPostList(context);
+        getPostList.setParameter(1);
+        getPostList.setEvent(new GetPostListPostEvent() {
             @Override
-            public void onSuccess(List<SellPost> posts) {
+            public void onSuccess(List<Post> posts) {
                 localPosts = posts;
                 signal.countDown();
             }
@@ -73,7 +73,7 @@ public class TestGetSellPostList extends InstrumentationTestCase {
                 signal.countDown();
             }
         });
-        getSellPostList.request();
+        getPostList.request();
         signal.await();
         assertEquals(ApiErrno.ERRNO_NO_ERROR, localErrno);
         assertEquals("title_19", localPosts.get(0).getTitle());

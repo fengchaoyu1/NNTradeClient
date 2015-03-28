@@ -31,11 +31,11 @@
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="zhaohg.sell.EditSellPostActivity"
+            android:name="zhaohg.post.EditPostActivity"
             android:label="@string/title_activity_edit_sell_post" >
         </activity>
         <activity
-            android:name="zhaohg.sell.SellPostActivity"
+            android:name="zhaohg.post.PostActivity"
             android:label="@string/title_activity_sell_post" >
         </activity>
     </application>

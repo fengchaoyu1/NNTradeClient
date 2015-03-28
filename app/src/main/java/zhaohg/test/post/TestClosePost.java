@@ -1,4 +1,4 @@
-package zhaohg.test.sell;
+package zhaohg.test.post;
 
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
@@ -8,25 +8,24 @@ import android.widget.TextView;
 
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.api.sell.GetSellPost;
 import zhaohg.main.R;
-import zhaohg.sell.SellPostActivity;
+import zhaohg.post.PostActivity;
 import zhaohg.test.helper.GetSellPostHelper;
 import zhaohg.test.helper.NewSellPostHelper;
 import zhaohg.test.helper.RandomName;
 import zhaohg.test.helper.RegisterAndLogin;
 import zhaohg.testable.OnTestFinishedListener;
 
-public class TestClosePost extends ActivityInstrumentationTestCase2<SellPostActivity> {
+public class TestClosePost extends ActivityInstrumentationTestCase2<PostActivity> {
 
-    private SellPostActivity activity;
+    private PostActivity activity;
     private Context context;
 
     private TextView textError;
     private Switch switchOpen;
 
     public TestClosePost() {
-        super(SellPostActivity.class);
+        super(PostActivity.class);
     }
 
     @Override

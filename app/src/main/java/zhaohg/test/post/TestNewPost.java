@@ -1,4 +1,4 @@
-package zhaohg.test.sell;
+package zhaohg.test.post;
 
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
@@ -7,24 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 
-import zhaohg.api.ApiErrno;
-import zhaohg.api.Encryption;
-import zhaohg.api.account.AccountLogin;
-import zhaohg.api.account.AccountLoginPostEvent;
-import zhaohg.api.account.AccountRegister;
-import zhaohg.api.account.AccountRegisterPostEvent;
 import zhaohg.main.R;
-import zhaohg.sell.EditSellPostActivity;
-import zhaohg.test.helper.RandomName;
+import zhaohg.post.EditPostActivity;
 import zhaohg.test.helper.RegisterAndLogin;
 import zhaohg.testable.OnTestFinishedListener;
 
-public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostActivity> {
+public class TestNewPost extends ActivityInstrumentationTestCase2<EditPostActivity> {
 
-    private EditSellPostActivity activity;
+    private EditPostActivity activity;
 
     private EditText editTitle;
     private EditText editDescription;
@@ -32,7 +24,7 @@ public class TestNewPost extends ActivityInstrumentationTestCase2<EditSellPostAc
     private TextView textError;
 
     public TestNewPost() {
-        super(EditSellPostActivity.class);
+        super(EditPostActivity.class);
     }
 
     @Override

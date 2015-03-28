@@ -1,4 +1,4 @@
-package zhaohg.sell;
+package zhaohg.post;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,15 +14,15 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import zhaohg.api.sell.GetSellPostList;
-import zhaohg.api.sell.GetSellPostListPostEvent;
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.GetPostList;
+import zhaohg.api.post.GetPostListPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.main.R;
 import zhaohg.testable.TestableFragment;
 
 import static android.support.v7.widget.RecyclerView.OnScrollListener;
 
-public class SellPostsFragment extends TestableFragment {
+public class PostsFragment extends TestableFragment {
 
     private Context context;
 
@@ -35,7 +35,7 @@ public class SellPostsFragment extends TestableFragment {
     private boolean loading = false;
     private int pageNum = 1;
 
-    public SellPostsFragment() {
+    public PostsFragment() {
     }
 
     @Override
@@ -45,13 +45,13 @@ public class SellPostsFragment extends TestableFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sell_posts, container, false);
+        View view = inflater.inflate(R.layout.fragment_posts, container, false);
         this.context = view.getContext();
 
         this.recyclePosts = (RecyclerView) view.findViewById(R.id.recycle_posts);
         this.layoutManager = new LinearLayoutManager(context);
         this.recyclePosts.setLayoutManager(layoutManager);
-        SellPostsAdapter adapter = new SellPostsAdapter(context);
+        PostsAdapter adapter = new PostsAdapter(context);
         this.recyclePosts.setAdapter(adapter);
         this.recyclePosts.setOnScrollListener(new OnPostsScrollListener());
 
@@ -60,7 +60,7 @@ public class SellPostsFragment extends TestableFragment {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, EditSellPostActivity.class);
+                Intent intent = new Intent(context, EditPostActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -84,12 +84,12 @@ public class SellPostsFragment extends TestableFragment {
 
     public void loadNextPage() {
         loading = true;
-        GetSellPostList getSellPostList = new GetSellPostList(context);
-        getSellPostList.setParameter(pageNum);
-        getSellPostList.setEvent(new GetSellPostListPostEvent() {
+        GetPostList getPostList = new GetPostList(context);
+        getPostList.setParameter(pageNum);
+        getPostList.setEvent(new GetPostListPostEvent() {
             @Override
-            public void onSuccess(List<SellPost> posts) {
-                SellPostsAdapter adapter = (SellPostsAdapter) recyclePosts.getAdapter();
+            public void onSuccess(List<Post> posts) {
+                PostsAdapter adapter = (PostsAdapter) recyclePosts.getAdapter();
                 if (refresh) {
                     refresh = false;
                     swipeRefreshLayout.setRefreshing(false);
@@ -107,7 +107,7 @@ public class SellPostsFragment extends TestableFragment {
                 finishTest();
             }
         });
-        getSellPostList.request();
+        getPostList.request();
     }
 
     private class OnPostsScrollListener extends OnScrollListener {

@@ -1,4 +1,4 @@
-package zhaohg.test.api.sell;
+package zhaohg.test.api.post;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.ApiErrno;
-import zhaohg.api.sell.GetSellPost;
-import zhaohg.api.sell.GetSellPostPostEvent;
-import zhaohg.api.sell.NewSellPost;
-import zhaohg.api.sell.NewSellPostPostEvent;
-import zhaohg.api.sell.SellPost;
+import zhaohg.api.post.GetPost;
+import zhaohg.api.post.GetPostPostEvent;
+import zhaohg.api.post.NewPost;
+import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.test.helper.RegisterAndLogin;
 
-public class TestNewSellPost extends InstrumentationTestCase {
+public class TestNewPost extends InstrumentationTestCase {
 
     private int localErrno;
 
@@ -31,7 +31,7 @@ public class TestNewSellPost extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        NewSellPost newPost = new NewSellPost(context);
+        NewPost newPost = new NewPost(context);
         List<String> imageIdList = new ArrayList<>();
         imageIdList.add("1");
         imageIdList.add("2");
@@ -39,15 +39,15 @@ public class TestNewSellPost extends InstrumentationTestCase {
         final String title = "New Post+";
         final String description = "New Post Description";
         newPost.setParameter(title, description, imageIdList);
-        newPost.setEvent(new NewSellPostPostEvent() {
+        newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String post_id) {
                 assertFalse(post_id.equals(""));
-                final GetSellPost getPost = new GetSellPost(context);
+                final GetPost getPost = new GetPost(context);
                 getPost.setParameter(post_id);
-                getPost.setEvent(new GetSellPostPostEvent() {
+                getPost.setEvent(new GetPostPostEvent() {
                     @Override
-                    public void onSuccess(SellPost post) {
+                    public void onSuccess(Post post) {
                         assertEquals(getPost.loadUserId(), post.getUserId());
                         assertEquals(post_id, post.getPostId());
                         assertEquals(title, post.getTitle());
@@ -82,7 +82,7 @@ public class TestNewSellPost extends InstrumentationTestCase {
         this.localErrno = ApiErrno.ERRNO_NO_ERROR;
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
-        NewSellPost newPost = new NewSellPost(context);
+        NewPost newPost = new NewPost(context);
         List<String> imageIdList = new ArrayList<>();
         imageIdList.add("1");
         imageIdList.add("2");
@@ -90,15 +90,15 @@ public class TestNewSellPost extends InstrumentationTestCase {
         final String title = "出售信息";
         final String description = "出售内容描述";
         newPost.setParameter(title, description, imageIdList);
-        newPost.setEvent(new NewSellPostPostEvent() {
+        newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String post_id) {
                 assertFalse(post_id.equals(""));
-                final GetSellPost getPost = new GetSellPost(context);
+                final GetPost getPost = new GetPost(context);
                 getPost.setParameter(post_id);
-                getPost.setEvent(new GetSellPostPostEvent() {
+                getPost.setEvent(new GetPostPostEvent() {
                     @Override
-                    public void onSuccess(SellPost post) {
+                    public void onSuccess(Post post) {
                         assertEquals(getPost.loadUserId(), post.getUserId());
                         assertEquals(post_id, post.getPostId());
                         assertEquals(title, post.getTitle());

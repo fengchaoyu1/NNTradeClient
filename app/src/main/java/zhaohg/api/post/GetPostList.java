@@ -1,4 +1,4 @@
-package zhaohg.api.sell;
+package zhaohg.api.post;
 
 import android.content.Context;
 
@@ -17,14 +17,14 @@ import zhaohg.json.JsonArray;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class GetSellPostList extends ApiBase {
-    public static String RESOURCE_URL = "sell/posts/";
+public class GetPostList extends ApiBase {
+    public static String RESOURCE_URL = "post/all/";
 
-    private GetSellPostListPostEvent event;
+    private GetPostListPostEvent event;
 
     private int pageNum;
 
-    public GetSellPostList(Context context) {
+    public GetPostList(Context context) {
         super(context);
     }
 
@@ -32,7 +32,7 @@ public class GetSellPostList extends ApiBase {
         this.pageNum = pageNum;
     }
 
-    public void setEvent(GetSellPostListPostEvent event) {
+    public void setEvent(GetPostListPostEvent event) {
         this.event = event;
     }
 
@@ -59,24 +59,11 @@ public class GetSellPostList extends ApiBase {
                         if (!values.getValue("success").getBoolean()) {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
-                            List<SellPost> posts = new ArrayList<>();
+                            List<Post> posts = new ArrayList<>();
                             JsonArray postArray = values.getValue("posts").getJsonArray();
                             for (int i = 0; i < postArray.size(); ++i) {
                                 JsonObject postObject = postArray.get(i).getJsonObject();
-                                SellPost post = new SellPost();
-                                post.setPostId(postObject.getValue("post_id").getString());
-                                post.setTitle(postObject.getValue("title").getString());
-                                post.setDescription(postObject.getValue("description").getString());
-                                post.setUserId(postObject.getValue("user_id").getString());
-                                post.setImageSetId(postObject.getValue("image_set_id").getString());
-                                try {
-                                    DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-                                    post.setPostDate(dateFormat.parse(postObject.getValue("post_date").getString()));
-                                    post.setModifyDate(dateFormat.parse(postObject.getValue("modify_date").getString()));
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                post.setOpen(postObject.getValue("is_open").getBoolean());
+                                Post post = new Post(postObject);
                                 posts.add(post);
                             }
                             event.onSuccess(posts);

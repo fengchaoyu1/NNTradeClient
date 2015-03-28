@@ -1,4 +1,4 @@
-package zhaohg.api.sell;
+package zhaohg.api.post;
 
 import android.content.Context;
 
@@ -14,15 +14,15 @@ import zhaohg.api.RequestTask;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class GetSellPost extends ApiBase {
+public class GetPost extends ApiBase {
 
-    public static String RESOURCE_URL = "sell/post/";
+    public static String RESOURCE_URL = "post/";
 
-    private GetSellPostPostEvent event;
+    private GetPostPostEvent event;
 
     private String postId;
 
-    public GetSellPost(Context context) {
+    public GetPost(Context context) {
         super(context);
     }
 
@@ -30,7 +30,7 @@ public class GetSellPost extends ApiBase {
         this.postId = postId;
     }
 
-    public void setEvent(GetSellPostPostEvent event) {
+    public void setEvent(GetPostPostEvent event) {
         this.event = event;
     }
 
@@ -59,20 +59,7 @@ public class GetSellPost extends ApiBase {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
                             JsonObject postObject = values.getValue("post").getJsonObject();
-                            SellPost post = new SellPost();
-                            post.setPostId(postObject.getValue("post_id").getString());
-                            post.setTitle(postObject.getValue("title").getString());
-                            post.setDescription(postObject.getValue("description").getString());
-                            post.setUserId(postObject.getValue("user_id").getString());
-                            post.setImageSetId(postObject.getValue("image_set_id").getString());
-                            try {
-                                DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-                                post.setPostDate(dateFormat.parse(postObject.getValue("post_date").getString()));
-                                post.setModifyDate(dateFormat.parse(postObject.getValue("modify_date").getString()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            post.setOpen(postObject.getValue("is_open").getBoolean());
+                            Post post = new Post(postObject);
                             event.onSuccess(post);
                         }
                     }

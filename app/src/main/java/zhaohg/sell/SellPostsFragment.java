@@ -119,14 +119,19 @@ public class SellPostsFragment extends TestableFragment {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            visibleItemCount = layoutManager.getChildCount();
             totalItemCount = layoutManager.getItemCount();
+            visibleItemCount = layoutManager.getChildCount();
             pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
             if (!loading) {
                 if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                     loadNextPage();
                 }
+            }
+            if (pastVisibleItems == 0) {
+                swipeRefreshLayout.setEnabled(true);
+            } else {
+                swipeRefreshLayout.setEnabled(false);
             }
         }
 

@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +35,18 @@ public class PostActivity extends TestableActionBarActivity {
 
     private String postId = "";
 
+    private TextView textUsername;
     private TextView textTitle;
     private TextView textDescription;
-    private TextView textDate;
+    private TextView textPublishDate;
+    private TextView textModifyDate;
     private Switch switchOpen;
+
+    private LinearLayoutManager layoutManager;
+    private RecyclerView recycleComments;
+
+    private EditText editMessage;
+    private ImageView buttonSend;
 
     private TextView textError;
 
@@ -56,11 +68,20 @@ public class PostActivity extends TestableActionBarActivity {
             }
         });
 
+        this.textUsername = (TextView) findViewById(R.id.text_username);
         this.textTitle = (TextView) findViewById(R.id.text_title);
         this.textDescription = (TextView) findViewById(R.id.text_description);
-        this.textDate = (TextView) findViewById(R.id.text_date);
+        this.textPublishDate = (TextView) findViewById(R.id.text_publish_date);
+        this.textModifyDate = (TextView) findViewById(R.id.text_modify_date);
         this.switchOpen = (Switch) findViewById(R.id.switch_open);
         this.switchOpen.setOnCheckedChangeListener(new OnOpenCheckedChangeListener());
+
+        this.recycleComments = (RecyclerView) findViewById(R.id.recycle_comments);
+        this.layoutManager = new LinearLayoutManager(this);
+        this.recycleComments.setLayoutManager(layoutManager);
+
+        this.editMessage = (EditText) findViewById(R.id.edit_message);
+        this.buttonSend = (ImageView) findViewById(R.id.button_send);
 
         this.textError = (TextView) findViewById(R.id.text_error);
 
@@ -160,9 +181,11 @@ public class PostActivity extends TestableActionBarActivity {
             @Override
             public void onSuccess(Post post) {
                 PostActivity.this.post = post;
+                textUsername.setText(post.getUserName());
                 textTitle.setText(post.getTitle());
                 textDescription.setText(post.getDescription());
-                textDate.setText(context.getString(R.string.publish_date_) + post.getPostDateString());
+                textPublishDate.setText(context.getString(R.string.publish_date_) + post.getPostDateString());
+                textModifyDate.setText(context.getString(R.string.modify_date_) + post.getModifyDateString());
                 switchOpen.setChecked(post.isOpen());
                 isOwner = post.getUserId().equals(getPost.loadUserId());
                 switchOpen.setEnabled(isOwner);

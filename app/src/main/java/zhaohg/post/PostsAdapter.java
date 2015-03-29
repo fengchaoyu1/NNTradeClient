@@ -86,7 +86,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             super(view);
             textTitle = (TextView) view.findViewById(R.id.text_title);
             textDescription = (TextView) view.findViewById(R.id.text_description);
-            textDate = (TextView) view.findViewById(R.id.text_date);
+            textDate = (TextView) view.findViewById(R.id.text_publish_date);
             view.setOnClickListener(new OnPostClickerListener());
         }
 

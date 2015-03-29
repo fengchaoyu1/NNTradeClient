@@ -7,4 +7,6 @@
     <string name="prompt_confirm">Confirm Password</string>
 
     <string name="click_to_login">Login</string>
+    
+    <string name="username">Username</string>
 </resources>

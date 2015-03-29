@@ -3,9 +3,9 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="publish_date_">Publish Date: </string>
+    <string name="modify_date_">Modify Date: </string>
 
     <string name="hello_world">Hello world!</string>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

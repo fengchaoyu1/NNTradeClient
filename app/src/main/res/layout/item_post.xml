@@ -34,7 +34,7 @@
             android:textColor="@color/text_color_primary_dark" />
 
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/text_publish_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"

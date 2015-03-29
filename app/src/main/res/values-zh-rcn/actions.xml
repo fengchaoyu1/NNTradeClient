@@ -12,4 +12,6 @@
     <string name="sure_to_delete">确定要删除吗？</string>
     <string name="action_confirm">确认</string>
     <string name="action_cancel">取消</string>
+    <string name="action_reply">回复</string>
+    <string name="action_send">发送</string>
 </resources>

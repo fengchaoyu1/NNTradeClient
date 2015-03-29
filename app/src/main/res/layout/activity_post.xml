@@ -1,9 +1,8 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="zhaohg.post.PostActivity">
 
     <android.support.v7.widget.Toolbar
@@ -14,7 +13,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,11 +26,20 @@
             android:paddingTop="@dimen/activity_vertical_margin">
 
             <TextView
+                android:id="@+id/text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:hint="@string/username"
+                android:textColor="@color/text_color_primary_dark"/>
+
+            <TextView
                 android:id="@+id/text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:hint="@string/title"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/text_color_primary_dark"/>
 
             <TextView
@@ -43,11 +52,21 @@
                 android:textColor="@color/text_color_primary_dark" />
 
             <TextView
-                android:id="@+id/text_date"
+                android:id="@+id/text_publish_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:hint="@string/publish_date_"
+                android:gravity="right"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/text_color_primary_dark" />
+
+            <TextView
+                android:id="@+id/text_modify_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:hint="@string/modify_date_"
                 android:gravity="right"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/text_color_primary_dark" />
@@ -76,8 +95,40 @@
                 android:textColor="@color/text_color_error"
                 android:drawableLeft="@drawable/error" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_comments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:scrollbars="vertical" />
+
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:weightSum="2">
+
+        <EditText
+            android:id="@+id/edit_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/action_reply"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/button_send"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/send_colorful"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

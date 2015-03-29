@@ -3,7 +3,6 @@ package zhaohg.test.api.comment;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -13,10 +12,6 @@ import zhaohg.api.comment.AppendCommentPostEvent;
 import zhaohg.api.comment.Comment;
 import zhaohg.api.comment.GetComments;
 import zhaohg.api.comment.GetCommentsPostEvent;
-import zhaohg.api.post.GetPost;
-import zhaohg.api.post.GetPostPostEvent;
-import zhaohg.api.post.NewPost;
-import zhaohg.api.post.NewPostPostEvent;
 import zhaohg.api.post.Post;
 import zhaohg.test.helper.GetPostHelper;
 import zhaohg.test.helper.NewPostHelper;
@@ -27,6 +22,7 @@ public class TestAppendComment extends InstrumentationTestCase {
     private Context context;
     private int localErrno;
 
+    private String localCommentId;
     private List<Comment> localComments;
 
     @Override
@@ -86,7 +82,7 @@ public class TestAppendComment extends InstrumentationTestCase {
         assertEquals(appendComment.loadUserId(), comment.getUserId());
         assertEquals(appendComment.loadUsername(), comment.getUserName());
         assertEquals("沙发", comment.getMessage());
-        assertEquals(0, comment.getReply());
+        assertFalse(comment.isReply());
     }
 
     public void testNewPostNormalTwice() throws Exception {
@@ -143,12 +139,12 @@ public class TestAppendComment extends InstrumentationTestCase {
         assertEquals(appendComment.loadUserId(), comment.getUserId());
         assertEquals(appendComment.loadUsername(), comment.getUserName());
         assertEquals("沙发", comment.getMessage());
-        assertEquals(0, comment.getReply());
+        assertFalse(comment.isReply());
         comment = this.localComments.get(1);
         assertEquals(appendComment.loadUserId(), comment.getUserId());
         assertEquals(appendComment.loadUsername(), comment.getUserName());
         assertEquals("板凳", comment.getMessage());
-        assertEquals(0, comment.getReply());
+        assertFalse(comment.isReply());
     }
 
     public void testNewPostNormalReply() throws Exception {
@@ -160,18 +156,33 @@ public class TestAppendComment extends InstrumentationTestCase {
         appendComment.setEvent(new AppendCommentPostEvent() {
             @Override
             public void onSuccess() {
-                AppendComment appendComment = new AppendComment(context);
-                appendComment.setParameter(commentsId, "板凳", 1);
-                appendComment.setEvent(new AppendCommentPostEvent() {
+                GetComments getComments = new GetComments(context);
+                getComments.setParameter(commentsId, 1);
+                getComments.setEvent(new GetCommentsPostEvent() {
                     @Override
-                    public void onSuccess() {
-                        GetComments getComments = new GetComments(context);
-                        getComments.setParameter(commentsId, 1);
-                        getComments.setEvent(new GetCommentsPostEvent() {
+                    public void onSuccess(List<Comment> comments) {
+                        localCommentId = comments.get(0).getCommentId();
+                        AppendComment appendComment = new AppendComment(context);
+                        appendComment.setParameter(commentsId, "板凳", localCommentId);
+                        appendComment.setEvent(new AppendCommentPostEvent() {
                             @Override
-                            public void onSuccess(List<Comment> comments) {
-                                localComments = comments;
-                                signal.countDown();
+                            public void onSuccess() {
+                                GetComments getComments = new GetComments(context);
+                                getComments.setParameter(commentsId, 1);
+                                getComments.setEvent(new GetCommentsPostEvent() {
+                                    @Override
+                                    public void onSuccess(List<Comment> comments) {
+                                        localComments = comments;
+                                        signal.countDown();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int errno) {
+                                        localErrno = errno;
+                                        signal.countDown();
+                                    }
+                                });
+                                getComments.request();
                             }
 
                             @Override
@@ -180,16 +191,15 @@ public class TestAppendComment extends InstrumentationTestCase {
                                 signal.countDown();
                             }
                         });
-                        getComments.request();
+                        appendComment.request();
                     }
-
                     @Override
                     public void onFailure(int errno) {
                         localErrno = errno;
                         signal.countDown();
                     }
                 });
-                appendComment.request();
+                getComments.request();
             }
             @Override
             public void onFailure(int errno) {
@@ -205,12 +215,15 @@ public class TestAppendComment extends InstrumentationTestCase {
         assertEquals(appendComment.loadUserId(), comment.getUserId());
         assertEquals(appendComment.loadUsername(), comment.getUserName());
         assertEquals("沙发", comment.getMessage());
-        assertEquals(0, comment.getReply());
+        assertFalse(comment.isReply());
         comment = this.localComments.get(1);
         assertEquals(appendComment.loadUserId(), comment.getUserId());
         assertEquals(appendComment.loadUsername(), comment.getUserName());
         assertEquals("板凳", comment.getMessage());
-        assertEquals(1, comment.getReply());
+        assertTrue(comment.isReply());
+        assertEquals(localCommentId, comment.getReplyCommentId());
+        assertEquals(appendComment.loadUserId(), comment.getReplyUserId());
+        assertEquals(appendComment.loadUsername(), comment.getReplyUserName());
     }
 
 }

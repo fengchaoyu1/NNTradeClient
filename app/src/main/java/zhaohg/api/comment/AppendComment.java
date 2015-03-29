@@ -16,7 +16,7 @@ public class AppendComment extends ApiBase {
 
     private String commentsId;
     private String message;
-    private int reply;
+    private String reply;
 
     private AppendCommentPostEvent event;
 
@@ -30,10 +30,10 @@ public class AppendComment extends ApiBase {
     }
 
     public void setParameter(String commentsId, String message) {
-        this.setParameter(commentsId, message, 0);
+        this.setParameter(commentsId, message, "");
     }
 
-    public void setParameter(String commentsId, String message, int reply) {
+    public void setParameter(String commentsId, String message, String reply) {
         this.commentsId = commentsId;
         this.message = message;
         this.reply = reply;
@@ -52,7 +52,7 @@ public class AppendComment extends ApiBase {
         param.addParam("user_id", this.loadUserId());
         param.setToken(this.loadToken());
         param.addParam("message", message);
-        if (this.reply > 0) {
+        if (!this.reply.equals("")) {
             param.addParam("reply", reply);
         }
         this.task.setRequestParam(param);

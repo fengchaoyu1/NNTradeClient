@@ -100,4 +100,8 @@ public class JsonObject extends JsonValue {
         return this.data.get(new JsonString(key));
     }
 
+    public boolean hasKey(String key) {
+        return this.data.get(new JsonString(key)) != null;
+    }
+
 }

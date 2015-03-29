@@ -10,7 +10,7 @@ import java.util.concurrent.CountDownLatch;
 
 import zhaohg.main.R;
 import zhaohg.post.PostActivity;
-import zhaohg.test.helper.NewSellPostHelper;
+import zhaohg.test.helper.NewPostHelper;
 import zhaohg.test.helper.RandomName;
 import zhaohg.test.helper.RegisterAndLogin;
 import zhaohg.testable.OnTestFinishedListener;
@@ -46,12 +46,12 @@ public class TestGetPost extends ActivityInstrumentationTestCase2<PostActivity> 
     }
 
     public void testGetPostNormal() throws Exception {
-        NewSellPostHelper newSellPostHelper = new NewSellPostHelper(context);
+        NewPostHelper newPostHelper = new NewPostHelper(context);
         final String title = RandomName.generateRandomName("title_");
         final String description = RandomName.generateRandomName("description_");
-        newSellPostHelper.setTitle(title);
-        newSellPostHelper.setDescription(description);
-        final String postId = newSellPostHelper.newPost();
+        newPostHelper.setTitle(title);
+        newPostHelper.setDescription(description);
+        final String postId = newPostHelper.newPost();
         assertFalse(postId.isEmpty());
         final CountDownLatch signal = new CountDownLatch(1);
         activity.runOnUiThread(new Runnable() {
@@ -75,12 +75,12 @@ public class TestGetPost extends ActivityInstrumentationTestCase2<PostActivity> 
     }
 
     public void testGetPostNotExist() throws Exception {
-        NewSellPostHelper newSellPostHelper = new NewSellPostHelper(context);
+        NewPostHelper newPostHelper = new NewPostHelper(context);
         final String title = RandomName.generateRandomName("title_");
         final String description = RandomName.generateRandomName("description_");
-        newSellPostHelper.setTitle(title);
-        newSellPostHelper.setDescription(description);
-        final String postId = newSellPostHelper.newPost();
+        newPostHelper.setTitle(title);
+        newPostHelper.setDescription(description);
+        final String postId = newPostHelper.newPost();
         assertFalse(postId.isEmpty());
         final CountDownLatch signal = new CountDownLatch(1);
         activity.runOnUiThread(new Runnable() {

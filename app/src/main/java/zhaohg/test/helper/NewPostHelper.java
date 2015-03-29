@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
 import zhaohg.api.post.NewPost;
 import zhaohg.api.post.NewPostPostEvent;
 
-public class NewSellPostHelper {
+public class NewPostHelper {
 
     private Context context;
 
@@ -19,7 +19,7 @@ public class NewSellPostHelper {
 
     private String postId;
 
-    public NewSellPostHelper(Context context) {
+    public NewPostHelper(Context context) {
         this.context = context;
         this.title = "";
         this.description = "";

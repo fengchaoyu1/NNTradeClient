@@ -1,10 +1,7 @@
-package zhaohg.api.post;
+package zhaohg.api.comment;
 
 import android.content.Context;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,29 +14,31 @@ import zhaohg.json.JsonArray;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class GetPostList extends ApiBase {
+public class GetComments extends ApiBase {
 
-    public static String RESOURCE_URL = "post/all/";
+    public static String RESOURCE_URL = "comment/";
 
-    private GetPostListPostEvent event;
+    private GetCommentsPostEvent event;
 
+    private String commentsId;
     private int pageNum;
 
-    public GetPostList(Context context) {
+    public GetComments(Context context) {
         super(context);
     }
 
-    public void setParameter(int pageNum) {
+    public void setParameter(String commentsId, int pageNum) {
+        this.commentsId = commentsId;
         this.pageNum = pageNum;
     }
 
-    public void setEvent(GetPostListPostEvent event) {
+    public void setEvent(GetCommentsPostEvent event) {
         this.event = event;
     }
 
     @Override
     public String getUrl() {
-        return BASE_URL + RESOURCE_URL + pageNum + "/";
+        return BASE_URL + RESOURCE_URL + commentsId + "/" + pageNum + "/";
     }
 
     @Override
@@ -60,14 +59,14 @@ public class GetPostList extends ApiBase {
                         if (!values.getValue("success").getBoolean()) {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
-                            List<Post> posts = new ArrayList<>();
-                            JsonArray postArray = values.getValue("posts").getJsonArray();
-                            for (int i = 0; i < postArray.size(); ++i) {
-                                JsonObject postObject = postArray.get(i).getJsonObject();
-                                Post post = new Post(postObject);
-                                posts.add(post);
+                            List<Comment> comments = new ArrayList<>();
+                            JsonArray commentsArray = values.getValue("comments").getJsonArray();
+                            for (int i = 0; i < commentsArray.size(); ++i) {
+                                JsonObject commentObject = commentsArray.get(i).getJsonObject();
+                                Comment comment = new Comment(commentObject);
+                                comments.add(comment);
                             }
-                            event.onSuccess(posts);
+                            event.onSuccess(comments);
                         }
                     }
                 }

@@ -10,8 +10,8 @@ import java.util.concurrent.CountDownLatch;
 
 import zhaohg.main.R;
 import zhaohg.post.PostActivity;
-import zhaohg.test.helper.GetSellPostHelper;
-import zhaohg.test.helper.NewSellPostHelper;
+import zhaohg.test.helper.GetPostHelper;
+import zhaohg.test.helper.NewPostHelper;
 import zhaohg.test.helper.RandomName;
 import zhaohg.test.helper.RegisterAndLogin;
 import zhaohg.testable.OnTestFinishedListener;
@@ -43,10 +43,10 @@ public class TestClosePost extends ActivityInstrumentationTestCase2<PostActivity
     }
 
     public void testClosePostNormal() throws Exception {
-        NewSellPostHelper newSellPostHelper = new NewSellPostHelper(context);
-        newSellPostHelper.setTitle(RandomName.generateRandomName("title_"));
-        newSellPostHelper.setDescription(RandomName.generateRandomName("description_"));
-        final String postId = newSellPostHelper.newPost();
+        NewPostHelper newPostHelper = new NewPostHelper(context);
+        newPostHelper.setTitle(RandomName.generateRandomName("title_"));
+        newPostHelper.setDescription(RandomName.generateRandomName("description_"));
+        final String postId = newPostHelper.newPost();
         assertFalse(postId.isEmpty());
         final CountDownLatch signal1 = new CountDownLatch(1);
         activity.runOnUiThread(new Runnable() {
@@ -80,8 +80,8 @@ public class TestClosePost extends ActivityInstrumentationTestCase2<PostActivity
         });
         signal2.await();
         assertFalse(switchOpen.isChecked());
-        GetSellPostHelper getSellPostHelper = new GetSellPostHelper(context);
-        assertFalse(getSellPostHelper.getSellPost(activity.getPostId()).isOpen());
+        GetPostHelper getPostHelper = new GetPostHelper(context);
+        assertFalse(getPostHelper.getSellPost(activity.getPostId()).isOpen());
         final CountDownLatch signal3 = new CountDownLatch(1);
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -97,6 +97,6 @@ public class TestClosePost extends ActivityInstrumentationTestCase2<PostActivity
         });
         signal3.await();
         assertTrue(switchOpen.isChecked());
-        assertTrue(getSellPostHelper.getSellPost(activity.getPostId()).isOpen());
+        assertTrue(getPostHelper.getSellPost(activity.getPostId()).isOpen());
     }
 }

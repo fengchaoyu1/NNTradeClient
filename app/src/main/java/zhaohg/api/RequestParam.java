@@ -66,6 +66,10 @@ public class RequestParam {
         this.params.put(key, value);
     }
 
+    public void addParam(String key, int value) {
+        this.params.put(key, String.valueOf(value));
+    }
+
     public void setToken(String token) {
         this.token = token;
     }

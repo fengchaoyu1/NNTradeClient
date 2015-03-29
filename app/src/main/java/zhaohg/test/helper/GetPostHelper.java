@@ -8,12 +8,12 @@ import zhaohg.api.post.GetPost;
 import zhaohg.api.post.GetPostPostEvent;
 import zhaohg.api.post.Post;
 
-public class GetSellPostHelper {
+public class GetPostHelper {
 
     private Context context;
     private Post post;
 
-    public GetSellPostHelper(Context context) {
+    public GetPostHelper(Context context) {
         this.context = context;
     }
 
@@ -24,7 +24,7 @@ public class GetSellPostHelper {
         newPost.setEvent(new GetPostPostEvent() {
             @Override
             public void onSuccess(Post post) {
-                GetSellPostHelper.this.post = post;
+                GetPostHelper.this.post = post;
                 signal.countDown();
             }
 

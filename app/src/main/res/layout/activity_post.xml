@@ -14,7 +14,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +100,9 @@
                 android:id="@+id/recycle_comments"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:minHeight="500dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
@@ -119,12 +122,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/action_reply"
+            android:textColor="@color/text_color_primary_dark"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/button_send"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:paddingRight="10dp"
             android:src="@drawable/send_colorful"
             android:layout_weight="1"/>

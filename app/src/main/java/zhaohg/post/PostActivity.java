@@ -19,6 +19,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import zhaohg.api.comment.Comment;
+import zhaohg.api.comment.GetComments;
+import zhaohg.api.comment.GetCommentsPostEvent;
 import zhaohg.api.post.DeletePost;
 import zhaohg.api.post.DeletePostPostEvent;
 import zhaohg.api.post.GetPost;
@@ -26,6 +31,7 @@ import zhaohg.api.post.GetPostPostEvent;
 import zhaohg.api.post.Post;
 import zhaohg.api.post.UpdatePost;
 import zhaohg.api.post.UpdatePostPostEvent;
+import zhaohg.comment.CommentsAdapter;
 import zhaohg.main.R;
 import zhaohg.testable.TestableActionBarActivity;
 
@@ -34,6 +40,8 @@ public class PostActivity extends TestableActionBarActivity {
     public static final String EXTRA_POST_ID = "EXTRA_POST_ID";
 
     private String postId = "";
+
+    private Context context;
 
     private TextView textUsername;
     private TextView textTitle;
@@ -53,10 +61,14 @@ public class PostActivity extends TestableActionBarActivity {
     private Post post;
     private boolean isOwner = false;
 
+    private int pageNum = 1;
+    private boolean loading = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        context = this.getApplicationContext();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,6 +91,9 @@ public class PostActivity extends TestableActionBarActivity {
         this.recycleComments = (RecyclerView) findViewById(R.id.recycle_comments);
         this.layoutManager = new LinearLayoutManager(this);
         this.recycleComments.setLayoutManager(layoutManager);
+        CommentsAdapter adapter = new CommentsAdapter(context);
+        this.recycleComments.setAdapter(adapter);
+        this.recycleComments.setOnScrollListener(new OnCommentsScrollListener());
 
         this.editMessage = (EditText) findViewById(R.id.edit_message);
         this.buttonSend = (ImageView) findViewById(R.id.button_send);
@@ -116,7 +131,6 @@ public class PostActivity extends TestableActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final Context context = this.getApplicationContext();
         switch(item.getItemId()) {
             case R.id.action_edit:
                 Intent intent = new Intent(context, EditPostActivity.class);
@@ -174,7 +188,6 @@ public class PostActivity extends TestableActionBarActivity {
     }
 
     public void loadInfo() {
-        final Context context = this.getApplicationContext();
         final GetPost getPost = new GetPost(context);
         getPost.setParameter(this.postId);
         getPost.setEvent(new GetPostPostEvent() {
@@ -190,6 +203,7 @@ public class PostActivity extends TestableActionBarActivity {
                 isOwner = post.getUserId().equals(getPost.loadUserId());
                 switchOpen.setEnabled(isOwner);
                 invalidateOptionsMenu();
+                loadNextPage();
                 hideErrorMessage();
                 finishTest();
             }
@@ -201,6 +215,30 @@ public class PostActivity extends TestableActionBarActivity {
             }
         });
         getPost.request();
+    }
+
+    public void loadNextPage() {
+        loading = true;
+        GetComments getComments = new GetComments(context);
+        getComments.setParameter(post.getCommentsId(), pageNum);
+        getComments.setEvent(new GetCommentsPostEvent() {
+            @Override
+            public void onSuccess(List<Comment> comments) {
+                CommentsAdapter commentsAdapter = (CommentsAdapter) recycleComments.getAdapter();
+                commentsAdapter.append(comments);
+                ++pageNum;
+                hideErrorMessage();
+                loading = false;
+                finishTest();
+            }
+            @Override
+            public void onFailure(int errno) {
+                showErrorMessage(context.getString(R.string.error_post_not_exist));
+                loading = false;
+                finishTest();
+            }
+        });
+        getComments.request();
     }
 
     public String getPostId() {
@@ -239,4 +277,27 @@ public class PostActivity extends TestableActionBarActivity {
             }
         }
     }
+
+    private class OnCommentsScrollListener extends RecyclerView.OnScrollListener {
+
+        private int pastVisibleItems;
+        private int visibleItemCount;
+        private int totalItemCount;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            totalItemCount = layoutManager.getItemCount();
+            visibleItemCount = layoutManager.getChildCount();
+            pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+            if (!loading) {
+                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                    loadNextPage();
+                }
+            }
+        }
+
+    }
+
 }

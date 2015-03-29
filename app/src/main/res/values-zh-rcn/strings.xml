@@ -5,5 +5,7 @@
     <string name="publish_date_">发布日期：</string>
     <string name="modify_date_">修改日期：</string>
 
+    <string name="reply_to_">回复：</string>
+
     <string name="hello_world">你好世界！</string>
 </resources>

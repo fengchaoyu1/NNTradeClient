@@ -127,7 +127,7 @@ public class Comment {
         return date;
     }
 
-    public String getPostDateString() {
+    public String getDateString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateFormat.format(this.date);
     }

@@ -16,6 +16,7 @@ public class NewPost extends ApiBase {
 
     public static String RESOURCE_URL = "post/";
 
+    private int postType;
     private String title;
     private String description;
     private List<String> imageIdList;
@@ -31,7 +32,8 @@ public class NewPost extends ApiBase {
         return BASE_URL + RESOURCE_URL;
     }
 
-    public void setParameter(String title, String description, List<String> imageIdList) {
+    public void setParameter(int postType, String title, String description, List<String> imageIdList) {
+        this.postType = postType;
         this.title = title;
         this.description = description;
         this.imageIdList = imageIdList;
@@ -49,6 +51,7 @@ public class NewPost extends ApiBase {
         param.setMethod(RequestParam.METHOD_POST);
         param.addParam("user_id", this.loadUserId());
         param.setToken(this.loadToken());
+        param.addParam("type", this.postType);
         param.addParam("title", this.title);
         param.addParam("description", this.description);
         String idList = "";

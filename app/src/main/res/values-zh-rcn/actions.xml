@@ -14,4 +14,7 @@
     <string name="action_cancel">取消</string>
     <string name="action_reply">回复</string>
     <string name="action_send">发送</string>
+    <string name="action_buy">求购</string>
+    <string name="action_sell">出售</string>
+    <string name="action_chat">聊天</string>
 </resources>

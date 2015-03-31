@@ -24,6 +24,8 @@ import static android.support.v7.widget.RecyclerView.OnScrollListener;
 
 public class PostsFragment extends TestableFragment {
 
+    public static final String EXTRA_POST_TYPE = "EXTRA_POST_TYPE";
+
     private Context context;
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -35,12 +37,24 @@ public class PostsFragment extends TestableFragment {
     private boolean loading = false;
     private int pageNum = 1;
 
-    public PostsFragment() {
+    private int postType = Post.POST_TYPE_SELL;
+
+    private PostsFragment() {
+    }
+
+    public static PostsFragment newInstance(int postType) {
+        PostsFragment postsFragment = new PostsFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_POST_TYPE, postType);
+        postsFragment.setArguments(args);
+        return postsFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        this.postType = args.getInt(EXTRA_POST_TYPE, Post.POST_TYPE_SELL);
     }
 
     @Override
@@ -62,6 +76,7 @@ public class PostsFragment extends TestableFragment {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, EditPostActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(EditPostActivity.EXTRA_POST_TYPE, postType);
                 context.startActivity(intent);
             }
         });
@@ -82,10 +97,19 @@ public class PostsFragment extends TestableFragment {
         return view;
     }
 
+    public void setPostType(int postType) {
+        if (this.postType != postType) {
+            this.postType = postType;
+            refresh = true;
+            pageNum = 1;
+            loadNextPage();
+        }
+    }
+
     public void loadNextPage() {
         loading = true;
         GetPostList getPostList = new GetPostList(context);
-        getPostList.setParameter(pageNum);
+        getPostList.setParameter(pageNum, postType);
         getPostList.setEvent(new GetPostListPostEvent() {
             @Override
             public void onSuccess(List<Post> posts, boolean isEnd) {

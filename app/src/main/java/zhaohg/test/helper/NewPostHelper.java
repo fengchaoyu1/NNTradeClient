@@ -8,6 +8,7 @@ import java.util.concurrent.CountDownLatch;
 
 import zhaohg.api.post.NewPost;
 import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.Post;
 
 public class NewPostHelper {
 
@@ -30,7 +31,7 @@ public class NewPostHelper {
     public String newPost() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         NewPost newPost = new NewPost(context);
-        newPost.setParameter(title, description, imageIdList);
+        newPost.setParameter(Post.POST_TYPE_SELL, title, description, imageIdList);
         newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String id) {

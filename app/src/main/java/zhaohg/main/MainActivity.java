@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import zhaohg.api.account.AccountLogout;
 import zhaohg.api.account.AccountLogoutPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.post.PostsFragment;
 
 public class MainActivity extends ActionBarActivity {
@@ -33,6 +34,26 @@ public class MainActivity extends ActionBarActivity {
 
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.mainDrawer = (MainDrawer) findViewById(R.id.drawer);
+        this.mainDrawer.setOnSelectedItemChanged(new MainDrawer.OnSelectedItemChanged() {
+            @Override
+            public void onSelectedItemChanged(int id) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                switch (id) {
+                    case MainDrawer.ITEM_SELL:
+                        fragmentTransaction.replace(R.id.frame_container, PostsFragment.newInstance(Post.POST_TYPE_SELL));
+                        break;
+                    case MainDrawer.ITEM_BUY:
+                        fragmentTransaction.replace(R.id.frame_container, PostsFragment.newInstance(Post.POST_TYPE_BUY));
+                        break;
+                    case MainDrawer.ITEM_CHAT:
+                        fragmentTransaction.replace(R.id.frame_container, PostsFragment.newInstance(Post.POST_TYPE_CHAT));
+                        break;
+                }
+                fragmentTransaction.commit();
+                drawerLayout.closeDrawers();
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_container, new PostsFragment());
+        fragmentTransaction.replace(R.id.frame_container, PostsFragment.newInstance(Post.POST_TYPE_SELL));
         fragmentTransaction.commit();
     }
 

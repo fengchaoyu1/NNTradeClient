@@ -7,17 +7,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import zhaohg.account.LoginActivity;
-import zhaohg.account.RegisterActivity;
 import zhaohg.api.account.AccountLogin;
 import zhaohg.testable.TestableLinearLayout;
 
 public class MainDrawer extends TestableLinearLayout {
 
+    public static final int ITEM_SELL = 0;
+    public static final int ITEM_BUY = 1;
+    public static final int ITEM_CHAT = 2;
+
+    public interface OnSelectedItemChanged {
+        public void onSelectedItemChanged(int id);
+    }
+
     private Context context;
     private View view;
+    private OnSelectedItemChanged onSelectedItemChanged;
 
     public MainDrawer(Context context) {
         super(context);
@@ -43,6 +52,34 @@ public class MainDrawer extends TestableLinearLayout {
         loginButton.setOnClickListener(new OnLoginButtonClickListener());
 
         this.updateUserLayout();
+
+        LinearLayout layoutSell = (LinearLayout) view.findViewById(R.id.layout_sell);
+        layoutSell.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onSelectedItemChanged != null) {
+                    onSelectedItemChanged.onSelectedItemChanged(ITEM_SELL);
+                }
+            }
+        });
+        LinearLayout layoutBuy = (LinearLayout) view.findViewById(R.id.layout_buy);
+        layoutBuy.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onSelectedItemChanged != null) {
+                    onSelectedItemChanged.onSelectedItemChanged(ITEM_BUY);
+                }
+            }
+        });
+        LinearLayout layoutChat = (LinearLayout) view.findViewById(R.id.layout_chat);
+        layoutChat.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onSelectedItemChanged != null) {
+                    onSelectedItemChanged.onSelectedItemChanged(ITEM_CHAT);
+                }
+            }
+        });
     }
 
     public void updateUserLayout() {
@@ -64,6 +101,10 @@ public class MainDrawer extends TestableLinearLayout {
                 usernameText.setVisibility(GONE);
             }
         }
+    }
+
+    public void setOnSelectedItemChanged(OnSelectedItemChanged onSelectedItemChanged) {
+        this.onSelectedItemChanged = onSelectedItemChanged;
     }
 
     private class OnLoginButtonClickListener implements OnClickListener {

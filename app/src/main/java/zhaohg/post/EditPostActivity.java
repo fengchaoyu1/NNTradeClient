@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import zhaohg.api.ApiErrno;
 import zhaohg.api.post.NewPost;
 import zhaohg.api.post.NewPostPostEvent;
+import zhaohg.api.post.Post;
 import zhaohg.api.post.UpdatePost;
 import zhaohg.api.post.UpdatePostPostEvent;
 import zhaohg.main.R;
@@ -22,6 +23,7 @@ import zhaohg.testable.TestableActionBarActivity;
 public class EditPostActivity extends TestableActionBarActivity {
 
     public static final String EXTRA_POST_ID = "EXTRA_POST_ID";
+    public static final String EXTRA_POST_TYPE = "EXTRA_POST_TYPE";
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
 
@@ -31,6 +33,7 @@ public class EditPostActivity extends TestableActionBarActivity {
     private TextView textError;
 
     private String postId = "";
+    private int postType = Post.POST_TYPE_SELL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class EditPostActivity extends TestableActionBarActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             this.postId = extras.getString(EXTRA_POST_ID, "");
+            this.postType = extras.getInt(EXTRA_POST_TYPE, Post.POST_TYPE_SELL);
             this.editTitle.setText(extras.getString(EXTRA_TITLE, ""));
             this.editDescription.setText(extras.getString(EXTRA_DESCRIPTION, ""));
         }
@@ -88,7 +92,7 @@ public class EditPostActivity extends TestableActionBarActivity {
             if (postId.isEmpty()) {
                 // Create new post.
                 NewPost newPost = new NewPost(context);
-                newPost.setParameter(title, description, new ArrayList<String>());
+                newPost.setParameter(postType, title, description, new ArrayList<String>());
                 newPost.setEvent(new NewPostPostEvent() {
                     @Override
                     public void onSuccess(String postId) {

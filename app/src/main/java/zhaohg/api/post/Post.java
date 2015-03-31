@@ -9,7 +9,9 @@ import zhaohg.json.JsonObject;
 
 public class Post {
 
-    public static final int TYPE_SELL = 0;
+    public static final int POST_TYPE_SELL = 0;
+    public static final int POST_TYPE_BUY = 1;
+    public static final int POST_TYPE_CHAT = 2;
 
     private int type;
     private String title;
@@ -24,7 +26,7 @@ public class Post {
     private Date modifyDate;
 
     public Post() {
-        this.type = TYPE_SELL;
+        this.type = POST_TYPE_SELL;
         this.title = "";
         this.description = "";
         this.userId = "";

@@ -53,7 +53,7 @@ public class TestUpdatePost extends InstrumentationTestCase {
         final CountDownLatch signal = new CountDownLatch(1);
         final Context context = this.getInstrumentation().getContext();
         NewPost newPost = new NewPost(context);
-        newPost.setParameter(title, description, imageIdList);
+        newPost.setParameter(Post.POST_TYPE_SELL, title, description, imageIdList);
         newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String postId) {

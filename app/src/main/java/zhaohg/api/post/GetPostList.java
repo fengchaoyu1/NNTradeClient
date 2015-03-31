@@ -24,13 +24,15 @@ public class GetPostList extends ApiBase {
     private GetPostListPostEvent event;
 
     private int pageNum;
+    private int postType;
 
     public GetPostList(Context context) {
         super(context);
     }
 
-    public void setParameter(int pageNum) {
+    public void setParameter(int pageNum, int postType) {
         this.pageNum = pageNum;
+        this.postType = postType;
     }
 
     public void setEvent(GetPostListPostEvent event) {
@@ -39,7 +41,7 @@ public class GetPostList extends ApiBase {
 
     @Override
     public String getUrl() {
-        return BASE_URL + RESOURCE_URL + pageNum + "/";
+        return BASE_URL + RESOURCE_URL + pageNum + "/type/" + postType + "/";
     }
 
     @Override

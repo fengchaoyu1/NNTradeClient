@@ -42,7 +42,7 @@ public class TestDeletePost extends InstrumentationTestCase {
         imageIdList.add("3");
         final String title = "New Post+";
         final String description = "New Post Description";
-        newPost.setParameter(title, description, imageIdList);
+        newPost.setParameter(Post.POST_TYPE_SELL, title, description, imageIdList);
         newPost.setEvent(new NewPostPostEvent() {
             @Override
             public void onSuccess(final String postId) {

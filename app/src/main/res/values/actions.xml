@@ -14,4 +14,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_reply">Reply</string>
     <string name="action_send">Send</string>
+    <string name="action_buy">Buy</string>
+    <string name="action_sell">Sell</string>
+    <string name="action_chat">Chat</string>
 </resources>

@@ -63,7 +63,7 @@ public class TestGetPostList extends InstrumentationTestCase {
         getPostList.setParameter(1);
         getPostList.setEvent(new GetPostListPostEvent() {
             @Override
-            public void onSuccess(List<Post> posts) {
+            public void onSuccess(List<Post> posts, boolean isEnd) {
                 localPosts = posts;
                 signal.countDown();
             }

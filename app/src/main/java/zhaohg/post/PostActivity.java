@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import zhaohg.api.comment.AppendComment;
+import zhaohg.api.comment.AppendCommentPostEvent;
 import zhaohg.api.comment.Comment;
 import zhaohg.api.comment.GetComments;
 import zhaohg.api.comment.GetCommentsPostEvent;
@@ -97,6 +99,7 @@ public class PostActivity extends TestableActionBarActivity {
 
         this.editMessage = (EditText) findViewById(R.id.edit_message);
         this.buttonSend = (ImageView) findViewById(R.id.button_send);
+        this.buttonSend.setOnClickListener(new OnSendButtonClickListener());
 
         this.textError = (TextView) findViewById(R.id.text_error);
 
@@ -218,27 +221,32 @@ public class PostActivity extends TestableActionBarActivity {
     }
 
     public void loadNextPage() {
-        loading = true;
-        GetComments getComments = new GetComments(context);
-        getComments.setParameter(post.getCommentsId(), pageNum);
-        getComments.setEvent(new GetCommentsPostEvent() {
-            @Override
-            public void onSuccess(List<Comment> comments) {
-                CommentsAdapter commentsAdapter = (CommentsAdapter) recycleComments.getAdapter();
-                commentsAdapter.append(comments);
-                ++pageNum;
-                hideErrorMessage();
-                loading = false;
-                finishTest();
-            }
-            @Override
-            public void onFailure(int errno) {
-                showErrorMessage(context.getString(R.string.error_post_not_exist));
-                loading = false;
-                finishTest();
-            }
-        });
-        getComments.request();
+        if (post != null) {
+            loading = true;
+            GetComments getComments = new GetComments(context);
+            getComments.setParameter(post.getCommentsId(), pageNum);
+            getComments.setEvent(new GetCommentsPostEvent() {
+                @Override
+                public void onSuccess(List<Comment> comments, boolean isEnd) {
+                    CommentsAdapter commentsAdapter = (CommentsAdapter) recycleComments.getAdapter();
+                    commentsAdapter.append(comments);
+                    if (!isEnd) {
+                        ++pageNum;
+                    }
+                    hideErrorMessage();
+                    loading = false;
+                    finishTest();
+                }
+
+                @Override
+                public void onFailure(int errno) {
+                    showErrorMessage(context.getString(R.string.error_post_not_exist));
+                    loading = false;
+                    finishTest();
+                }
+            });
+            getComments.request();
+        }
     }
 
     public String getPostId() {
@@ -252,7 +260,6 @@ public class PostActivity extends TestableActionBarActivity {
     private class OnOpenCheckedChangeListener implements CompoundButton.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            Context context = buttonView.getContext();
             if (post.isOpen() != isChecked) {
                 UpdatePost updatePost = new UpdatePost(context);
                 updatePost.setParameter(postId);
@@ -294,6 +301,34 @@ public class PostActivity extends TestableActionBarActivity {
             if (!loading) {
                 if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                     loadNextPage();
+                }
+            }
+        }
+
+    }
+
+    private class OnSendButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (post != null) {
+                String message = editMessage.getText().toString();
+                if (!message.isEmpty()) {
+                    editMessage.setText("");
+                    AppendComment appendComment = new AppendComment(context);
+                    appendComment.setParameter(post.getCommentsId(), message);
+                    appendComment.setEvent(new AppendCommentPostEvent() {
+                        @Override
+                        public void onSuccess() {
+                            loadNextPage();
+                            finishTest();
+                        }
+                        @Override
+                        public void onFailure(int errno) {
+                            finishTest();
+                        }
+                    });
+                    appendComment.request();
                 }
             }
         }

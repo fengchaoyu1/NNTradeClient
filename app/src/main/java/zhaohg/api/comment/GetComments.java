@@ -66,7 +66,7 @@ public class GetComments extends ApiBase {
                                 Comment comment = new Comment(commentObject);
                                 comments.add(comment);
                             }
-                            event.onSuccess(comments);
+                            event.onSuccess(comments, values.getValue("is_end").getBoolean());
                         }
                     }
                 }

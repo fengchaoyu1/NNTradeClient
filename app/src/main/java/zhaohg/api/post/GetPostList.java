@@ -67,7 +67,7 @@ public class GetPostList extends ApiBase {
                                 Post post = new Post(postObject);
                                 posts.add(post);
                             }
-                            event.onSuccess(posts);
+                            event.onSuccess(posts, values.getValue("is_end").getBoolean());
                         }
                     }
                 }

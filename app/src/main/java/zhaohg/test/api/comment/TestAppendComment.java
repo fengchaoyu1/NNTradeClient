@@ -56,7 +56,7 @@ public class TestAppendComment extends InstrumentationTestCase {
                 getComments.setParameter(commentsId, 1);
                 getComments.setEvent(new GetCommentsPostEvent() {
                     @Override
-                    public void onSuccess(List<Comment> comments) {
+                    public void onSuccess(List<Comment> comments, boolean isEnd) {
                         localComments = comments;
                         signal.countDown();
                     }
@@ -103,7 +103,7 @@ public class TestAppendComment extends InstrumentationTestCase {
                         getComments.setParameter(commentsId, 1);
                         getComments.setEvent(new GetCommentsPostEvent() {
                             @Override
-                            public void onSuccess(List<Comment> comments) {
+                            public void onSuccess(List<Comment> comments, boolean isEnd) {
                                 localComments = comments;
                                 signal.countDown();
                             }
@@ -160,7 +160,7 @@ public class TestAppendComment extends InstrumentationTestCase {
                 getComments.setParameter(commentsId, 1);
                 getComments.setEvent(new GetCommentsPostEvent() {
                     @Override
-                    public void onSuccess(List<Comment> comments) {
+                    public void onSuccess(List<Comment> comments, boolean isEnd) {
                         localCommentId = comments.get(0).getCommentId();
                         AppendComment appendComment = new AppendComment(context);
                         appendComment.setParameter(commentsId, "板凳", localCommentId);
@@ -171,7 +171,7 @@ public class TestAppendComment extends InstrumentationTestCase {
                                 getComments.setParameter(commentsId, 1);
                                 getComments.setEvent(new GetCommentsPostEvent() {
                                     @Override
-                                    public void onSuccess(List<Comment> comments) {
+                                    public void onSuccess(List<Comment> comments, boolean isEnd) {
                                         localComments = comments;
                                         signal.countDown();
                                     }

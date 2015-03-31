@@ -46,11 +46,22 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         return comments.size();
     }
 
+    private boolean isExisted(Comment newComment) {
+        for (Comment comment : comments) {
+            if (comment.getCommentId().equals(newComment.getCommentId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void append(Comment comment) {
-        int pos = comments.size();
-        comments.add(comment);
-        notifyItemInserted(pos);
-        notifyItemRangeChanged(pos, 1);
+        if (!isExisted(comment)) {
+            int pos = comments.size();
+            comments.add(comment);
+            notifyItemInserted(pos);
+            notifyItemRangeChanged(pos, 1);
+        }
     }
 
     public void append(List<Comment> newComments) {

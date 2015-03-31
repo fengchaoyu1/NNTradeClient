@@ -88,7 +88,7 @@ public class PostsFragment extends TestableFragment {
         getPostList.setParameter(pageNum);
         getPostList.setEvent(new GetPostListPostEvent() {
             @Override
-            public void onSuccess(List<Post> posts) {
+            public void onSuccess(List<Post> posts, boolean isEnd) {
                 PostsAdapter adapter = (PostsAdapter) recyclePosts.getAdapter();
                 if (refresh) {
                     refresh = false;
@@ -96,7 +96,9 @@ public class PostsFragment extends TestableFragment {
                     adapter.clear();
                 }
                 adapter.append(posts);
-                ++pageNum;
+                if (!isEnd) {
+                    ++pageNum;
+                }
                 loading = false;
                 finishTest();
             }

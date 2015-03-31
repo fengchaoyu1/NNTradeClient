@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,13 +17,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import zhaohg.api.comment.AppendComment;
 import zhaohg.api.comment.AppendCommentPostEvent;
-import zhaohg.api.comment.Comment;
-import zhaohg.api.comment.GetComments;
-import zhaohg.api.comment.GetCommentsPostEvent;
 import zhaohg.api.post.DeletePost;
 import zhaohg.api.post.DeletePostPostEvent;
 import zhaohg.api.post.GetPost;
@@ -33,7 +26,8 @@ import zhaohg.api.post.GetPostPostEvent;
 import zhaohg.api.post.Post;
 import zhaohg.api.post.UpdatePost;
 import zhaohg.api.post.UpdatePostPostEvent;
-import zhaohg.comment.CommentsAdapter;
+import zhaohg.comment.CommentsView;
+import zhaohg.comment.ScrollViewWithBottomEvent;
 import zhaohg.main.R;
 import zhaohg.testable.TestableActionBarActivity;
 
@@ -45,6 +39,7 @@ public class PostActivity extends TestableActionBarActivity {
 
     private Context context;
 
+    private ScrollViewWithBottomEvent scrollView;
     private TextView textUsername;
     private TextView textTitle;
     private TextView textDescription;
@@ -52,8 +47,7 @@ public class PostActivity extends TestableActionBarActivity {
     private TextView textModifyDate;
     private Switch switchOpen;
 
-    private LinearLayoutManager layoutManager;
-    private RecyclerView recycleComments;
+    private CommentsView commentsView;
 
     private EditText editMessage;
     private ImageView buttonSend;
@@ -63,8 +57,8 @@ public class PostActivity extends TestableActionBarActivity {
     private Post post;
     private boolean isOwner = false;
 
-    private int pageNum = 1;
-    private boolean loading = false;
+    public PostActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +76,14 @@ public class PostActivity extends TestableActionBarActivity {
             }
         });
 
+        this.scrollView = (ScrollViewWithBottomEvent) findViewById(R.id.scroll_view);
+        this.scrollView.setBottomEvent(new ScrollViewWithBottomEvent.OnHitBottomEvent() {
+            @Override
+            public void onHitBottom() {
+                commentsView.loadNextPage();
+            }
+        });
+
         this.textUsername = (TextView) findViewById(R.id.text_username);
         this.textTitle = (TextView) findViewById(R.id.text_title);
         this.textDescription = (TextView) findViewById(R.id.text_description);
@@ -90,12 +92,7 @@ public class PostActivity extends TestableActionBarActivity {
         this.switchOpen = (Switch) findViewById(R.id.switch_open);
         this.switchOpen.setOnCheckedChangeListener(new OnOpenCheckedChangeListener());
 
-        this.recycleComments = (RecyclerView) findViewById(R.id.recycle_comments);
-        this.layoutManager = new LinearLayoutManager(this);
-        this.recycleComments.setLayoutManager(layoutManager);
-        CommentsAdapter adapter = new CommentsAdapter(context);
-        this.recycleComments.setAdapter(adapter);
-        this.recycleComments.setOnScrollListener(new OnCommentsScrollListener());
+        this.commentsView = (CommentsView) findViewById(R.id.view_comments);
 
         this.editMessage = (EditText) findViewById(R.id.edit_message);
         this.buttonSend = (ImageView) findViewById(R.id.button_send);
@@ -206,7 +203,8 @@ public class PostActivity extends TestableActionBarActivity {
                 isOwner = post.getUserId().equals(getPost.loadUserId());
                 switchOpen.setEnabled(isOwner);
                 invalidateOptionsMenu();
-                loadNextPage();
+                commentsView.setCommentsId(post.getCommentsId());
+                commentsView.loadNextPage();
                 hideErrorMessage();
                 finishTest();
             }
@@ -220,35 +218,6 @@ public class PostActivity extends TestableActionBarActivity {
         getPost.request();
     }
 
-    public void loadNextPage() {
-        if (post != null) {
-            loading = true;
-            GetComments getComments = new GetComments(context);
-            getComments.setParameter(post.getCommentsId(), pageNum);
-            getComments.setEvent(new GetCommentsPostEvent() {
-                @Override
-                public void onSuccess(List<Comment> comments, boolean isEnd) {
-                    CommentsAdapter commentsAdapter = (CommentsAdapter) recycleComments.getAdapter();
-                    commentsAdapter.append(comments);
-                    if (!isEnd) {
-                        ++pageNum;
-                    }
-                    hideErrorMessage();
-                    loading = false;
-                    finishTest();
-                }
-
-                @Override
-                public void onFailure(int errno) {
-                    showErrorMessage(context.getString(R.string.error_post_not_exist));
-                    loading = false;
-                    finishTest();
-                }
-            });
-            getComments.request();
-        }
-    }
-
     public String getPostId() {
         return postId;
     }
@@ -258,6 +227,7 @@ public class PostActivity extends TestableActionBarActivity {
     }
 
     private class OnOpenCheckedChangeListener implements CompoundButton.OnCheckedChangeListener {
+
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (post.isOpen() != isChecked) {
@@ -283,27 +253,6 @@ public class PostActivity extends TestableActionBarActivity {
                 switchOpen.setText(context.getString(R.string.sell_close));
             }
         }
-    }
-
-    private class OnCommentsScrollListener extends RecyclerView.OnScrollListener {
-
-        private int pastVisibleItems;
-        private int visibleItemCount;
-        private int totalItemCount;
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            totalItemCount = layoutManager.getItemCount();
-            visibleItemCount = layoutManager.getChildCount();
-            pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-
-            if (!loading) {
-                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                    loadNextPage();
-                }
-            }
-        }
 
     }
 
@@ -320,11 +269,13 @@ public class PostActivity extends TestableActionBarActivity {
                     appendComment.setEvent(new AppendCommentPostEvent() {
                         @Override
                         public void onSuccess() {
-                            loadNextPage();
+                            commentsView.loadNextPage();
+                            Toast.makeText(context, context.getString(R.string.sell_send_comment_success), Toast.LENGTH_SHORT).show();
                             finishTest();
                         }
                         @Override
                         public void onFailure(int errno) {
+                            Toast.makeText(context, context.getString(R.string.sell_send_comment_fail), Toast.LENGTH_SHORT).show();
                             finishTest();
                         }
                     });

@@ -109,7 +109,14 @@
 
     </zhaohg.comment.ScrollViewWithBottomEvent>
 
+    <TextView
+        android:id="@+id/text_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_edit"/>
+
     <LinearLayout
+        android:id="@+id/layout_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

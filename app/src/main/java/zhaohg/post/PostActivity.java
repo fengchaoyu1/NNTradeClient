@@ -17,6 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import zhaohg.api.account.AccountLogin;
 import zhaohg.api.comment.AppendComment;
 import zhaohg.api.comment.AppendCommentPostEvent;
 import zhaohg.api.post.DeletePost;
@@ -49,6 +50,7 @@ public class PostActivity extends TestableActionBarActivity {
 
     private CommentsView commentsView;
 
+    private TextView textReply;
     private EditText editMessage;
     private ImageView buttonSend;
 
@@ -56,6 +58,8 @@ public class PostActivity extends TestableActionBarActivity {
 
     private Post post;
     private boolean isOwner = false;
+
+    private String replyCommentId = "";
 
     public PostActivity() {
     }
@@ -93,7 +97,21 @@ public class PostActivity extends TestableActionBarActivity {
         this.switchOpen.setOnCheckedChangeListener(new OnOpenCheckedChangeListener());
 
         this.commentsView = (CommentsView) findViewById(R.id.view_comments);
+        this.commentsView.setChildViewClicked(new CommentsView.OnChildViewClicked() {
+            @Override
+            public void onChildViewClicker(String commentId, String username) {
+                AccountLogin accountLogin = new AccountLogin(context);
+                if (replyCommentId.equals(commentId) || accountLogin.loadUsername().equals(username)) {
+                    textReply.setText("");
+                    replyCommentId = "";
+                } else {
+                    textReply.setText(context.getString(R.string.reply_to_) + username);
+                    replyCommentId = commentId;
+                }
+            }
+        });
 
+        this.textReply = (TextView) findViewById(R.id.text_reply);
         this.editMessage = (EditText) findViewById(R.id.edit_message);
         this.buttonSend = (ImageView) findViewById(R.id.button_send);
         this.buttonSend.setOnClickListener(new OnSendButtonClickListener());
@@ -264,8 +282,14 @@ public class PostActivity extends TestableActionBarActivity {
                 String message = editMessage.getText().toString();
                 if (!message.isEmpty()) {
                     editMessage.setText("");
+                    textReply.setText("");
                     AppendComment appendComment = new AppendComment(context);
-                    appendComment.setParameter(post.getCommentsId(), message);
+                    if (replyCommentId.isEmpty()) {
+                        appendComment.setParameter(post.getCommentsId(), message);
+                    } else {
+                        appendComment.setParameter(post.getCommentsId(), message, replyCommentId);
+                    }
+                    replyCommentId = "";
                     appendComment.setEvent(new AppendCommentPostEvent() {
                         @Override
                         public void onSuccess() {

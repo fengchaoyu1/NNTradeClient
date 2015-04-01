@@ -1,10 +1,15 @@
 package com.example.dip.testapplication;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,6 +50,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -53,6 +60,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import com.example.dip.testapplication.CustomView;
+
 
 
 public class MainActivity extends ActionBarActivity {
@@ -61,10 +70,13 @@ public class MainActivity extends ActionBarActivity {
     ImageView myView3=null;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //drawStars=new DrawStars(this,null);
+       // setContentView(drawStars);
 
        /*
 
@@ -88,8 +100,26 @@ public class MainActivity extends ActionBarActivity {
         }catch(IOException e){
             e.printStackTrace();
         }*/
+        RatingBar ratingBar=(RatingBar)findViewById(R.id.ratingBar);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.gold), PorterDuff.Mode.SRC_ATOP);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
 
-        Bitmap mBitmap;
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+                ratingBar.setRating(rating);
+                Toast.makeText(MainActivity.this, "当前评分:" + String.valueOf(rating),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
+
+
+
+    Bitmap mBitmap;
         int[] mColors;
         int WIDTH=500;
         int HEIGHT=500;
@@ -101,6 +131,9 @@ public class MainActivity extends ActionBarActivity {
         ImageView myImage2=null;
         myImage2=(ImageView)findViewById(R.id.myView);
         myImage2.setImageBitmap(mBitmap);
+
+
+
 
 
 
@@ -139,6 +172,7 @@ public class MainActivity extends ActionBarActivity {
                 testThumbnails();
                 RequestTask requestTask=new RequestTask();
                 requestTask.execute(imagePath);
+
                 /*
                 ImageView myImage3=null;
                 myImage3=(ImageView)findViewById(R.id.imageInternet);

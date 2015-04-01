@@ -6,5 +6,6 @@
     <string name="register_name">请注册</string>
     <drawable name="red">#FF0000</drawable>
     <string name="title_activity_register">RegisterActivity</string>
+    <color name="gold">#FFD700</color>
 
 </resources>

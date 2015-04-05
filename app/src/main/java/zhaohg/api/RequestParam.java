@@ -3,6 +3,7 @@ package zhaohg.api;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -16,8 +17,10 @@ public class RequestParam {
     public static final int METHOD_POST = 1;
     public static final int METHOD_PUT = 2;
     public static final int METHOD_DELETE = 3;
+    public static final int METHOD_FILE = 4;
 
     private Map<String, String> params;
+    private Map<String, File> files;
 
     private String url = "";
     private int method = METHOD_GET;
@@ -28,6 +31,7 @@ public class RequestParam {
 
     public RequestParam() {
         this.params = new TreeMap<>();
+        this.files = new TreeMap<>();
     }
 
     public void setUrl(String value) {
@@ -68,6 +72,10 @@ public class RequestParam {
 
     public void addParam(String key, int value) {
         this.params.put(key, String.valueOf(value));
+    }
+
+    public void addFile(String key, File file) {
+        this.files.put(key, file);
     }
 
     public void setToken(String token) {
@@ -152,6 +160,10 @@ public class RequestParam {
             }
         }
         return nameValuePairs;
+    }
+
+    public Map<String, File> getFiles() {
+        return this.files;
     }
 
 }

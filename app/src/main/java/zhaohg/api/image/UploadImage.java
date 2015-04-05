@@ -17,6 +17,7 @@ public class UploadImage extends ApiBase {
     public static String RESOURCE_URL = "image/";
 
     private File imageFile;
+    private File thumbnailFile;
 
     private UploadImagePostEvent event;
 
@@ -29,8 +30,9 @@ public class UploadImage extends ApiBase {
         return BASE_URL + RESOURCE_URL;
     }
 
-    public void setParameter(File imageFile) {
+    public void setParameter(File imageFile, File thumbnailFile) {
         this.imageFile = imageFile;
+        this.thumbnailFile = thumbnailFile;
     }
 
     public void setEvent(UploadImagePostEvent event) {
@@ -46,6 +48,7 @@ public class UploadImage extends ApiBase {
         param.addParam("user_id", this.loadUserId());
         param.setToken(this.loadToken());
         param.addFile("image", this.imageFile);
+        param.addFile("thumbnail", this.thumbnailFile);
         this.task.setRequestParam(param);
         this.task.setRequestPostEvent(new PostEvent() {
             @Override

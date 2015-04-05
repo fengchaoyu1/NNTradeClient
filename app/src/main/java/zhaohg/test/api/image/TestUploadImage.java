@@ -18,6 +18,7 @@ import zhaohg.test.helper.RegisterAndLogin;
 public class TestUploadImage extends InstrumentationTestCase {
 
     private String imagePath = "";
+    private String thumbnailPath = "";
 
     private Context context;
     private int localErrno;
@@ -46,6 +47,19 @@ public class TestUploadImage extends InstrumentationTestCase {
         FileOutputStream outputStream = new FileOutputStream(imagePath);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
         outputStream.close();
+        thumbnailPath = Environment.getExternalStorageDirectory() + File.separator + "test_thumbnail.jpg";
+        bitmap = Bitmap.createBitmap(200, 150, Bitmap.Config.ARGB_8888);
+        for (int i = 0; i < bitmap.getWidth(); ++i) {
+            for (int j = 0; j < bitmap.getHeight(); ++j) {
+                bitmap.setPixel(i, j, Color.argb(255,
+                        255 * i / bitmap.getWidth(),
+                        255 - 255 * i / bitmap.getWidth(),
+                        255 * j / bitmap.getHeight()));
+            }
+        }
+        outputStream = new FileOutputStream(thumbnailPath);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        outputStream.close();
     }
 
     public void testNewPostNormal() throws Exception {
@@ -54,7 +68,8 @@ public class TestUploadImage extends InstrumentationTestCase {
         this.createImage();
         UploadImage uploadImage = new UploadImage(context);
         File imageFile = new File(imagePath);
-        uploadImage.setParameter(imageFile);
+        File thumbnailFile = new File(thumbnailPath);
+        uploadImage.setParameter(imageFile, thumbnailFile);
         uploadImage.setEvent(new UploadImagePostEvent() {
             @Override
             public void onSuccess(String imageId) {

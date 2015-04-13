@@ -1,10 +1,6 @@
-package zhaohg.api.post;
+package zhaohg.api.image;
 
 import android.content.Context;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import zhaohg.api.ApiBase;
 import zhaohg.api.ApiErrno;
@@ -14,29 +10,29 @@ import zhaohg.api.RequestTask;
 import zhaohg.json.JsonObject;
 import zhaohg.json.JsonValue;
 
-public class GetPost extends ApiBase {
+public class GetImage extends ApiBase {
 
-    public static String RESOURCE_URL = "post/";
+    public static String RESOURCE_URL = "image/";
 
-    private GetPostPostEvent event;
+    private GetImagePostEvent event;
 
-    private String postId;
+    private String imageId;
 
-    public GetPost(Context context) {
+    public GetImage(Context context) {
         super(context);
     }
 
-    public void setParameter(String postId) {
-        this.postId = postId;
+    public void setParameter(String imageId) {
+        this.imageId = imageId;
     }
 
-    public void setEvent(GetPostPostEvent event) {
+    public void setEvent(GetImagePostEvent event) {
         this.event = event;
     }
 
     @Override
     public String getUrl() {
-        return BASE_URL + RESOURCE_URL + postId + "/";
+        return BASE_URL + RESOURCE_URL + imageId + "/";
     }
 
     @Override
@@ -57,8 +53,8 @@ public class GetPost extends ApiBase {
                         if (!values.getValue("success").getBoolean()) {
                             event.onFailure(values.getValue("errno").getInteger());
                         } else {
-                            JsonObject postObject = values.getValue("post").getJsonObject();
-                            Post post = new Post(postObject);
+                            JsonObject imageObject = values.getValue("image").getJsonObject();
+                            Image post = new Image(imageObject);
                             event.onSuccess(post);
                         }
                     }

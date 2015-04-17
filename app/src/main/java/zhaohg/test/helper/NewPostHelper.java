@@ -74,12 +74,4 @@ public class NewPostHelper {
         this.imageIdList = imageIdList;
     }
 
-    public void addNewImages(int num) throws Exception {
-        for (int i = 0; i < num; ++i) {
-            UploadImageHelper uploadImageHelper = new UploadImageHelper(context);
-            String imageId = uploadImageHelper.uploadImage();
-            this.imageIdList.add(imageId);
-        }
-    }
-
 }

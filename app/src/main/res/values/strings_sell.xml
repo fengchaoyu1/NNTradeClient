@@ -10,5 +10,4 @@
     <string name="sell_get_posts_fail">Failed to get post list</string>
     <string name="sell_send_comment_fail">Failed to send comment</string>
     <string name="sell_send_comment_success">Comment sent</string>
-    <string name="add_image">Add Image</string>
 </resources>

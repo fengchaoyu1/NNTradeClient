@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +32,9 @@ import zhaohg.comment.ScrollViewWithBottomEvent;
 import zhaohg.main.R;
 import zhaohg.testable.TestableActionBarActivity;
 
-
 public class PostActivity extends TestableActionBarActivity {
 
     public static final String EXTRA_POST_ID = "EXTRA_POST_ID";
-    public LinearLayout linearLayoutPostShow;
 
     private String postId = "";
 
@@ -127,7 +124,6 @@ public class PostActivity extends TestableActionBarActivity {
         }
 
         this.loadInfo();
-
     }
 
     @Override

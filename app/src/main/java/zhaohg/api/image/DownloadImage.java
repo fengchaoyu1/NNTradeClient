@@ -15,10 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Dip on 2015/3/31.
- */
-public class ImageDownload {
+public class DownloadImage {
+
     private class ImageRequestTask extends AsyncTask<String, Integer, Bitmap> {
         protected Bitmap doInBackground(String ...imagePath) {
             HttpGet httpRequest = new HttpGet(imagePath[0]);
@@ -26,28 +24,27 @@ public class ImageDownload {
             Bitmap bitmap = null;
             try {
                 HttpResponse httpResponse = httpClient.execute(httpRequest);
-                if (httpResponse.getStatusLine().getStatusCode()== HttpStatus.SC_OK) {
+                if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                     HttpEntity httpEntity = httpResponse.getEntity();
                     InputStream is = httpEntity.getContent();
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                 }
-            }
-            catch (ClientProtocolException e) {
+            } catch (ClientProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return bitmap;
         }
+
         protected void onPostExecute(Bitmap bitmap) {
-            //add excute
         }
     }
 
-    public void getImageDownload(String webname){
+    public void getImageDownload(String url){
         ImageRequestTask imageRequestTask = new ImageRequestTask();
-        imageRequestTask.execute(webname);
+        imageRequestTask.execute(url);
     }
 
 }

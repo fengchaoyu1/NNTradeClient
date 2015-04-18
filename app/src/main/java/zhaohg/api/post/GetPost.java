@@ -45,6 +45,7 @@ public class GetPost extends ApiBase {
         RequestParam param = new RequestParam();
         param.setUrl(this.getUrl());
         param.setMethod(RequestParam.METHOD_GET);
+        param.addParam("postId", postId);
         this.task.setRequestParam(param);
         this.task.setRequestPostEvent(new PostEvent() {
             @Override

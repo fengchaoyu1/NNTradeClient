@@ -39,6 +39,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:hint="@string/description"
                 android:textColor="@color/text_color_primary_dark" />
+            <zhaohg.post.PostView
+                android:id="@+id/view_post_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
 
             <Button
                 android:id="@+id/button_add_image"

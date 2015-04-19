@@ -4,8 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,13 +17,26 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import zhaohg.api.account.AccountLogin;
 import zhaohg.api.comment.AppendComment;
 import zhaohg.api.comment.AppendCommentPostEvent;
+import zhaohg.api.image.ImageDownloader;
 import zhaohg.api.post.DeletePost;
 import zhaohg.api.post.DeletePostPostEvent;
 import zhaohg.api.post.GetPost;
@@ -60,6 +77,10 @@ public class PostActivity extends TestableActionBarActivity {
     private boolean isOwner = false;
 
     private String replyCommentId = "";
+
+    private ImageView addButton;
+    private LinearLayout linearLayoutShow;
+    private Bitmap bmp;
 
     public PostActivity() {
     }
@@ -123,6 +144,24 @@ public class PostActivity extends TestableActionBarActivity {
             this.postId = extras.getString(EXTRA_POST_ID, "");
         }
 
+        this.addButton = (ImageView) findViewById(R.id.button_select_image);
+        addButton.setVisibility(View.INVISIBLE);
+
+        this.linearLayoutShow = (LinearLayout) findViewById(R.id.linear_layout_images);
+        LayoutInflater mInflater = LayoutInflater.from(PostActivity.this);
+        final View deleteView  = mInflater.inflate(R.layout.image_view_with_remove,null);
+        ImageView image = (ImageView)deleteView.findViewById(R.id.image);
+        image.setScaleType(ImageView.ScaleType.CENTER);
+        ImageView removeImage = (ImageView)deleteView.findViewById(R.id.remove);
+        removeImage.setVisibility(View.INVISIBLE);
+        String imagePath = "http://ts2.mm.bing.net/th?id=JN.e7ZkpRcEUx%2bbPOROSIthww&pid=15.1";
+        ImageDownloader imageDownloader = new ImageDownloader(imagePath,image,bmp);
+        imageDownloader.execute();
+        linearLayoutShow.addView(deleteView);
+        if (image == null)
+        {
+            System.out.println("image : " + null);
+        }
         this.loadInfo();
     }
 
@@ -309,5 +348,8 @@ public class PostActivity extends TestableActionBarActivity {
         }
 
     }
+
+
+
 
 }
